@@ -16,4 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('/skilltrees', 'SkilltreesController@store');
-ROute::get('/skilltrees', 'SkilltreesController@index');
+Route::get('/skilltrees', 'SkilltreesController@index');
+Route::get('/skilltrees/{skilltree}', 'SkilltreesController@show');

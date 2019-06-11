@@ -15,8 +15,28 @@ class SkilltreesController extends Controller
 
     public function store()
     {
-        Skilltree::create(request(['title', 'description']));
+/*        request()->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        Skilltree::create(request(['title', 'description'])); */
+        Skilltree::create($this->validateRequest());
 
         return redirect('/skilltrees');
+    }
+
+    public function show(Skilltree $skilltree)
+    {
+        return view('skilltrees.show', compact('skilltree'));
+
+    }
+
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
     }
 }

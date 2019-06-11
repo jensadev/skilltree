@@ -7,8 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach ($skilltrees as $skilltree)
-        {{ $skilltree->title }}
-    @endforeach
+    <ul class="list-group">
+        @forelse ($skilltrees as $skilltree)
+            <li class="list-group-item">
+                <a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a>
+            </li>
+        @empty
+            <li>No skilltrees yet.</li>
+        @endforelse
+    </ul>
 </body>
 </html>
