@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/skilltrees', 'SkilltreesController@store');
-Route::get('/skilltrees', 'SkilltreesController@index');
-Route::get('/skilltrees/{skilltree}', 'SkilltreesController@show');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('skilltrees', 'SkilltreesController');
+
+});
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

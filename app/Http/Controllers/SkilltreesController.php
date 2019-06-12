@@ -9,27 +9,30 @@ class SkilltreesController extends Controller
 {
     public function index()
     {
-        $skilltrees = Skilltree::all();
+        $skilltrees = auth()->user()->accessibleSkilltrees();
         return view('skilltrees.index', compact('skilltrees'));
     }
 
     public function store()
     {
-/*        request()->validate([
-            'title' => 'required',
-            'description' => 'required'
-        ]);
+        $skilltree = auth()->user()->skilltrees()->create($this->validateRequest());
 
-        Skilltree::create(request(['title', 'description'])); */
-        Skilltree::create($this->validateRequest());
-
-        return redirect('/skilltrees');
+        return redirect($skilltree->path());
     }
 
     public function show(Skilltree $skilltree)
     {
         return view('skilltrees.show', compact('skilltree'));
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('skilltrees.create');
     }
 
     protected function validateRequest()

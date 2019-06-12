@@ -17,4 +17,21 @@ class SkilltreeTest extends TestCase
 
         $this->assertEquals('/skilltrees/' .  $skilltree->id, $skilltree->path());
     }
+
+    /** @test **/
+    public function it_belongs_to_an_owner()
+    {
+        $skilltree = factory('App\Skilltree')->create();
+        $this->assertInstanceOf('App\User', $skilltree->owner);
+    }
+
+    /** @test **/
+    function it_can_add_a_skill()
+    {
+        $skilltree = factory('App\Skilltree')->create();
+        $skill = $skilltree->addSkill('Test skill');
+
+        $this->assertCount(1, $skilltree->skills);
+        $this->assertTrue($skilltree->skills->contains($skill));
+    }
 }
