@@ -1,21 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row py-2">
-        <section class="col-lg-8 py-2">
-
-        </section>
-        <section class="col-lg-4 py-2">
-            <div class="card shadow-sm bg-white rounded float-lg-right w-100" >
-                <div class="card-body">
-                    <h5 class="card-title border-bottom"><a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a></h5>
-                    <p class="card-text text-muted">{{ str_limit($skilltree->description, 150) }}</p>
-                </div>
+    <dashbar>
+        <template v-slot:trigger>
+            <i class="material-icons">dashboard</i>
+        </template>
+        <template v-slot:add>
+                <i class="material-icons">add</i>
+        </template>
+        <div class="card shadow-sm bg-white">
+            <div class="card-header d-flex justify-content-between align-items-baseline">
+                <h5 class="text-uppercase"><a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a></h5>
+                <button type="button" class="close" aria-label="Close" id="dashbarclose">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            @can('manage', $skilltree)
 
-            @endcan
-        </section>
+
+            <div class="card-body">
+                <p class="card-text">{{ str_limit($skilltree->description, 150) }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                @can('manage', $skilltree)
+                    @include("skilltrees.invite")
+                @endcan
+                @include("skilltrees.activity.card")
+            </ul>
+        </div>
+    </dashbar>
+    <div>
 
     </div>
 @endsection

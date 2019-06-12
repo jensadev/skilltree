@@ -21,7 +21,7 @@ class ManageSkilltreesTest extends TestCase
         $this->followingRedirects()
             ->post('/skilltrees', $attributes = factory(Skilltree::class)->raw())
             ->assertSee($attributes['title'])
-            ->assertSee($attributes['description']);
+            ->assertSee(str_limit($attributes['description'], 150));
     }
 
     /** @test */
@@ -32,7 +32,7 @@ class ManageSkilltreesTest extends TestCase
         $this->actingAs($skilltree->owner)
             ->get($skilltree->path())
             ->assertSee($skilltree->title)
-            ->assertSee($skilltree->description);
+            ->assertSee(str_limit($skilltree->description, 150));
     }
 
     /**  @test */

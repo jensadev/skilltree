@@ -37,3 +37,38 @@ $cards-per-line: (
 .textcheck {
     background-color: white !important;
 }
+
+.skilltree {
+    background:url(
+        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAHElEQVQoU2P88OHDfwYCgBGkSEBAgBGfulFFDABtzCPZKslCrgAAAABJRU5ErkJggg==
+        ) repeat;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.dashbar {
+    right: 0.2rem;
+    top: 3.8rem;
+}
+.dashbaricon {
+    color: darken($blue, 15%);
+    background-color: transparent;
+    border: 0;
+}
+.dashbaricon:focus {
+    box-shadow: none;
+}
+
+.dashbar-content {
+
+}
+
+#dropzone {
+
+}
+
+h5 {
+    font-weight: 600;
+}
