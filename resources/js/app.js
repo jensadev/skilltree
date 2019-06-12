@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashbar', require('./components/Dashbar.vue').default);
+Vue.component('skillcard', require('./components/Skillcard.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

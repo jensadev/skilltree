@@ -72,3 +72,9 @@ $cards-per-line: (
 h5 {
     font-weight: 600;
 }
+
+.line {
+    position:absolute;
+    border: 1px $light dashed;
+    z-index: -1;
+}

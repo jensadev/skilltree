@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    closebar(e) {
+    closebar() {
       this.isOpen = false;
     }
   }

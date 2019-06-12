@@ -28,7 +28,17 @@
             </ul>
         </div>
     </dashbar>
-    <div>
+    <section id="dropzone">
+        @foreach ($skilltree->skills as $skill)
+            <skillcard v-key="index" title="{{ $skill->title }}" description="{{ $skill->description }}">
 
+            </skillcard>
+
+        @endforeach
+
+    <skillcard description="fnas">
+    </skillcard>
+    <skillcard title="bus" description="fnas">
+    </skillcard>
     </div>
 @endsection
