@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <ul class="list-group">
+@extends('layouts.app')
+@section('content')
+    <header class="d-flex py-2 justify-content-between">
+        <h2 class="h3 text-muted">My Skilltrees</h2>
+        <a href="/skilltrees/create" class="btn btn-primary" role="button">Add Skilltree</a>
+    </header>
+    <section class="card-deck">
         @forelse ($skilltrees as $skilltree)
-            <li class="list-group-item">
-                <a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a>
-            </li>
+            @include('skilltrees.card')
         @empty
-            <li>No skilltrees yet.</li>
+            <div class="card shadow-sm bg-white rounded my-2" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">No Skilltrees yet.</h5>
+                </div>
+            </div>
         @endforelse
-    </ul>
-</body>
-</html>
+    </section>
+@endsection

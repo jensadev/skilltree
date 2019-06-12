@@ -22,6 +22,7 @@ class SkilltreesController extends Controller
 
     public function show(Skilltree $skilltree)
     {
+        $this->authorize('update', $skilltree);
         return view('skilltrees.show', compact('skilltree'));
     }
 

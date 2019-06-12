@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Skilltree;
 use Facades\Tests\Setup\SkilltreeFactory;
 
-class SkilltreesTest extends TestCase
+class ManageSkilltreesTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
@@ -35,6 +35,14 @@ class SkilltreesTest extends TestCase
             ->assertSee($skilltree->description);
     }
 
+    /**  @test */
+    function an_authenticated_user_cannot_view_the_skilltrees_of_others()
+    {
+        $this->signIn();
+        $skilltree = SkilltreeFactory::create();
+        $this->get($skilltree->path())->assertStatus(403);
+    }
+
     /** @test */
     function only_authenticated_users_can_create_skilltrees()
     {
@@ -49,10 +57,14 @@ class SkilltreesTest extends TestCase
     }
 
     /** @test */
-    function guests()
+    function unauthorized_users_cannot_manage_skilltrees()
     {
         $skilltree = factory('App\Skilltree')->create();
         $this->get($skilltree->path())->assertRedirect('/login');
+        $this->get('/skilltrees')->assertRedirect('/login');
+        $this->get('/skilltrees/create')->assertRedirect('/login');
+        $this->get($skilltree->path() . '/edit')->assertRedirect('/login');
+        $this->post('/skilltrees', $skilltree->toArray())->assertRedirect('/login');
     }
 
     /** @test */
