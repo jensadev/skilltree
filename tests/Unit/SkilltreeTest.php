@@ -33,4 +33,14 @@ class SkilltreeTest extends TestCase
         $this->assertCount(1, $skilltree->skills);
         $this->assertTrue($skilltree->skills->contains($skill));
     }
+
+    /** @test **/
+    function it_can_invite_a_user()
+    {
+        $skilltree = factory('App\Skilltree')->create();
+
+        $skilltree->invite($user = factory(User::class)->create());
+
+        $this->assertTrue($skilltree->members->contains($user));
+    }
 }

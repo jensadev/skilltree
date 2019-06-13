@@ -35,12 +35,35 @@ class ManageSkilltreesTest extends TestCase
             ->assertSee(str_limit($skilltree->description, 150));
     }
 
+    /** @test **/
+    public function a_user_can_delete_a_skilltree()
+    {
+        //$this->withoutExceptionHandling();
+        $this->signIn();
+
+        $skilltree = SkilltreeFactory::create();
+
+        $this->actingAs($skilltree->owner)
+            ->delete($skilltree->path())
+            ->assertRedirect('/skilltrees');
+
+        $this->assertDatabaseMissing('skilltrees', $skilltree->only('id'));
+    }
+
     /**  @test */
     function an_authenticated_user_cannot_view_the_skilltrees_of_others()
     {
         $this->signIn();
         $skilltree = SkilltreeFactory::create();
         $this->get($skilltree->path())->assertStatus(403);
+    }
+
+    /** @test **/
+    function an_authenticated_user_cannot_update_the_skilltrees_of_others()
+    {
+        $this->signIn();
+        $skilltree = SkilltreeFactory::create();
+        $this->patch($skilltree->path())->assertStatus(403);
     }
 
     /** @test */
@@ -81,5 +104,28 @@ class ManageSkilltreesTest extends TestCase
         $this->signIn();
         $attributes = factory('App\Skilltree')->raw(['description' => '']);
         $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
+    }
+
+    /** @test **/
+    function unauthorized_users_cannot_delete_skilltrees()
+    {
+        $skilltree = SkilltreeFactory::create();
+        $this->delete($skilltree->path())
+            ->assertRedirect('/login');
+
+        $user = $this->signIn();
+        $this->delete($skilltree->path())
+            ->assertStatus(403);
+    
+        $skilltree->invite($user);
+        $this->actingAs($user)->delete($skilltree->path())->assertStatus(403);
+    }
+
+    /** @test **/
+    public function a_user_can_see_all_skilltrees_they_have_been_invited_to_on_their_dashboard()
+    {
+        $skilltree = tap(SkilltreeFactory::create())->invite($this->signIn()); // tap ensures we get a return value
+
+        $this->get('/skilltrees')->assertSee($skilltree->title);
     }
 }

@@ -10,9 +10,13 @@ use App\Skilltree;
 
 class Skill extends Model
 {
-    use Metable;
+    use RecordsActivity;
 
     protected $guarded = [];
+
+    protected $touches = ['skilltree'];
+
+    protected static $recordableEvents = ['created', 'deleted'];
 
     public function skilltree()
     {

@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use App\Skills;
+use App\Skill;
+use App\Activity;
 
 class Skilltree extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
     public function path()
@@ -28,5 +31,25 @@ class Skilltree extends Model
     public function addSkill($title)
     {
         return $this->skills()->create(compact('title'));
+    }
+
+    public function addSkills($skills)
+    {
+        return $this->skills()->createMany($skills);
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class)->latest();
+    }
+
+    public function invite(User $user)
+    {
+        return $this->members()->attach($user);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps();
     }
 }
