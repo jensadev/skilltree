@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSkillsTable extends Migration
+class CreateSkilltreeMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateSkillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('skills', function (Blueprint $table) {
+        Schema::create('skilltree_members', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('skilltree_id');
-            $table->string('title');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            //$table->index(['skilltree_id']); //, 'category_id']);
-            $table->foreign('skilltree_id')->references('id')->on('skilltrees')->onDelete('cascade');
+            $table->index(['skilltree_id', 'user_id']);
         });
     }
 
@@ -31,6 +30,6 @@ class CreateSkillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skills');
+        Schema::dropIfExists('skilltree_members');
     }
 }

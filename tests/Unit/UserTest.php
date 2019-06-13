@@ -23,6 +23,8 @@ class UserTest extends TestCase
     /** @test **/
     public function a_user_has_accessible_skilltrees()
     {
+        $this->withoutExceptionHandling();
+
         $john = $this->signIn();
 
         SkilltreeFactory::ownedBy($john)->create();
@@ -34,10 +36,10 @@ class UserTest extends TestCase
 
         $skilltree = tap(SkilltreeFactory::ownedBy($sally)->create())->invite($nick);
 
-        $this->assertCount(1, $john->accessibleProjects());
+        $this->assertCount(1, $john->accessibleSkilltrees());
 
-        $project->invite($john);
+        $skilltree->invite($john);
 
-        $this->assertCount(2, $john->accessibleProjects());
+        $this->assertCount(2, $john->accessibleSkilltrees());
     }
 }

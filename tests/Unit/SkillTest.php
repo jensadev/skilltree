@@ -10,6 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SkillTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /** @test */
     function it_belongs_to_a_skilltree()
     {

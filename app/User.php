@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Skilltree;
 
 class User extends Authenticatable
 {
@@ -45,14 +46,10 @@ class User extends Authenticatable
     public function accessibleSkilltrees()
     {
         return Skilltree::where('owner_id', $this->id)
+            ->orWhereHas('members', function ($query) {
+                $query->where('user_id', $this->id);
+            })
             ->latest('updated_at')
             ->get();
     }
 }
-
-
-/*
-            ->orWhereHas('members', function ($query) {
-                $query->where('user_id', $this->id);
-            })
-            */
