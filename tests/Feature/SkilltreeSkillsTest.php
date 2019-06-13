@@ -12,6 +12,13 @@ class SkilltreeSkillsTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @test **/
+    public function guests_cannot_add_skills_to_skilltrees()
+    {
+        $skilltree = factory('App\Skilltree')->create();
+        $this->post($skilltree->path() . '/skills')->assertRedirect('login');
+    }
+
     /** @test */
     function a_skilltree_can_have_skills()
     {
@@ -48,6 +55,19 @@ class SkilltreeSkillsTest extends TestCase
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('skills', ['title' => 'Test skill']);
+    }
+
+    /** @test **/
+    public function only_the_owner_of_a_skilltree_may_update_a_skill()
+    {
+        $this->signIn();
+
+        $skilltree = SkilltreeFactory::withSkills(1)->create();
+
+        $this->patch($skilltree->skills[0]->path(), ['title' => 'changed'])
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('skills', ['title' => 'changed']);
     }
 
     /** @test **/
