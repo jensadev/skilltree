@@ -1859,14 +1859,17 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     isOpen: function isOpen(_isOpen) {
       if (_isOpen) {
-        document.getElementById("addskillclose").addEventListener("click", this.closebar);
+        document.addEventListener("click", this.closeIfClickedOutside);
         document.getElementById("title").autofocus = true;
       }
     }
   },
   methods: {
-    closebar: function closebar() {
-      this.isOpen = false;
+    closeIfClickedOutside: function closeIfClickedOutside(event) {
+      if (!event.target.closest(".addskill")) {
+        this.isOpen = false;
+        document.removeEventListener("click", this.closeIfClickedOutside);
+      }
     }
   }
 });
@@ -1936,13 +1939,16 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     isOpen: function isOpen(_isOpen) {
       if (_isOpen) {
-        document.getElementById("sidebarclose").addEventListener("click", this.closebar);
+        document.addEventListener("click", this.closeIfClickedOutside);
       }
     }
   },
   methods: {
-    closebar: function closebar() {
-      this.isOpen = false;
+    closeIfClickedOutside: function closeIfClickedOutside(event) {
+      if (!event.target.closest(".sidebar")) {
+        this.isOpen = false;
+        document.removeEventListener("click", this.closeIfClickedOutside);
+      }
     }
   }
 });

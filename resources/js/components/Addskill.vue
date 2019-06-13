@@ -20,16 +20,17 @@ export default {
   watch: {
     isOpen(isOpen) {
       if (isOpen) {
-        document
-          .getElementById("addskillclose")
-          .addEventListener("click", this.closebar);
+        document.addEventListener("click", this.closeIfClickedOutside);
         document.getElementById("title").autofocus = true;
       }
     }
   },
   methods: {
-    closebar() {
-      this.isOpen = false;
+    closeIfClickedOutside(event) {
+      if (!event.target.closest(".addskill")) {
+        this.isOpen = false;
+        document.removeEventListener("click", this.closeIfClickedOutside);
+      }
     }
   }
 };

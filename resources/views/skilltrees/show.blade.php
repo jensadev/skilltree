@@ -7,19 +7,13 @@
                 <i class="material-icons">add</i>
             </template>
             <div class="card shadow-sm bg-white">
-                <div class="card-header d-flex justify-content-between">
-                    <h5>Add a skill</h5>
-                    <button type="button" class="close" aria-label="Close" id="addskillclose">
-                        <i class="material-icons">close</i>
-                    </button>
-                </div>
                 <div class="card-body">
                     <form action="{{ $skilltree->path() . '/skills'}}" method="post">
                             @csrf
                             <div class="input-group">
                                 <input type="text" class="form-control" name="title" id="title" placeholder="Add a skill" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="submit">Create</button>
+                                    <button class="btn btn-outline-secondary" type="submit">Create skill</button>
                                 </div>
                             </div>
                         </form>
@@ -33,9 +27,9 @@
             <div class="card shadow-sm bg-white">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="text-uppercase"><a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a></h5>
-                    <button type="button" class="close" aria-label="Close" id="sidebarclose">
-                        <i class="material-icons">close</i>
-                    </button>
+                    <a class="close" href="{{ $skilltree->path() . '/edit'}}">
+                        <i class="material-icons">edit</i>
+                    </a>
                 </div>
 
 

@@ -29,7 +29,7 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 @else
-                    <span class="navbar-brand"><a  href="{{ url('/skilltrees') }}">My Skilltrees</a>
+                    <span class="navbar-brand"><a  href="{{ url('/skilltrees') }}">Skilltrees</a>
                         @isset($skilltree)
                              / {{ $skilltree->title }}
                         @endisset

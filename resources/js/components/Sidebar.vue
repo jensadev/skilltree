@@ -20,15 +20,16 @@ export default {
   watch: {
     isOpen(isOpen) {
       if (isOpen) {
-        document
-          .getElementById("sidebarclose")
-          .addEventListener("click", this.closebar);
+        document.addEventListener("click", this.closeIfClickedOutside);
       }
     }
   },
   methods: {
-    closebar() {
-      this.isOpen = false;
+    closeIfClickedOutside(event) {
+      if (!event.target.closest(".sidebar")) {
+        this.isOpen = false;
+        document.removeEventListener("click", this.closeIfClickedOutside);
+      }
     }
   }
 };

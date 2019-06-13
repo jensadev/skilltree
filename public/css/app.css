@@ -10714,3 +10714,8 @@ h5 {
   z-index: -1;
 }
 
+.btn-less {
+  border: 0;
+  background-color: transparent;
+}
+

@@ -76,3 +76,8 @@ h5 {
     border: 1px $light dashed;
     z-index: -1;
 }
+
+.btn-less {
+    border: 0;
+    background-color: transparent;
+}

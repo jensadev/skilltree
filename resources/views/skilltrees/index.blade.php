@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <header class="d-flex py-2 justify-content-between">
-        <h2 class="h3 text-muted">My Skilltrees</h2>
+        <h2 class="h3 text-muted">Skilltrees</h2>
         <a href="/skilltrees/create" class="btn btn-primary" role="button">Add Skilltree</a>
     </header>
     <section class="card-deck">
