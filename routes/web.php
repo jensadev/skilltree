@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('skilltrees', 'SkilltreesController');
     Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
-    Route::patch('/projects/{project}/skills/{skill}', 'ProjectTasksController@update');
+    Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
 });
 
 

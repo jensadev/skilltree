@@ -24,6 +24,21 @@ class SkilltreeSkillsTest extends TestCase
             ->assertSee('Test skill');
     }
 
+    /** @test */
+    function a_skill_can_be_updated()
+    {
+        $skilltree = SkilltreeFactory::withSkills(1)->create();
+
+        $this->actingAs($skilltree->owner)
+            ->patch($skilltree->skills[0]->path(), [
+                'title' => 'changed'
+            ]);
+
+        $this->assertDatabaseHas('skills', [
+            'title' => 'changed'
+        ]);
+    }
+
     /** @test **/
     function only_the_owner_of_a_skilltree_may_add_skills()
     {
