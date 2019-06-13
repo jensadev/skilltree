@@ -25,8 +25,8 @@ class Skilltree extends Model
         return $this->hasMany(Skill::class);
     }
 
-    public function addSkill($name)
+    public function addSkill($title)
     {
-        return $this->skills()->create(compact('name'));
+        return $this->skills()->create(compact('title'));
     }
 }

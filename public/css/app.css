@@ -10681,6 +10681,7 @@ a.text-dark:focus {
 }
 
 .skilltree {
+  /* http://www.patternify.com/ */
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAHElEQVQoU2P88OHDfwYCgBGkSEBAgBGfulFFDABtzCPZKslCrgAAAABJRU5ErkJggg==) repeat;
 }
 

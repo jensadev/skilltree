@@ -1,14 +1,11 @@
 <template>
-  <div class="dashbar position-absolute d-flex w-100 justify-content-end">
+  <div class="addskill">
     <!-- trigger -->
-    <button class="dashbaricon btn">
-      <slot name="add"></slot>
-    </button>
     <button class="dashbaricon btn" @click="isOpen = !isOpen">
       <slot name="trigger"></slot>
     </button>
     <!-- content -->
-    <div v-show="isOpen" class="dashbar-content position-absolute w-25">
+    <div v-show="isOpen" class="addskill-content position-absolute w-50">
       <slot></slot>
     </div>
   </div>
@@ -24,8 +21,9 @@ export default {
     isOpen(isOpen) {
       if (isOpen) {
         document
-          .getElementById("dashbarclose")
+          .getElementById("addskillclose")
           .addEventListener("click", this.closebar);
+        document.getElementById("title").autofocus = true;
       }
     }
   },
@@ -36,3 +34,10 @@ export default {
   }
 };
 </script>
+<style>
+.addskill-content {
+  right: 0.2rem;
+  top: 0.6rem;
+  z-index: 5;
+}
+</style>

@@ -17,10 +17,19 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('skilltrees', 'SkilltreesController');
-
+    Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
+    Route::patch('/projects/{project}/skills/{skill}', 'ProjectTasksController@update');
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
+
+Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')
+    ->name('login.provider')
+    ->where('driver', implode('|', config('auth.socialite.drivers')));
+
+Route::get('{driver}/callback', 'Auth\LoginController@handleProviderCallback')
+    ->name('login.callback')
+    ->where('driver', implode('|', config('auth.socialite.drivers')));
 
 Route::get('/home', 'HomeController@index')->name('home');

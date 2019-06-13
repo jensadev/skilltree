@@ -15,7 +15,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_user_can_create_a_skilltree()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $this->signIn();
         $this->get('/skilltrees/create')->assertStatus(200);
         $this->followingRedirects()

@@ -39,6 +39,7 @@ $cards-per-line: (
 }
 
 .skilltree {
+    /* http://www.patternify.com/ */
     background:url(
         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAHElEQVQoU2P88OHDfwYCgBGkSEBAgBGfulFFDABtzCPZKslCrgAAAABJRU5ErkJggg==
         ) repeat;
@@ -61,9 +62,6 @@ $cards-per-line: (
     box-shadow: none;
 }
 
-.dashbar-content {
-
-}
 
 #dropzone {
 

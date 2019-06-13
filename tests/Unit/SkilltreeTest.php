@@ -14,7 +14,6 @@ class SkilltreeTest extends TestCase
     function it_has_a_path()
     {
         $skilltree = factory('App\Skilltree')->create();
-
         $this->assertEquals('/skilltrees/' .  $skilltree->id, $skilltree->path());
     }
 

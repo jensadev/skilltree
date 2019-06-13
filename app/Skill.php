@@ -6,12 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Appstract\Meta\Metable;
 use App\User;
 use App\Skills;
+use App\Skilltree;
 
 class Skill extends Model
 {
     use Metable;
 
     protected $guarded = [];
+
+    public function skilltree()
+    {
+        return $this->belongsTo(Skilltree::class);
+    }
+
+    public function path()
+    {
+        return "/skilltrees/{$this->skilltree->id}/skills/{$this->id}";
+    }
 }
 
 
