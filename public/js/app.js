@@ -38257,7 +38257,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "dropzone" },
     [
       _vm._l(_vm.skilltree, function(skill, index) {
         return _c(

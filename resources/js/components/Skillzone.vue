@@ -1,5 +1,5 @@
 <template>
-  <section class="dropzone">
+  <section>
     <div
       class="card skillcard"
       draggable="true"

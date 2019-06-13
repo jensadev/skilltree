@@ -24,17 +24,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                @guest
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
-                @else
-                    <span class="navbar-brand"><a  href="{{ url('/skilltrees') }}">Skilltrees</a>
-                        @isset($skilltree)
-                             / {{ $skilltree->title }}
-                        @endisset
-                    </span>
-                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -97,8 +89,7 @@
                 </div>
             </div>
         </nav>
-
-        <main class="container py-2">
+        <main class="container py-2 {{ Request::is('skilltrees/*') ? 'dropzone' : '' }}">
             @yield('content')
         </main>
     </div>
