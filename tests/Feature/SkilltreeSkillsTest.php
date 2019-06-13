@@ -13,15 +13,15 @@ class SkilltreeSkillsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function a_skilltree_can_have_skillgroups()
+    function a_skilltree_can_have_skills()
     {
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)
-            ->post($skilltree->path() . '/skillgroups', ['title' => 'Test skillgroups']);
+            ->post($skilltree->path() . '/skills', ['title' => 'Test skill']);
 
         $this->get($skilltree->path())
-            ->assertSee('Test skillgroups');
+            ->assertSee('Test skill');
     }
 
     /** @test **/
@@ -29,10 +29,10 @@ class SkilltreeSkillsTest extends TestCase
     {
         $this->signIn();
         $skilltree = factory('App\Skilltree')->create();
-        $this->post($skilltree->path() . '/skillgroups', ['title' => 'Test skillgroups'])
+        $this->post($skilltree->path() . '/skills', ['title' => 'Test skill'])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('skills', ['title' => 'Test skillgroups']);
+        $this->assertDatabaseMissing('skills', ['title' => 'Test skill']);
     }
 
     /** @test **/
@@ -43,17 +43,6 @@ class SkilltreeSkillsTest extends TestCase
         $attributes = factory('App\Skill')->raw(['title' => '']);
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/skills', $attributes)
-            ->assertSessionHasErrors('title');
-    }
-
-    /** @test **/
-    function a_skillgroup_requires_a_title()
-    {
-        $skilltree = SkilltreeFactory::create();
-
-        $attributes = factory('App\Skillgroup')->raw(['title' => '']);
-        $this->actingAs($skilltree->owner)
-            ->post($skilltree->path() . '/skillgroups', $attributes)
             ->assertSessionHasErrors('title');
     }
 }
