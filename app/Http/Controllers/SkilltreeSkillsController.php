@@ -8,11 +8,17 @@ use App\Skill;
 
 class SkilltreeSkillsController extends Controller
 {
+
     public function store(Skilltree $skilltree)
     {
         $this->authorize('update', $skilltree);
-        request()->validate(['title' => 'required|min:3']);
+        $request = request()->validate(['title' => 'required|min:3']);
         $skilltree->addSkill(request('title'));
+/*        $id = $skilltree->addSkill(request('title'))->id;
+        $skill = Skill::find($id);
+        $skill->addMeta('left', rand(200, 800));
+        $skill->addMeta('top', rand(200,800));
+        */
         return redirect($skilltree->path());
     }
 

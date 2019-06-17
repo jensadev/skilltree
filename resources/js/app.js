@@ -25,7 +25,7 @@ Vue.use(VModal);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sidebar', require('./components/Sidebar.vue').default);
 Vue.component('addskill', require('./components/Addskill.vue').default);
-Vue.component('skillcard', require('./components/Skillcard.vue').default);
+//Vue.component('skillcard', require('./components/Skillcard.vue').default);
 Vue.component('skillzone', require('./components/Skillzone.vue').default);
 
 /**

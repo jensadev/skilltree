@@ -68,6 +68,6 @@ class TriggerActivityTest extends TestCase
 
         $skilltree->skills[0]->delete();
 
-        $this->assertCount(3, $project->activity);
+        $this->assertCount(3, $skilltree->activity);
     }
 }

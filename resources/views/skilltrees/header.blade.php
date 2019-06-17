@@ -4,7 +4,7 @@
                 / {{ $skilltree->title }}
             @endif
         </h1>
-        @if(Request::is('skilltrees'))
+        @if(Request::is('/*'))
             <a href="/skilltrees/create" class="btn btn-less" role="button">
                 <i class="material-icons">add</i>
             </a>

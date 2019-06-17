@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Skill;
 use App\Skilltree;
+use Appstract\Meta\Metable;
 
 class Skill extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Metable;
 
     protected $guarded = [];
 
