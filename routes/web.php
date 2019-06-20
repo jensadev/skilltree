@@ -12,11 +12,13 @@
  */
 
 Route::group(
-    ['middleware' => 'auth'], function () {
+    ['middleware' => 'auth'],
+    function () {
         Route::get('/', 'SkilltreesController@index');
         Route::resource('skilltrees', 'SkilltreesController');
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
+        Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
     }
 );
 

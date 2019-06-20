@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Facades\Tests\Setup\SkilltreeFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Skill;
 
 class TriggerActivityTest extends TestCase
 {
@@ -54,17 +55,17 @@ class TriggerActivityTest extends TestCase
         $skilltree = SkilltreeFactory::create();
         $skilltree->addSkill('Some skill');
         $this->assertCount(2, $skilltree->activity);
-        tap($skilltree->activity->last(), function($activity) {
+        tap($skilltree->activity->last(), function ($activity) {
             $this->assertEquals('created_skill', $activity->description);
             $this->assertInstanceOf(Skill::class, $activity->subject);
-            $this->assertEquals('Some skill', $activity->subject->body);
+            $this->assertEquals('Some skill', $activity->subject->title);
         });
     }
 
     /** @test **/
     function deleting_a_skill()
     {
-        $skilltree = SkilltreeFactory::withSkills(1)->create() ;
+        $skilltree = SkilltreeFactory::withSkills(1)->create();
 
         $skilltree->skills[0]->delete();
 

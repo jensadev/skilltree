@@ -35,7 +35,6 @@ class InvitationsTest extends TestCase
     /** @test **/
     public function a_skilltree_owner_can_invite_a_user()
     {
-        //$this->withoutExceptionHandling();
         $skilltree = SkilltreeFactory::create();
 
         $userToInvite = factory(User::class)->create();
@@ -68,8 +67,8 @@ class InvitationsTest extends TestCase
     /** @test **/
     public function invited_users_may_update_skilltree_details()
     {
-        //$this->withoutExceptionHandling();
-        // project has owner
+        $this->withoutExceptionHandling();
+        // skilltree has owner
         $skilltree = SkilltreeFactory::create();
 
         // onwer can invite users
