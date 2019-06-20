@@ -6,13 +6,13 @@
         </h1>
         @if(Request::is('/*'))
             <a href="/skilltrees/create" class="btn btn-less" role="button">
-                <i class="material-icons">add</i>
+                <i class="material-icons">add_circle_outline</i>
             </a>
         @endif
 @if(Request::is('skilltrees/*'))
     <addskill>
         <template v-slot:trigger>
-            <i class="material-icons">add</i>
+            <i class="material-icons">add_circle_outline</i>
         </template>
         <div class="card shadow-sm bg-white">
             <div class="card-body">
@@ -20,9 +20,12 @@
                         @csrf
                         <div class="input-group">
                             <input type="text" class="form-control" name="title" id="title" placeholder="Add a skill" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="submit">Create skill</button>
-                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Skill group">
+                        </div>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="submit">Create skill</button>
                         </div>
                     </form>
             </div>
