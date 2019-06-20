@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     You are logged in!
+                    {{ auth()->user()->teacher }}
                 </div>
             </div>
         </div>

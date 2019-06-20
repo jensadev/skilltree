@@ -21,7 +21,7 @@ $factory->define(\App\User::class, function (Faker $faker) {
     $userName = $faker->userName;
     $uniqueSuffix = $faker->unique()->word;
 
-    if (rand(0, 1) % 1) {
+    if (rand(0, 1) % 2) {
         $domain = 'ga.ntig.se';
     } else {
         $domain = 'elev.ga.ntig.se';

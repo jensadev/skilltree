@@ -3,6 +3,8 @@
         @csrf
         <div class="input-group">
             <input
+                id="email"
+                name="email"
                 type="text"
                 class="form-control"
                 placeholder="Email address"

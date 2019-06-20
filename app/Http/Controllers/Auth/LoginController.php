@@ -67,9 +67,17 @@ class LoginController extends Controller
         if ($existingUser) {
             auth()->login($existingUser, true);
         } else {
+
+            $findme   = 'elev';
+            $pos = strpos($user->getEmail(), $findme);
+
+
             $newUser                    = new User;
             $newUser->provider_name     = $driver;
             $newUser->provider_id       = $user->getId();
+            if ($pos === false) {
+                $newUser->teacher           = true;
+            }
             $newUser->name              = $user->getName();
             $newUser->email             = $user->getEmail();
             $newUser->email_verified_at = now();
