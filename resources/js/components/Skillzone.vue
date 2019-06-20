@@ -1,5 +1,5 @@
 <template>
-  <section id="dropzone">
+  <section class="dropzone" id="dropzone">
     <skillcard
       v-for="(skill, index) in skills"
       :key="index"
@@ -29,9 +29,9 @@ export default {
       zone.addEventListener(
         "drag",
         function(e) {
-          console.log(e.target);
           e.target.top = e.y + "px";
           e.target.left = e.x + "px";
+          console.log(e.target.top);
         },
         false
       );
@@ -40,7 +40,7 @@ export default {
         "dragstart",
         function(e) {
           // store a ref. on the dragged elem
-          dragged = e.target;
+          this.dragged = e.target;
           // make it half transparent
           e.target.style.opacity = 0.5;
         },
@@ -77,11 +77,13 @@ export default {
         function(e) {
           // prevent default action (open as link for some elements)
           e.preventDefault();
+          console.log("drop");
           // move dragged elem to the selected drop target
           if (e.target.className == "dropzone") {
+            console.log("fire");
             e.target.style.background = "";
-            dragged.parentNode.removeChild(dragged);
-            e.target.appendChild(dragged);
+            this.dragged.parentNode.removeChild(this.dragged);
+            e.target.appendChild(this.dragged);
           }
         },
         false

@@ -2029,13 +2029,13 @@ __webpack_require__.r(__webpack_exports__);
       /* events fired on the draggable target */
 
       zone.addEventListener("drag", function (e) {
-        console.log(e.target);
         e.target.top = e.y + "px";
         e.target.left = e.x + "px";
+        console.log(e.target.top);
       }, false);
       zone.addEventListener("dragstart", function (e) {
         // store a ref. on the dragged elem
-        dragged = e.target; // make it half transparent
+        this.dragged = e.target; // make it half transparent
 
         e.target.style.opacity = 0.5;
       }, false);
@@ -2055,12 +2055,14 @@ __webpack_require__.r(__webpack_exports__);
       zone.addEventListener("dragleave", function (e) {}, false);
       zone.addEventListener("drop", function (e) {
         // prevent default action (open as link for some elements)
-        e.preventDefault(); // move dragged elem to the selected drop target
+        e.preventDefault();
+        console.log("drop"); // move dragged elem to the selected drop target
 
         if (e.target.className == "dropzone") {
+          console.log("fire");
           e.target.style.background = "";
-          dragged.parentNode.removeChild(dragged);
-          e.target.appendChild(dragged);
+          this.dragged.parentNode.removeChild(this.dragged);
+          e.target.appendChild(this.dragged);
         }
       }, false);
     }
@@ -38310,7 +38312,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { attrs: { id: "dropzone" } },
+    { staticClass: "dropzone", attrs: { id: "dropzone" } },
     _vm._l(_vm.skills, function(skill, index) {
       return _c("skillcard", {
         key: index,
