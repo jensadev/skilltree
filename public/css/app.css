@@ -10719,3 +10719,7 @@ h5 {
   background-color: transparent;
 }
 
+.btn-less:focus {
+  box-shadow: none;
+}
+
