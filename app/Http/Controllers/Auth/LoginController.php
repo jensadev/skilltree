@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use App\User;
+use Google_Client;
+use Google_Service_Classroom;
 
 class LoginController extends Controller
 {
@@ -46,7 +48,9 @@ class LoginController extends Controller
      */
     public function redirectToProvider($driver)
     {
-        return Socialite::driver($driver)->redirect();
+        return Socialite::driver('google')
+            ->scopes(['openid', 'profile', 'email', Google_Service_Classroom::CLASSROOM_COURSES])
+            ->redirect();
     }
 
     /**
@@ -61,23 +65,38 @@ class LoginController extends Controller
         } catch (Exception $e) {
             return redirect()->route('login');
         }
-
+        // Set token for the Google API PHP Client
+        $google_client_token = [
+            'access_token' => $user->token,
+            'refresh_token' => $user->refreshToken,
+            'expires_in' => $user->expiresIn
+        ];
+        /*
+        $client = new Google_Client();
+        $client->setApplicationName('Skilltree');
+        $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES);
+        $client->setAccessToken($google_client_token);
+        $service = new Google_Service_Classroom($client);
+        dd($service->courses->listCourses());
+*/
         $existingUser = User::where('email', $user->getEmail())->first();
 
         if ($existingUser) {
+            $attributes = [
+                'g_token' => json_encode($google_client_token)
+            ];
+            $existingUser->update($attributes);
             auth()->login($existingUser, true);
         } else {
 
             $findme   = 'elev';
             $pos = strpos($user->getEmail(), $findme);
 
-
             $newUser                    = new User;
             $newUser->provider_name     = $driver;
             $newUser->provider_id       = $user->getId();
-            if ($pos === false) {
-                $newUser->teacher           = true;
-            }
+            $newUser->teacher           = $pos === false ? true : false;
+            $newUser->g_token           = json_encode($google_client_token);
             $newUser->name              = $user->getName();
             $newUser->email             = $user->getEmail();
             $newUser->email_verified_at = now();
@@ -86,7 +105,6 @@ class LoginController extends Controller
 
             auth()->login($newUser, true);
         }
-
         return redirect($this->redirectPath());
     }
 }

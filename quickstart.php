@@ -13,7 +13,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Classroom API PHP Quickstart');
-    $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES_READONLY);
+    $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES);
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
