@@ -14,14 +14,14 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     /** @test **/
-     function a_user_has_skilltrees()
+    function a_user_has_skilltrees()
     {
         $user = factory('App\User')->create();
         $this->assertInstanceOf(Collection::class, $user->skilltrees);
     }
 
     /** @test **/
-    public function a_user_has_accessible_skilltrees()
+    function a_user_has_accessible_skilltrees()
     {
         $this->withoutExceptionHandling();
 
@@ -41,5 +41,14 @@ class UserTest extends TestCase
         $skilltree->invite($john);
 
         $this->assertCount(2, $john->accessibleSkilltrees());
+    }
+
+    /** @test */
+    function teacher_status_is_decided_by_email_at_creation()
+    {
+        //$this->withoutExceptionHandling();
+        $user = factory('App\User')->create();
+        $pos = strpos($user['email'], 'elev');
+        $this->assertEquals($user['teacher'], $pos === false  ? true : false);
     }
 }

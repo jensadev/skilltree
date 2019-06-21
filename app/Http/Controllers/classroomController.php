@@ -3,43 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Socialite;
 use Google_Client;
 use Google_Service_Classroom;
-use Google_Service_Drive;
 use Illuminate\Http\Request;
 
-class classroomController extends Controller
+class ClassroomController extends Controller
 {
-    public function test()
+    protected $service;
+    protected $client;
+    protected $optParams;
+
+    public function __construct()
+    {
+        $this->optParams = [
+            'courseStates' => 'ACTIVE',
+            'teacherId' => `"me" `
+        ];
+    }
+
+    public function getCourses()
     {
         $user = Auth::user();
-        $client = new Google_Client();
-        $client->setApplicationName('Skilltree');
-        //$client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES);
-        //$client->addScope(['https://www.googleapis.com/auth/classroom.courses']);
-        $client->setAuthConfig('../credentials.json');
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
-        $client->setAccessToken($user->g_token);
+        $this->client = new Google_Client();
+        $this->client->setApplicationName('Skilltree');
+        $this->client->setAuthConfig('../credentials.json');
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->client->setAccessToken($user->g_token);
 
-        $service = new Google_Service_Classroom($client);
-        //dd($service->courses->listCourses());
-        $optParams = [
-            'courseStates' => 'ACTIVE',
-            'teacherId' => `"me"`
-        ];
-        $results = $service->courses->listCourses();
+        $this->service = new Google_Service_Classroom($this->client);
 
-        $courses = [];
-        //return $results->getCourses();
-        foreach ($results->getCourses() as $course) {
-            //var_dump(json_encode($course));
-            //            $id = $course->getId();
-            //            echo $course->listCoursestopics($id);
-            array_push($courses, $course);
+        $coursesResult = $this->service->courses->listCourses($this->optParams);
+        $dump = [];
+        foreach ($coursesResult->getCourses() as $course) {
+            array_push($dump, $course);
         }
-        return $courses;
-        //dd($results->getCourses());
+        return $dump;
+    }
+
+    public function getTopics()
+    {
+        $user = Auth::user();
+        $this->client = new Google_Client();
+        $this->client->setApplicationName('Skilltree');
+        $this->client->setAuthConfig('../credentials.json');
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->client->setAccessToken($user->g_token);
+
+        $this->service = new Google_Service_Classroom($this->client);
+
+        $coursesResult = $this->service->courses->listCourses($this->optParams);
+        $topicsResult = $this->service->courses_topics;
+
+        $dump = [];
+        foreach ($coursesResult->getCourses() as $course) {
+            $id = $course->getId();
+            array_push($dump, $topicsResult->listCoursesTopics($id));
+        }
+        return $dump;
     }
 }

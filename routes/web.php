@@ -20,7 +20,9 @@ Route::group(
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
-        Route::get('/test', 'classroomController@test');
+        //classroom test routes
+        Route::get('/courses', 'ClassroomController@getCourses');
+        Route::get('/topics', 'ClassroomController@getTopics');
     }
 );
 
