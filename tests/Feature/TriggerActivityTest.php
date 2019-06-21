@@ -7,6 +7,7 @@ use Facades\Tests\Setup\SkilltreeFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Skill;
+use App\User;
 
 class TriggerActivityTest extends TestCase
 {
@@ -15,8 +16,6 @@ class TriggerActivityTest extends TestCase
     /** @test **/
     function creating_a_skilltree()
     {
-        $this->withoutExceptionhandling();
-
         $skilltree = SkilltreeFactory::create();
 
         $this->assertCount(1, $skilltree->activity);
@@ -70,5 +69,29 @@ class TriggerActivityTest extends TestCase
         $skilltree->skills[0]->delete();
 
         $this->assertCount(3, $skilltree->activity);
+    }
+
+    /** @test **/
+    function inviting_a_user_triggers_acitivty()
+    {
+        $this->withoutExceptionhandling();
+        $skilltree = SkilltreeFactory::create();
+
+        $userToInvite = factory(User::class)->create();
+
+        $this->actingAs($skilltree->owner)
+            ->post($skilltree->path() . '/invitations', [
+                'email' => $userToInvite->email
+            ])
+            ->assertRedirect($skilltree->path());
+
+        $this->assertTrue($skilltree->members->contains($userToInvite));
+
+        $this->assertCount(2, $skilltree->activity);
+
+        tap($skilltree->activity->last(), function ($activity) {
+            $this->assertEquals('invited_user', $activity->description);
+            $this->assertInstanceOf(User::class, $activity->subject);
+        });
     }
 }

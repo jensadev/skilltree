@@ -38,6 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static $recordableEvents = ['invited'];
+
     public function skilltrees()
     {
         return $this->hasMany(Skilltree::class, 'owner_id')->latest('updated_at');
