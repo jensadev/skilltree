@@ -1,6 +1,6 @@
-<header class="d-flex py-2 justify-content-between">
+<nav class="navbar bg-transparent justify-content-between dashbar">
     <div class="crumb">
-        <h1 class="h3 text-capitalize"><a  href="/skilltrees">Skilltrees</a>
+        <h1 class="h4 text-capitalize"><a  href="/skilltrees">Skilltrees</a>
             @if(isset($skilltree))
                 / {{ $skilltree->title }}
             @endif
@@ -36,5 +36,5 @@
             </a>
         @endif
     </div>
-</header>
+</nav>
 <manage-skilltree-modal></manage-skilltree-modal>

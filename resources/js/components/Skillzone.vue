@@ -1,5 +1,6 @@
 <template>
-    <section class="dropzone" id="dropzone">
+    <section>
+        <skillcard :id="0" :title="title" :description="description" class="root"></skillcard>
         <skillcard
             v-for="(skill, index) in skills"
             :key="index"
@@ -16,7 +17,7 @@ export default {
     components: {
         skillcard
     },
-    props: ["skills"],
+    props: ["title", "description", "skills"],
 
     methods: {}
 };

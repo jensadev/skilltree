@@ -10646,6 +10646,36 @@ a.text-dark:focus {
   }
 }
 
+@media (min-width: 0) {
+  .card-deck .card {
+    flex: 0 0 calc(100% - 30px);
+  }
+}
+
+@media (min-width: 576px) {
+  .card-deck .card {
+    flex: 0 0 calc(100% - 30px);
+  }
+}
+
+@media (min-width: 768px) {
+  .card-deck .card {
+    flex: 0 0 calc(50% - 30px);
+  }
+}
+
+@media (min-width: 992px) {
+  .card-deck .card {
+    flex: 0 0 calc(33.3333333333% - 30px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-deck .card {
+    flex: 0 0 calc(25% - 30px);
+  }
+}
+
 .textcheck {
   background-color: white !important;
 }
@@ -10660,8 +10690,7 @@ a.text-dark:focus {
 }
 
 .dashbar {
-  right: 0.2rem;
-  top: 3.8rem;
+  top: 3.5rem;
 }
 
 .dashbaricon {
@@ -10691,5 +10720,27 @@ h5 {
 
 .btn-less:focus {
   box-shadow: none;
+}
+
+.skillcard {
+  width: 14rem;
+  text-align: left;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-header {
+  padding: 0.5rem 1rem;
+}
+
+.root {
+  background-color: #dd0890;
+  color: #f0f0f0;
+}
+
+.root .card-header {
+  font-weight: 600;
 }
 

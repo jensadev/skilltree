@@ -4,6 +4,34 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Bootstrap 4 breakpoints & gutter
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+) !default;
+
+$grid-gutter-width: 30px !default;
+
+// number of cards per line for each breakpoint
+$cards-per-line: (
+    xs: 1,
+    sm: 1,
+    md: 2,
+    lg: 3,
+    xl: 4
+);
+
+@each $name, $breakpoint in $grid-breakpoints {
+    @media (min-width: $breakpoint) {
+        .card-deck .card {
+            flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
+        }
+    }
+}
+
 .textcheck {
     background-color: white !important;
 }
@@ -20,8 +48,7 @@
 }
 
 .dashbar {
-    right: 0.2rem;
-    top: 3.8rem;
+    top: 3.5rem;
 }
 .dashbaricon {
     color: darken($blue, 15%);
@@ -48,4 +75,24 @@ h5 {
 }
 .btn-less:focus {
     box-shadow: none;;
+}
+
+.skillcard {
+  width: 14rem;
+  text-align: left;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-header {
+    padding: 0.5rem 1rem;
+}
+.root {
+        background-color:  $pink;
+                    color: $light;
+        .card-header {
+            font-weight: 600;
+        }
 }
