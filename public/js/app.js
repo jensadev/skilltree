@@ -6553,7 +6553,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.addskill-content {\n  right: 0.2rem;\n  top: 0.6rem;\n  z-index: 5;\n}\n", ""]);
+exports.push([module.i, "\n.addskill-content {\n    right: 0.2rem;\n    top: 0.6rem;\n    z-index: 5;\n}\n", ""]);
 
 // exports
 
@@ -38349,6 +38349,7 @@ var render = function() {
       "button",
       {
         staticClass: "dashbaricon btn",
+        attrs: { title: "Add a new Skill" },
         on: {
           click: function($event) {
             _vm.isOpen = !_vm.isOpen
@@ -50711,8 +50712,7 @@ Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default.a);
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('sidebar', __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue")["default"]);
-Vue.component('addskill', __webpack_require__(/*! ./components/Addskill.vue */ "./resources/js/components/Addskill.vue")["default"]); //Vue.component('skillcard', require('./components/Skillcard.vue').default);
-
+Vue.component('addskill', __webpack_require__(/*! ./components/Addskill.vue */ "./resources/js/components/Addskill.vue")["default"]);
 Vue.component('skillzone', __webpack_require__(/*! ./components/Skillzone.vue */ "./resources/js/components/Skillzone.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

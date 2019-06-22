@@ -1,38 +1,8 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:800|Titillium+Web:300,400,600&display=swap');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
-$grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px
-) !default;
-
-$grid-gutter-width: 30px !default;
-
-// number of cards per line for each breakpoint
-$cards-per-line: (
-    xs: 1,
-    sm: 1,
-    md: 2,
-    lg: 3,
-    xl: 4
-);
-
-@each $name, $breakpoint in $grid-breakpoints {
-    @media (min-width: $breakpoint) {
-        .card-deck .card {
-            flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
-        }
-    }
-}
 
 .textcheck {
     background-color: white !important;
@@ -60,11 +30,6 @@ $cards-per-line: (
 }
 .dashbaricon:focus {
     box-shadow: none;
-}
-
-
-#dropzone {
-
 }
 
 h5 {

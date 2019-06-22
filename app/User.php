@@ -38,7 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static $recordableEvents = ['invited'];
+    //    protected static $recordableEvents = ['invited'];
 
     public function skilltrees()
     {
