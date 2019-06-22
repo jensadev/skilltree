@@ -29,6 +29,11 @@ export default {
             let pos = JSON.parse(localStorage.getItem("skill_" + this.id));
             if (pos) {
                 return { left: pos[0], top: pos[1] };
+            } else {
+                return {
+                    left: this.random(200, window.innerWidth - 300),
+                    top: this.random(200, window.innerHeight - 300)
+                };
             }
         },
         onPosChanged: function(positionDiff, absolutePosition, event) {
@@ -44,6 +49,9 @@ export default {
         },
         onDragEnd: function() {
             console.log("stop");
+        },
+        random: function(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
         }
     },
     mounted() {},
