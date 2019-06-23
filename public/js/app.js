@@ -6815,7 +6815,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.skillzone {\r\n    height: 100vh;\n}\r\n", ""]);
+exports.push([module.i, "\n.skillzone {\n    height: 100vh;\n}\n", ""]);
 
 // exports
 
