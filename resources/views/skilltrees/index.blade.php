@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @include('skilltrees.header')
-    <section class="card-deck">
+    <section class="card-deck" style="padding-top: 6rem;">
         @forelse ($skilltrees as $skilltree)
             @include('skilltrees.card')
         @empty

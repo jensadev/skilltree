@@ -91,9 +91,12 @@
                 </div>
             </div>
         </nav>
-        <main class="container py-2 {{ Request::is('skilltrees/*') ? 'dropzone' : '' }}">
+        <main>
             @yield('content')
         </main>
     </div>
+    @if (Request::is('skilltrees/*'))
+        @include('skilltrees.dragConnect')
+    @endif
 </body>
 </html>

@@ -2,5 +2,5 @@
 
 @section('content')
     @include('skilltrees.header')
-    <skillzone :title="'{{ $skilltree->title }}'" :description="'{{ $skilltree->description }}'" :skills="{{ $skilltree->skills }}"></skillzone>
+    <skillzone :tree="'{{ $skilltree->id }}'":title="'{{ $skilltree->title }}'" :description="'{{ $skilltree->description }}'" :skills="{{ $skilltree->skills }}"></skillzone>
 @endsection
