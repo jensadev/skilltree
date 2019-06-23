@@ -25,7 +25,7 @@ class SkilltreeSkillsTest extends TestCase
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)
-            ->post($skilltree->path() . '/skills', ['title' => 'Test skill']);
+            ->post($skilltree->path() . '/skills', ['skill_title' => 'Test skill']);
 
         $this->get($skilltree->path())
             ->assertSee('Test skill');
@@ -38,11 +38,11 @@ class SkilltreeSkillsTest extends TestCase
 
         $this->actingAs($skilltree->owner)
             ->patch($skilltree->skills[0]->path(), [
-                'title' => 'changed'
+                'skill_title' => 'changed'
             ]);
 
         $this->assertDatabaseHas('skills', [
-            'title' => 'changed'
+            'skill_title' => 'changed'
         ]);
     }
 
@@ -51,10 +51,10 @@ class SkilltreeSkillsTest extends TestCase
     {
         $this->signIn();
         $skilltree = factory('App\Skilltree')->create();
-        $this->post($skilltree->path() . '/skills', ['title' => 'Test skill'])
+        $this->post($skilltree->path() . '/skills', ['skill_title' => 'Test skill'])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('skills', ['title' => 'Test skill']);
+        $this->assertDatabaseMissing('skills', ['skill_title' => 'Test skill']);
     }
 
     /** @test **/
@@ -64,10 +64,10 @@ class SkilltreeSkillsTest extends TestCase
 
         $skilltree = SkilltreeFactory::withSkills(1)->create();
 
-        $this->patch($skilltree->skills[0]->path(), ['title' => 'changed'])
+        $this->patch($skilltree->skills[0]->path(), ['skill_title' => 'changed'])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('skills', ['title' => 'changed']);
+        $this->assertDatabaseMissing('skills', ['skill_title' => 'changed']);
     }
 
     /** @test **/
@@ -75,9 +75,9 @@ class SkilltreeSkillsTest extends TestCase
     {
         $skilltree = SkilltreeFactory::create();
 
-        $attributes = factory('App\Skill')->raw(['title' => '']);
+        $attributes = factory('App\Skill')->raw(['skill_title' => '']);
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/skills', $attributes)
-            ->assertSessionHasErrors('title');
+            ->assertSessionHasErrors('skill_title');
     }
 }

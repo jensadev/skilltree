@@ -47,9 +47,13 @@ $cards-per-line: (
     font-weight: 600;
 }
 
+.ptop {
+    padding-top: 7rem;
+}
+
 .dashbar {
-    top: 3.5rem;
     z-index: 1;
+    top: 4rem;
 }
 .dashbaricon {
     color: darken($blue, 15%);
@@ -75,7 +79,6 @@ h5 {
 .skillcard {
     width: 180px;
     z-index: 5;
-    border-radius: 0 !important;
 }
 
 .card-body {

@@ -1,8 +1,8 @@
 <template>
     <div class="card skillcard" :id="'skill_' + id" v-draggable="draggableValue">
-        <div class="card-header">{{ title }}</div>
+        <div class="card-header">{{ skill_title }}</div>
         <div class="card-body">
-            <p class="card-text">{{ description }}</p>
+            <p class="card-text">{{ skill_description }}</p>
         </div>
         <button class="btn btn-less lArr hideArr" @click="createConnection">
             <i class="material-icons" style="transform: scaleX(-1);">forward</i>
@@ -103,7 +103,7 @@ export default {
         }
     },
     name: "skillcard",
-    props: ["id", "title", "description", "tree"]
+    props: ["id", "skill_title", "skill_description", "tree"]
 };
 </script>
 <style>

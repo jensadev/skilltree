@@ -21,7 +21,7 @@ export default {
         isOpen(isOpen) {
             if (isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
-                document.getElementById("title").autofocus = true;
+                document.getElementById("skill_title").autofocus = true;
             }
         }
     },

@@ -15,7 +15,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_user_can_create_a_skilltree()
     {
-       // parent::setUp();
+        // parent::setUp();
 
         $this->withoutExceptionHandling();
         $this->signIn();
@@ -27,8 +27,22 @@ class ManageSkilltreesTest extends TestCase
         $this->followingRedirects()
             ->post('/skilltrees', $attributes);
 
-            // ->assertSee($attributes['title'])
-            // ->assertSee(str_limit($attributes['description'], 150));
+        // ->assertSee($attributes['title'])
+        // ->assertSee(str_limit($attributes['description'], 150));
+    }
+
+    /** @test */
+    function skills_can_be_included_as_part_of_a_new_skilltree_creation()
+    {
+        $this->signIn();
+        $attributes = factory(Skilltree::class)->raw();
+        $attributes['skills'] = [
+            ['skill_title' => 'Skill 1'],
+            ['skill_title' => 'Skill 2']
+        ];
+        $this->post('/skilltrees', $attributes);
+
+        $this->assertCount(2, Skilltree::first()->skills);
     }
 
     /** @test */
@@ -39,7 +53,7 @@ class ManageSkilltreesTest extends TestCase
         $this->actingAs($skilltree->owner)
             ->get($skilltree->path())
             ->assertSee($skilltree->title)
-            ->assertSee(str_limit($skilltree->description, 150));
+            ->assertSee($skilltree->description);
     }
 
     /** @test **/

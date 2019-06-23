@@ -1,13 +1,19 @@
 <template>
     <section class="skillzone">
-        <skillcard :id="0" :title="title" :description="description" :tree="tree" class="root"></skillcard>
+        <skillcard
+            :id="0"
+            :skill_title="title"
+            :skill_description="description"
+            :tree="tree"
+            class="root"
+        ></skillcard>
         <skillcard
             v-for="(skill, index) in skills"
             :key="index"
             :tree="tree"
             :id="skill.id"
-            :title="skill.title"
-            :description="skill.description"
+            :skill_title="skill.skill_title"
+            :skill_description="skill.skill_description"
         ></skillcard>
     </section>
 </template>

@@ -51,4 +51,10 @@ class Skill extends Model
     {
         return "/skilltrees/{$this->skilltree->id}/skills/{$this->id}";
     }
+    /*
+    public function addSubskill($title)
+    {
+        //return $this->create(compact('title'));
+        return $this->addMeta('subSkill', $title);
+    }*/
 }

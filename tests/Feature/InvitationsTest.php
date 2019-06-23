@@ -74,7 +74,7 @@ class InvitationsTest extends TestCase
         // onwer can invite users
         $skilltree->invite($newUser = factory(User::class)->create());
 
-        // invited user can add tasks
+        // invited user can add skills
         $this->signIn($newUser);
         $this->post(action('SkilltreeSkillsController@store', $skilltree), $skill = ['title' => 'Foo skill']);
 

@@ -57,7 +57,7 @@ class TriggerActivityTest extends TestCase
         tap($skilltree->activity->last(), function ($activity) {
             $this->assertEquals('created_skill', $activity->description);
             $this->assertInstanceOf(Skill::class, $activity->subject);
-            $this->assertEquals('Some skill', $activity->subject->title);
+            $this->assertEquals('Some skill', $activity->subject->skill_title);
         });
     }
 

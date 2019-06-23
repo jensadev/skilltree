@@ -16,9 +16,9 @@ class SkilltreesController extends Controller
     public function store()
     {
         $skilltree = auth()->user()->skilltrees()->create($this->validateRequest());
-        
+
         if ($skills = request('skills')) {
-            $skilltree->addTasks($skills);
+            $skilltree->addSkills($skills);
         }
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
@@ -54,14 +54,14 @@ class SkilltreesController extends Controller
         $skilltree->update($this->validateRequest());
         return redirect($skilltree->path());
     }
- 
+
     public function destroy(Skilltree $skilltree)
     {
         $this->authorize('manage', $skilltree);
         $skilltree->delete();
         return redirect('/skilltrees');
     }
-    
+
     protected function validateRequest()
     {
         return request()->validate([

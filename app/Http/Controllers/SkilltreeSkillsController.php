@@ -12,8 +12,8 @@ class SkilltreeSkillsController extends Controller
     public function store(Skilltree $skilltree)
     {
         $this->authorize('update', $skilltree);
-        $request = request()->validate(['title' => 'required|min:3']);
-        $skilltree->addSkill(request('title'));
+        $request = request()->validate(['skill_title' => 'required|min:3']);
+        $skilltree->addSkill(request('skill_title'));
         /*        $id = $skilltree->addSkill(request('title'))->id;
         $skill = Skill::find($id);
         $skill->addMeta('left', rand(200, 800));
@@ -26,9 +26,9 @@ class SkilltreeSkillsController extends Controller
     {
         $this->authorize('update', $skill->skilltree);
 
-        $skill->update(request()->validate(['title' => 'required|min:3']));
+        $skill->update(request()->validate(['skill_title' => 'required|min:3']));
 
-        request('target') ==  $skill->addMeta('target', request('target'));
+        //request('target') ==  $skill->addMeta('target', request('target'));
 
         return redirect($skilltree->path());
     }
