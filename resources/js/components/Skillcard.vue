@@ -66,16 +66,18 @@ export default {
                     radius: 1,
                     color: "#dd0890"
                 });
+
+                if (!this.connections.includes(e.target.offsetParent.id)) {
+                    this.connections.push(e.target.offsetParent.id);
+
+                    localStorage.setItem(
+                        "tree_" + this.tree + "_" + this.id,
+                        JSON.stringify(this.connections)
+                    );
+                }
             }
             // remove handler
             document.removeEventListener("click", this.handler, true);
-
-            this.connections.push(e.target.offsetParent.id);
-
-            localStorage.setItem(
-                "tree_" + this.tree + "_" + this.id,
-                JSON.stringify(this.connections)
-            );
         },
         createConnection: function() {
             document.addEventListener("click", this.handler, true);
