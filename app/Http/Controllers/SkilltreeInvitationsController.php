@@ -15,6 +15,10 @@ class SkilltreeInvitationsController extends Controller
 
         $skilltree->invite($user);
 
+        if (request()->wantsJson()) {
+            return ['message' => $skilltree->path()];
+        }
+
         return redirect($skilltree->path());
     }
 }

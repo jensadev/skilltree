@@ -30,8 +30,6 @@ class SkilltreesController extends Controller
     {
         $this->authorize('update', $skilltree);
 
-        //dd($skilltree->skills->first()->tasks);
-
         return view('skilltrees.show', compact('skilltree'));
     }
 
