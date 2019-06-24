@@ -50,6 +50,8 @@ export default {
     },
     data() {
         return {
+            color: "#0de1ec",
+            thickness: 1,
             draggableValue: {
                 onPositionChange: this.onPosChanged,
                 onDragEnd: this.onDragEnd,
@@ -63,8 +65,8 @@ export default {
             console.log();
             if (e.target.offsetParent.id.includes("skill")) {
                 jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
-                    radius: 1,
-                    color: "#dd0890"
+                    radius: this.thickness,
+                    color: this.color
                 });
 
                 if (!this.connections.includes(e.target.offsetParent.id)) {
@@ -124,8 +126,8 @@ export default {
                         this.$el,
                         document.getElementById(e),
                         {
-                            radius: 1,
-                            color: "#dd0890;"
+                            radius: this.thickness,
+                            color: this.color
                         }
                     );
                 }

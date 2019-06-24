@@ -22,7 +22,7 @@
 </head>
 <body class="skilltree">
     <div id="app">
-        <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src="/img/nti_gymnasiet_symbol_vit.png" height="30" alt="{{ config('app.name', 'Laravel') }}">

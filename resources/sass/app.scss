@@ -97,11 +97,15 @@ $cards-per-line: (
 }
 
 .root {
-        background-color:  $pink;
+        background-color:  $blue;
                     color: $light;
         .card-header {
-            font-weight: 600;
+            @include font-medium;
         }
+}
+
+.h1 {
+    @include font-xbold;
 }
 
 .h4 {
@@ -112,10 +116,6 @@ $cards-per-line: (
     @include font-regular;
 }
 
-.form-control:focus {
-    border-color: #6c757d;
-    box-shadow: 0 0;
-}
 
 .feed {
     right: 15px;
@@ -129,4 +129,8 @@ $cards-per-line: (
 
 .smallform-content {
     right: 15px;
+}
+
+.loginheader {
+    height: 50vh;
 }

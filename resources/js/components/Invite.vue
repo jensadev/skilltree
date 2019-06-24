@@ -24,7 +24,7 @@
                             >
                             <div class="input-group-append">
                                 <button
-                                    class="btn btn-outline-secondary"
+                                    class="btn btn-outline-primary"
                                     type="submit"
                                     :disabled="form.errorAny()"
                                 >Invite</button>
@@ -59,7 +59,9 @@ export default {
         isOpen() {
             if (this.isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
-                document.getElementById("email").autofocus = true;
+                window.setTimeout(function() {
+                    document.getElementById("email").focus();
+                }, 0);
             }
         }
     },

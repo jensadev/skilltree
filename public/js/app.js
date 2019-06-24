@@ -2078,8 +2078,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     isOpen: function isOpen() {
       if (this.isOpen) {
+        console.log("isopen");
         document.addEventListener("click", this.closeIfClickedOutside);
-        document.getElementById("skill_title").autofocus = true;
+        window.setTimeout(function () {
+          document.getElementById("skill_title").focus();
+        }, 0);
       }
     }
   },
@@ -2255,7 +2258,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isOpen: function isOpen() {
       if (this.isOpen) {
         document.addEventListener("click", this.closeIfClickedOutside);
-        document.getElementById("email").autofocus = true;
+        window.setTimeout(function () {
+          document.getElementById("email").focus();
+        }, 0);
       }
     }
   },
@@ -2317,9 +2322,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
 //
 //
 //
@@ -2661,6 +2663,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      color: "#0de1ec",
+      thickness: 1,
       draggableValue: {
         onPositionChange: this.onPosChanged,
         onDragEnd: this.onDragEnd,
@@ -2675,8 +2679,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (e.target.offsetParent.id.includes("skill")) {
         jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
-          radius: 1,
-          color: "#dd0890"
+          radius: this.thickness,
+          color: this.color
         });
 
         if (!this.connections.includes(e.target.offsetParent.id)) {
@@ -2729,8 +2733,8 @@ __webpack_require__.r(__webpack_exports__);
       this.connections.forEach(function (e) {
         if (e) {
           jqSimpleConnect.connect(_this.$el, document.getElementById(e), {
-            radius: 1,
-            color: "#dd0890;"
+            radius: _this.thickness,
+            color: _this.color
           });
         }
       });
@@ -41367,7 +41371,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-outline-secondary",
+                        staticClass: "btn btn-outline-primary",
                         attrs: { type: "submit", disabled: _vm.form.errorAny() }
                       },
                       [_vm._v("Invite")]
@@ -41557,9 +41561,7 @@ var render = function() {
               _c("div", { staticClass: "col-lg-6" }, [
                 _vm._v("GOOGLE CONTENTS")
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [_vm._t("default")], 2)
+            ])
           ]
         ),
         _vm._v(" "),

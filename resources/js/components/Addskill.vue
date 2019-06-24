@@ -54,8 +54,12 @@ export default {
     watch: {
         isOpen() {
             if (this.isOpen) {
+                console.log("isopen");
                 document.addEventListener("click", this.closeIfClickedOutside);
-                document.getElementById("skill_title").autofocus = true;
+
+                window.setTimeout(function() {
+                    document.getElementById("skill_title").focus();
+                }, 0);
             }
         }
     },
