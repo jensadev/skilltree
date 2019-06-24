@@ -2015,12 +2015,15 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2068,7 +2071,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isOpen: false,
-      form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         skill_title: ""
       })
     };
@@ -2089,15 +2092,34 @@ __webpack_require__.r(__webpack_exports__);
         document.removeEventListener("click", this.closeIfClickedOutside);
       }
     },
-    onSubmit: function onSubmit() {
-      var _this = this;
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.form.submit(this.url).then(function (response) {
+                  return location = response.data.message;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
 
-      this.form.post(this.url).then(function (response) {
-        return console.log("Wahoo!");
-      })["catch"](function (error) {
-        return console.log(_this.form.errors.get("skill_title"));
-      });
-    }
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
   }
 });
 
@@ -2112,6 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
 //
 //
 //
@@ -2152,6 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -2225,7 +2249,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _SkilltreeForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkilltreeForm */ "./resources/js/components/SkilltreeForm.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2318,11 +2342,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      form: new _SkilltreeForm__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         title: "",
         description: "",
         skills: [{
@@ -40937,14 +40965,13 @@ var render = function() {
             _c(
               "form",
               {
-                attrs: { method: "post" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.onSubmit($event)
+                    return _vm.submit($event)
                   },
                   keydown: function($event) {
-                    return _vm.form.errors.clear($event.target.name)
+                    return _vm.form.errorClear($event.target.name)
                   }
                 }
               },
@@ -40960,16 +40987,13 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    class: _vm.form.errors.has("skill_title")
-                      ? "is-invalid"
-                      : "",
+                    class: _vm.form.errors.skill_title ? "is-invalid" : "",
                     attrs: {
                       type: "text",
                       name: "skill_title",
                       id: "skill_title",
                       placeholder: "Skill title",
-                      "aria-label": "Skill title",
-                      "aria-describedby": "button-title"
+                      "aria-label": "Skill title"
                     },
                     domProps: { value: _vm.form.skill_title },
                     on: {
@@ -40987,23 +41011,17 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-outline-secondary",
-                        attrs: {
-                          type: "submit",
-                          id: "button-title",
-                          disabled: _vm.form.errors.any()
-                        }
+                        attrs: { type: "submit", disabled: _vm.form.errorAny() }
                       },
                       [_vm._v("Add skill")]
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.form.errors.has("skill_title")
+                  _vm.form.errors.skill_title
                     ? _c("div", {
                         staticClass: "invalid-feedback",
                         domProps: {
-                          textContent: _vm._s(
-                            _vm.form.errors.get("skill_title")
-                          )
+                          textContent: _vm._s(_vm.form.errors.skill_title[0])
                         }
                       })
                     : _vm._e()
@@ -41237,6 +41255,9 @@ var render = function() {
               submit: function($event) {
                 $event.preventDefault()
                 return _vm.submit($event)
+              },
+              keydown: function($event) {
+                return _vm.form.errorClear($event.target.name)
               }
             }
           },
@@ -41420,7 +41441,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "submit" }
+                        attrs: { type: "submit", disabled: _vm.form.errorAny() }
                       },
                       [_vm._v("Create Skilltree")]
                     )
@@ -54128,102 +54149,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Errors.js":
-/*!*******************************************!*\
-  !*** ./resources/js/components/Errors.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Errors =
-/*#__PURE__*/
-function () {
-  /**
-   * Create a new Errors instance.
-   */
-  function Errors() {
-    _classCallCheck(this, Errors);
-
-    this.errors = {};
-  }
-  /**
-   * Determine if an errors exists for the given field.
-   *
-   * @param {string} field
-   */
-
-
-  _createClass(Errors, [{
-    key: "has",
-    value: function has(field) {
-      return this.errors.hasOwnProperty(field);
-    }
-    /**
-     * Determine if we have any errors.
-     */
-
-  }, {
-    key: "any",
-    value: function any() {
-      return Object.keys(this.errors).length > 0;
-    }
-    /**
-     * Retrieve the error message for a field.
-     *
-     * @param {string} field
-     */
-
-  }, {
-    key: "get",
-    value: function get(field) {
-      if (this.errors[field]) {
-        return this.errors[field][0];
-      }
-    }
-    /**
-     * Record the new errors.
-     *
-     * @param {object} errors
-     */
-
-  }, {
-    key: "record",
-    value: function record(errors) {
-      this.errors = errors;
-    }
-    /**
-     * Clear one or all error fields.
-     *
-     * @param {string|null} field
-     */
-
-  }, {
-    key: "clear",
-    value: function clear(field) {
-      if (field) {
-        delete this.errors[field];
-        return;
-      }
-
-      this.errors = {};
-    }
-  }]);
-
-  return Errors;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Errors);
-
-/***/ }),
-
 /***/ "./resources/js/components/Form.js":
 /*!*****************************************!*\
   !*** ./resources/js/components/Form.js ***!
@@ -54235,7 +54160,6 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Errors */ "./resources/js/components/Errors.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -54244,146 +54168,87 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-
 var Form =
 /*#__PURE__*/
 function () {
-  /**
-   * Create a new Form instance.
-   *
-   * @param {object} data
-   */
   function Form(data) {
     _classCallCheck(this, Form);
 
-    this.originalData = data;
-
-    for (var field in data) {
-      this[field] = data[field];
-    }
-
-    this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.originalData = JSON.parse(JSON.stringify(data));
+    Object.assign(this, data);
+    this.errors = {};
+    this.submitted = false;
   }
-  /**
-   * Fetch all relevant data for the form.
-   */
-
 
   _createClass(Form, [{
     key: "data",
     value: function data() {
       var data = {};
 
-      for (var property in this.originalData) {
-        data[property] = this[property];
+      for (var attribute in this.originalData) {
+        data[attribute] = this[attribute];
       }
 
       return data;
     }
-    /**
-     * Reset the form fields.
-     */
-
+  }, {
+    key: "post",
+    value: function post(endpoint) {
+      this.submit(endpoint);
+    }
+  }, {
+    key: "patch",
+    value: function patch(endpoint) {
+      this.submit(endpoint, 'patch');
+    }
+  }, {
+    key: "delete",
+    value: function _delete(endpoint) {
+      this.submit(endpoint, 'delete');
+    }
+  }, {
+    key: "submit",
+    value: function submit(endpoint) {
+      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
+      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this));
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(response) {
+      this.submitted = true;
+      this.errors = {};
+      return response;
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.errors = error.response.data.errors;
+      this.submitted = false;
+      throw error;
+    }
   }, {
     key: "reset",
     value: function reset() {
-      for (var field in this.originalData) {
-        this[field] = '';
+      Object.assign(this, this.originalData);
+    }
+    /**
+     * Error stuff, doesn't really belong here
+     */
+
+  }, {
+    key: "errorClear",
+    value: function errorClear(field) {
+      if (field) {
+        delete this.errors[field];
+        return;
       }
 
-      this.errors.clear();
+      this.errors = {};
     }
-    /**
-     * Send a POST request to the given URL.
-     * .
-     * @param {string} url
-     */
-
   }, {
-    key: "post",
-    value: function post(url) {
-      return this.submit('post', url);
-    }
-    /**
-     * Send a PUT request to the given URL.
-     * .
-     * @param {string} url
-     */
-
-  }, {
-    key: "put",
-    value: function put(url) {
-      return this.submit('put', url);
-    }
-    /**
-     * Send a PATCH request to the given URL.
-     * .
-     * @param {string} url
-     */
-
-  }, {
-    key: "patch",
-    value: function patch(url) {
-      return this.submit('patch', url);
-    }
-    /**
-     * Send a DELETE request to the given URL.
-     * .
-     * @param {string} url
-     */
-
-  }, {
-    key: "delete",
-    value: function _delete(url) {
-      return this.submit('delete', url);
-    }
-    /**
-     * Submit the form.
-     *
-     * @param {string} requestType
-     * @param {string} url
-     */
-
-  }, {
-    key: "submit",
-    value: function submit(requestType, url) {
-      var _this = this;
-
-      return new Promise(function (resolve, reject) {
-        axios[requestType](url, _this.data()).then(function (response) {
-          _this.onSuccess(response.data);
-
-          resolve(response.data);
-        })["catch"](function (error) {
-          _this.onFail(error.response.data);
-
-          reject(error.response.data);
-        });
-      });
-    }
-    /**
-     * Handle a successful form submission.
-     *
-     * @param {object} data
-     */
-
-  }, {
-    key: "onSuccess",
-    value: function onSuccess(data) {
-      console.log(data.message); // temporary
-
-      this.reset();
-    }
-    /**
-     * Handle a failed form submission.
-     *
-     * @param {object} errors
-     */
-
-  }, {
-    key: "onFail",
-    value: function onFail(errors) {
-      this.errors.record(errors);
+    key: "errorAny",
+    value: function errorAny() {
+      return Object.keys(this.errors).length > 0;
     }
   }]);
 
@@ -54616,97 +54481,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Skillcard_vue_vue_type_template_id_37010686___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/SkilltreeForm.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/SkilltreeForm.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var SkilltreeForm =
-/*#__PURE__*/
-function () {
-  function SkilltreeForm(data) {
-    _classCallCheck(this, SkilltreeForm);
-
-    this.originalData = JSON.parse(JSON.stringify(data));
-    Object.assign(this, data);
-    this.errors = {};
-    this.submitted = false;
-  }
-
-  _createClass(SkilltreeForm, [{
-    key: "data",
-    value: function data() {
-      var data = {};
-
-      for (var attribute in this.originalData) {
-        data[attribute] = this[attribute];
-      }
-
-      return data;
-    }
-  }, {
-    key: "post",
-    value: function post(endpoint) {
-      this.submit(endpoint);
-    }
-  }, {
-    key: "patch",
-    value: function patch(endpoint) {
-      this.submit(endpoint, 'patch');
-    }
-  }, {
-    key: "delete",
-    value: function _delete(endpoint) {
-      this.submit(endpoint, 'delete');
-    }
-  }, {
-    key: "submit",
-    value: function submit(endpoint) {
-      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
-      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this));
-    }
-  }, {
-    key: "onSuccess",
-    value: function onSuccess(response) {
-      this.submitted = true;
-      this.errors = {};
-      return response;
-    }
-  }, {
-    key: "onFail",
-    value: function onFail(error) {
-      this.errors = error.response.data.errors;
-      this.submitted = false;
-      throw error;
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      Object.assign(this, this.originalData);
-    }
-  }]);
-
-  return SkilltreeForm;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (SkilltreeForm);
 
 /***/ }),
 

@@ -8,11 +8,8 @@
         <div v-show="isOpen" class="addskill-content position-absolute w-50">
             <div class="card shadow-sm bg-white">
                 <div class="card-body">
-                    <form
-                        method="post"
-                        @submit.prevent="onSubmit"
-                        @keydown="form.errors.clear($event.target.name)"
-                    >
+                    <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
+                        <!--  @keydown="form.errors.clear($event.target.name)"-->
                         <div class="input-group">
                             <input
                                 type="text"
@@ -21,22 +18,20 @@
                                 class="form-control"
                                 placeholder="Skill title"
                                 aria-label="Skill title"
-                                aria-describedby="button-title"
-                                :class="form.errors.has('skill_title') ? 'is-invalid' : ''"
+                                :class="form.errors.skill_title ? 'is-invalid' : ''"
                                 v-model="form.skill_title"
                             >
                             <div class="input-group-append">
                                 <button
                                     class="btn btn-outline-secondary"
                                     type="submit"
-                                    id="button-title"
-                                    :disabled="form.errors.any()"
+                                    :disabled="form.errorAny()"
                                 >Add skill</button>
                             </div>
                             <div
                                 class="invalid-feedback"
-                                v-if="form.errors.has('skill_title')"
-                                v-text="form.errors.get('skill_title')"
+                                v-if="form.errors.skill_title"
+                                v-text="form.errors.skill_title[0]"
                             ></div>
                         </div>
                     </form>
@@ -76,13 +71,11 @@ export default {
                 );
             }
         },
-        onSubmit: function() {
+        async submit() {
             this.form
-                .post(this.url)
-                .then(response => console.log("Wahoo!"))
-                .catch(error =>
-                    console.log(this.form.errors.get("skill_title"))
-                );
+                .submit(this.url)
+                .then(response => (location = response.data.message))
+                .catch(error => console.log(error));
         }
     }
 };

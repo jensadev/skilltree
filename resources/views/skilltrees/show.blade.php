@@ -6,7 +6,7 @@
         <skillcard
             :tree="{{ $skilltree->id }}"
             :id="0"
-            :skill_title="'{{ str_limit($skilltree->title, 12) }}'"
+            :skill_title="'{{ str_limit($skilltree->title, 15) }}'"
             :skill_description="'{{ $skilltree->description }}'"
             class="root"
         ></skillcard>
@@ -14,7 +14,7 @@
             <skillcard
                 :tree="{{ $skilltree->id }}"
                 :id="{{ $skill->id }}"
-                :skill_title="'{{ str_limit($skill->skill_title, 12) }}'"
+                :skill_title="'{{ str_limit($skill->skill_title, 15) }}'"
                 :skill_description="'{{ $skill->skill_description }}'"
                 @if (count($skill->tasks) > 0)
                     :skill_tasks="{{ $skill->tasks }}"

@@ -2,7 +2,7 @@
     <modal name="new-skilltree" classes="h-75">
         <div class="modal-body modal-content">
             <div class="container">
-                <form @submit.prevent="submit">
+                <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
                     <header class="row">
                         <div class="col-lg-12 text-center">
                             <h3 class="modal-title">Create a new skilltree</h3>
@@ -75,7 +75,11 @@
                                     class="btn btn-outline-primary mr-2"
                                     @click="$modal.hide('new-skilltree')"
                                 >Cancel</button>
-                                <button class="btn btn-primary" type="submit">Create Skilltree</button>
+                                <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    :disabled="form.errorAny()"
+                                >Create Skilltree</button>
                             </div>
                         </div>
                     </footer>
@@ -85,12 +89,12 @@
     </modal>
 </template>
 <script>
-import SkilltreeForm from "./SkilltreeForm";
+import Form from "./Form";
 
 export default {
     data() {
         return {
-            form: new SkilltreeForm({
+            form: new Form({
                 title: "",
                 description: "",
                 skills: [{ skill_title: "" }]

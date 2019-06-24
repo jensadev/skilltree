@@ -1,122 +1,77 @@
 import Axios from "axios";
-import Errors from "./Errors";
 
 class Form {
-    /**
-     * Create a new Form instance.
-     *
-     * @param {object} data
-     */
     constructor(data) {
-        this.originalData = data;
+        this.originalData = JSON.parse(JSON.stringify(data));
 
-        for (let field in data) {
-            this[field] = data[field];
-        }
+        Object.assign(this, data);
 
-        this.errors = new Errors();
+        this.errors = {};
+        this.submitted = false;
     }
 
-    /**
-     * Fetch all relevant data for the form.
-     */
     data() {
         let data = {};
 
-        for (let property in this.originalData) {
-            data[property] = this[property];
+        for (let attribute in this.originalData) {
+            data[attribute] = this[attribute];
         }
 
         return data;
     }
 
-    /**
-     * Reset the form fields.
-     */
+    post(endpoint) {
+        this.submit(endpoint);
+    }
+
+    patch(endpoint) {
+        this.submit(endpoint, 'patch');
+    }
+
+    delete(endpoint) {
+        this.submit(endpoint, 'delete');
+    }
+
+    submit(endpoint, requestType = 'post') {
+        return axios[requestType](endpoint, this.data())
+            .catch(this.onFail.bind(this))
+            .then(this.onSuccess.bind(this));
+    }
+
+    onSuccess(response) {
+        this.submitted = true;
+        this.errors = {};
+        
+        return response;
+    }
+
+    onFail(error) {
+        this.errors = error.response.data.errors;
+        this.submitted = false;
+
+        throw error;
+    }
+
     reset() {
-        for (let field in this.originalData) {
-            this[field] = '';
+        Object.assign(this, this.originalData);
+    }
+
+    /**
+     * Error stuff, doesn't really belong here
+     */    
+
+    errorClear(field) {
+        if (field) {
+            delete this.errors[field];
+
+            return;
         }
 
-        this.errors.clear();
+        this.errors = {};
     }
 
-    /**
-     * Send a POST request to the given URL.
-     * .
-     * @param {string} url
-     */
-    post(url) {
-        return this.submit('post', url);
-    }
-
-    /**
-     * Send a PUT request to the given URL.
-     * .
-     * @param {string} url
-     */
-    put(url) {
-        return this.submit('put', url);
-    }
-
-    /**
-     * Send a PATCH request to the given URL.
-     * .
-     * @param {string} url
-     */
-    patch(url) {
-        return this.submit('patch', url);
-    }
-
-    /**
-     * Send a DELETE request to the given URL.
-     * .
-     * @param {string} url
-     */
-    delete(url) {
-        return this.submit('delete', url);
-    }
-
-    /**
-     * Submit the form.
-     *
-     * @param {string} requestType
-     * @param {string} url
-     */
-    submit(requestType, url) {
-        return new Promise((resolve, reject) => {
-            axios[requestType](url, this.data())
-                .then(response => {
-                    this.onSuccess(response.data);
-
-                    resolve(response.data);
-                })
-                .catch(error => {
-                    this.onFail(error.response.data);
-
-                    reject(error.response.data);
-                });
-        });
-    }
-
-    /**
-     * Handle a successful form submission.
-     *
-     * @param {object} data
-     */
-    onSuccess(data) {
-        console.log(data.message); // temporary
-
-        this.reset();
-    }
-
-    /**
-     * Handle a failed form submission.
-     *
-     * @param {object} errors
-     */
-    onFail(errors) {
-        this.errors.record(errors);
+    errorAny() {
+        return Object.keys(this.errors).length > 0;
     }
 }
 
