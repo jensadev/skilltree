@@ -10716,6 +10716,7 @@ a.text-dark:focus {
 }
 
 .skillcard {
+  position: absolute;
   width: 180px;
   z-index: 5;
 }
@@ -10764,5 +10765,9 @@ a.text-dark:focus {
   right: 15px;
   bottom: 0px;
   z-index: -1;
+}
+
+.skillzone {
+  height: 100vh;
 }
 

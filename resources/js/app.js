@@ -26,7 +26,8 @@ Vue.use(VModal);
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 //Vue.component('sidebar', require('./components/Sidebar.vue').default);
 Vue.component('addskill', require('./components/Addskill.vue').default);
-Vue.component('skillzone', require('./components/Skillzone.vue').default);
+//Vue.component('skillzone', require('./components/Skillzone.vue').default);
+Vue.component('skillcard', require('./components/Skillcard.vue').default);
 Vue.component('edit-skill-modal', require('./components/EditSkillModal.vue').default);
 Vue.component('new-skilltree-modal', require('./components/NewSkilltreeModal.vue').default);
 Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeModal.vue').default);
@@ -41,3 +42,11 @@ Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeMod
 const app = new Vue({
     el: '#app',
 });
+
+/*
+Array.prototype.find = function(regex) {
+  var arr = this;
+  var matches = arr.filter( function(e) { return regex.test(e); } );
+  return matches.map(function(e) { return arr.indexOf(e); } );
+};
+*/

@@ -14,23 +14,10 @@
                 </a>
             @endif
             @if(isset($skilltree))
-                <addskill>
+                <addskill :url="'{{ $skilltree->path() . '/skills' }}'">
                     <template v-slot:trigger>
                         <i class="material-icons">add_box</i>
                     </template>
-                    <div class="card shadow-sm bg-white">
-                        <div class="card-body">
-                            <form action="{{ $skilltree->path() . '/skills'}}" method="post">
-                                @csrf
-                                <div class="input-group">
-                                    <input type="text" name="skill_title" id="skill_title" class="form-control" placeholder="Skill title" aria-label="Skill title" aria-describedby="button-title">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="submit" id="button-title">Add skill</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </addskill>
                 <a href="" class="btn dashbaricon" role="button" title="Save Skilltree">
                     <i class="material-icons">save</i>

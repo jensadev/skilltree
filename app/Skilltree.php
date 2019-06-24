@@ -50,7 +50,7 @@ class Skilltree extends Model
 
     public function activity()
     {
-        return $this->hasMany(Activity::class)->latest();
+        return $this->hasMany(Activity::class)->latest()->take(10);
     }
 
     public function invite(User $user)

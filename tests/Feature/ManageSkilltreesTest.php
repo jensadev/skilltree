@@ -59,7 +59,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test **/
     public function a_user_can_delete_a_skilltree()
     {
-        //$this->withoutExceptionHandling();
+        //  
         $this->signIn();
 
         $skilltree = SkilltreeFactory::create();

@@ -27,14 +27,13 @@ class SkillTest extends TestCase
     }
 
     /** @test **/
-    /*    function it_can_add_a_subskill()
+    function it_can_add_a_task()
     {
-        $this->withoutExceptionhandling();
         $skilltree = factory('App\Skilltree')->create();
         $skill = $skilltree->addSkill('Test skill');
-        $skill->addSubskill("Test");
+        $task = $skill->addtask('Test task');
 
-        $this->assertCount(1, $skill->getAllMeta());
-        //$this->assertTrue($skill->getMeta("subSkill")->contains($subskill));
-    }*/
+        $this->assertCount(1, $skill->tasks);
+        $this->assertTrue($skill->tasks->contains($task));
+    }
 }

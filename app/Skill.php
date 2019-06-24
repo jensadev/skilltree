@@ -42,6 +42,21 @@ class Skill extends Model
         return $this->belongsTo(Skilltree::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Add a task to the skill.
+     * 
+     * @param string $body
+     */
+    public function addTask($body)
+    {
+        return $this->tasks()->create(compact('body'));
+    }
+
     /**
      * Handle for skill path
      *

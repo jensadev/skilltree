@@ -14,10 +14,14 @@
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
             </a>
         </div>
-        <div class="card-body">
-            <p class="card-text">{{ skill_description }}</p>
+        <div class="card-body" v-if="skill_tasks || skill_description">
+            <p v-if="skill_description" class="card-text">{{ skill_description }}</p>
+            <ul v-if="skill_tasks" class="list-unstyled">
+                <li class="list-item" :key="index" v-for="(task, index) in skill_tasks">
+                    <small>{{ task.body }}</small>
+                </li>
+            </ul>
         </div>
-
         <div v-if="id != 0" class="progress" style="height: 5px;">
             <div
                 class="progress-bar bg-pink"
@@ -56,18 +60,17 @@ export default {
     },
     methods: {
         handler: function(e) {
-            jqSimpleConnect.connect(
-                document.getElementById("skill_" + this.id),
-                e.path[1],
-                {
+            console.log();
+            if (e.target.offsetParent.id.includes("skill")) {
+                jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
                     radius: 1,
                     color: "#dd0890"
-                }
-            );
+                });
+            }
             // remove handler
             document.removeEventListener("click", this.handler, true);
 
-            this.connections.push(e.path[1].id);
+            this.connections.push(e.target.offsetParent.id);
 
             localStorage.setItem(
                 "tree_" + this.tree + "_" + this.id,
@@ -116,7 +119,7 @@ export default {
             this.connections.forEach(e => {
                 if (e) {
                     jqSimpleConnect.connect(
-                        document.getElementById("skill_" + this.id),
+                        this.$el,
                         document.getElementById(e),
                         {
                             radius: 1,
@@ -128,7 +131,7 @@ export default {
         }
     },
     name: "skillcard",
-    props: ["id", "skill_title", "skill_description", "tree"]
+    props: ["tree", "id", "skill_title", "skill_description", "skill_tasks"]
 };
 </script>
 <style>

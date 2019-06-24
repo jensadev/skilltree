@@ -17,6 +17,7 @@ Route::group(
         Route::get('/', 'SkilltreesController@index');
         Route::resource('skilltrees', 'SkilltreesController');
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
+        Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
