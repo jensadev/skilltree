@@ -10698,6 +10698,12 @@ a.text-dark:focus {
   color: #dd0890;
   background-color: transparent;
   border: 0;
+  padding: 0;
+}
+
+.dashbaricon .material-icons {
+  font-size: 30px;
+  padding-left: 8px;
 }
 
 .dashbaricon:focus {

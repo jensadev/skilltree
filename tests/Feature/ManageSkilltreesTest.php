@@ -71,6 +71,23 @@ class ManageSkilltreesTest extends TestCase
         $this->assertDatabaseMissing('skilltrees', $skilltree->only('id'));
     }
 
+    /** @test **/
+    public function a_user_can_update_a_skilltree()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+        $skilltree = SkilltreeFactory::create();
+
+        $this->actingAs($skilltree->owner)
+            ->patch($skilltree->path(), [
+                'title' => 'changed',
+                'description' => 'changed'
+            ])
+            ->assertRedirect($skilltree->path());
+
+        $this->assertDatabaseHas('skilltrees', ['title' => 'changed', 'description' => 'changed']);
+    }
+
     /**  @test */
     function an_authenticated_user_cannot_view_the_skilltrees_of_others()
     {

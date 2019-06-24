@@ -55,6 +55,9 @@ class SkilltreesController extends Controller
     {
         $this->authorize('update', $skilltree);
         $skilltree->update($this->validateRequest());
+        if (request()->wantsJson()) {
+            return ['message' => $skilltree->path()];
+        }
         return redirect($skilltree->path());
     }
 

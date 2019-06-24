@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top bg-transparent justify-content-between dashbar">
+<nav class="navbar fixed-top bg-transparent dashbar">
     <div class="container">
         <div class="crumb">
             <h1 class="h4 text-capitalize"><a  href="/skilltrees">Skilltrees</a>

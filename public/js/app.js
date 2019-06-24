@@ -2189,6 +2189,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2234,7 +2243,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        title: this.title,
+        description: this.description
+      })
+    };
+  },
+  props: ["id", "title", "description"],
+  methods: {
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
+                  return location = response.data.message;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
+  }
+});
 
 /***/ }),
 
@@ -2256,6 +2329,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -41144,29 +41219,69 @@ var render = function() {
   return _c("modal", { attrs: { name: "manage-skilltree", classes: "h-75" } }, [
     _c("div", { staticClass: "modal-body modal-content" }, [
       _c("div", { staticClass: "container" }, [
-        _c("header", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-12 text-center" }, [
-            _c("h3", { staticClass: "modal-title" }, [
-              _vm._v("Update skilltree")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-lg-6" },
-            [
-              _c("form", [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
+              },
+              keydown: function($event) {
+                return _vm.form.errorClear($event.target.name)
+              }
+            }
+          },
+          [
+            _c("header", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12 text-center" }, [
+                _c("h3", { staticClass: "modal-title" }, [
+                  _vm._v("Manage skilltree")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.title,
+                        expression: "form.title"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { id: "title", name: "title", type: "text" }
+                    class: _vm.form.errors.title ? "is-invalid" : "",
+                    attrs: {
+                      id: "title",
+                      name: "title",
+                      type: "text",
+                      placeholder: "e.g Design"
+                    },
+                    domProps: { value: _vm.form.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "title", $event.target.value)
+                      }
+                    }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" })
+                  _vm.form.errors.title
+                    ? _c("div", {
+                        staticClass: "invalid-feedback",
+                        domProps: {
+                          textContent: _vm._s(_vm.form.errors.title[0])
+                        }
+                      })
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -41175,11 +41290,41 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.description,
+                        expression: "form.description"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { id: "description", name: "description", rows: "6" }
+                    class: _vm.form.errors.description ? "is-invalid" : "",
+                    attrs: {
+                      id: "description",
+                      name: "description",
+                      rows: "6",
+                      placeholder: "Add a short description of your Skilltree"
+                    },
+                    domProps: { value: _vm.form.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "description", $event.target.value)
+                      }
+                    }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" })
+                  _vm.form.errors.description
+                    ? _c("div", {
+                        staticClass: "invalid-feedback",
+                        domProps: {
+                          textContent: _vm._s(_vm.form.errors.description[0])
+                        }
+                      })
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c(
@@ -41193,7 +41338,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.$modal.hide("new-skilltree")
+                            return _vm.$modal.hide("manage-skilltree")
                           }
                         }
                       },
@@ -41204,20 +41349,19 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "submit" }
+                        attrs: { type: "submit", disabled: _vm.form.errorAny() }
                       },
                       [_vm._v("Update Skilltree")]
                     )
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _vm._t("default")
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6" }, [_vm._v("GOOGLE STUFFINGS")])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("footer", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12" })
         ])
       ])
     ])
@@ -41286,7 +41430,12 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     class: _vm.form.errors.title ? "is-invalid" : "",
-                    attrs: { id: "title", name: "title", type: "text" },
+                    attrs: {
+                      id: "title",
+                      name: "title",
+                      type: "text",
+                      placeholder: "e.g Design"
+                    },
                     domProps: { value: _vm.form.title },
                     on: {
                       input: function($event) {
@@ -41327,7 +41476,8 @@ var render = function() {
                     attrs: {
                       id: "description",
                       name: "description",
-                      rows: "6"
+                      rows: "6",
+                      placeholder: "Add a short description..."
                     },
                     domProps: { value: _vm.form.description },
                     on: {
@@ -41356,7 +41506,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Add some skills")]),
+                    _c("label", [_vm._v("Add Skills")]),
                     _vm._v(" "),
                     _vm._l(_vm.form.skills, function(skill, index) {
                       return _c("input", {

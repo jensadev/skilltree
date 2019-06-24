@@ -18,6 +18,7 @@
                                     class="form-control"
                                     :class="form.errors.title ? 'is-invalid' : ''"
                                     type="text"
+                                    placeholder="e.g Design"
                                     v-model="form.title"
                                 >
                                 <div
@@ -35,6 +36,7 @@
                                     :class="form.errors.description ? 'is-invalid' : ''"
                                     rows="6"
                                     v-model="form.description"
+                                    placeholder="Add a short description..."
                                 ></textarea>
                                 <div
                                     class="invalid-feedback"
@@ -45,7 +47,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Add some skills</label>
+                                <label>Add Skills</label>
                                 <input
                                     class="form-control mb-2"
                                     type="text"

@@ -23,7 +23,7 @@
         @endforeach
     </section>
     <edit-skill-modal></edit-skill-modal>
-    <manage-skilltree-modal>
+    <manage-skilltree-modal :id="'{{ $skilltree->id }}'" :title="'{{ $skilltree->title }}'" :description="'{{ $skilltree->description }}'">
         @include('skilltrees.invite')
     </manage-skilltree-modal>
     @include('skilltrees.activity.feed')
