@@ -27,7 +27,9 @@ Vue.use(VModal);
 //Vue.component('sidebar', require('./components/Sidebar.vue').default);
 Vue.component('addskill', require('./components/Addskill.vue').default);
 Vue.component('skillzone', require('./components/Skillzone.vue').default);
+Vue.component('edit-skill-modal', require('./components/EditSkillModal.vue').default);
 Vue.component('new-skilltree-modal', require('./components/NewSkilltreeModal.vue').default);
+Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeModal.vue').default);
 
 
 /**

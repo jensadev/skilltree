@@ -43,10 +43,6 @@ $cards-per-line: (
         ) repeat;
 }
 
-.navbar-brand {
-    font-weight: 600;
-}
-
 .ptop {
     padding-top: 7rem;
 }
@@ -56,7 +52,7 @@ $cards-per-line: (
     top: 4rem;
 }
 .dashbaricon {
-    color: darken($blue, 15%);
+    color: $blue;
     background-color: transparent;
     border: 0;
 }
@@ -64,16 +60,15 @@ $cards-per-line: (
     box-shadow: none;
 }
 
-h5 {
-    font-weight: 600;
-}
-
 .btn-less {
     border: 0;
+    border-radius: 0;
     background-color: transparent;
+    color: $gray;
 }
+
 .btn-less:focus {
-    box-shadow: none;;
+    box-shadow: none;
 }
 
 .skillcard {
@@ -87,6 +82,12 @@ h5 {
 
 .card-header {
     padding: 0.5rem 0.75rem;
+    .btn-less {
+        height: 24px;
+    }
+    .h5 {
+        margin-bottom: 0.2rem;
+    }
 }
 .root {
         background-color:  $pink;
@@ -94,4 +95,23 @@ h5 {
         .card-header {
             font-weight: 600;
         }
+}
+
+.h4 {
+    @include font-medium;
+}
+
+.h5 {
+    @include font-regular;
+}
+
+.form-control:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0;
+}
+
+.feed {
+    right: 15px;
+    bottom: 0px;
+    z-index: -1;
 }

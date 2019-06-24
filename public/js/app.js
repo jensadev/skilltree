@@ -2053,6 +2053,117 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewSkilltreeModal.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewSkilltreeModal.vue?vue&type=script&lang=js& ***!
@@ -2238,6 +2349,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   directives: {
@@ -2256,8 +2392,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handler: function handler(e) {
       jqSimpleConnect.connect(document.getElementById("skill_" + this.id), e.path[1], {
-        radius: 2,
-        color: "#bbb"
+        radius: 1,
+        color: "#dd0890"
       }); // remove handler
 
       document.removeEventListener("click", this.handler, true);
@@ -2305,8 +2441,8 @@ __webpack_require__.r(__webpack_exports__);
       this.connections.forEach(function (e) {
         if (e) {
           jqSimpleConnect.connect(document.getElementById("skill_" + _this.id), document.getElementById(e), {
-            radius: 2,
-            color: "#bbb"
+            radius: 1,
+            color: "#dd0890;"
           });
         }
       });
@@ -6934,7 +7070,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.addskill-content {\n    right: 0.2rem;\n    top: 0.6rem;\n    z-index: 5;\n}\n", ""]);
+exports.push([module.i, "\n.addskill-content {\n    right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -6953,7 +7089,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\r\n    position: absolute;\r\n    border: 0.5px #00000010 dashed;\r\n    z-index: -1;\n}\n.skillcard:hover .hideArr {\r\n    visibility: visible;\n}\n.hideArr {\r\n    visibility: hidden;\n}\n.rArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    right: -36px;\r\n    transform: translate(0, -50%);\n}\n.lArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: -36px;\r\n    transform: translate(0, -50%);\n}\r\n", ""]);
+exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skillcard:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -40835,10 +40971,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewSkilltreeModal.vue?vue&type=template&id=0c030663&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewSkilltreeModal.vue?vue&type=template&id=0c030663& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1& ***!
+  \*****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40850,7 +40986,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("modal", { attrs: { name: "new-skilltree", classes: "h-50" } }, [
+  return _c("modal", { attrs: { name: "edit-skill", classes: "h-75" } }, [
     _c("div", { staticClass: "modal-body modal-content" }, [
       _c("div", { staticClass: "container" }, [
         _c(
@@ -40866,7 +41002,196 @@ var render = function() {
           [
             _c("header", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-12 text-center" }, [
-                _c("h5", { staticClass: "modal-title" }, [
+                _c("h3", { staticClass: "modal-title" }, [_vm._v("Edit skill")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "skill_title" } }, [
+                    _vm._v("Title")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "skill_title",
+                      name: "skill_title",
+                      type: "text"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "skill_description" } }, [
+                    _vm._v("Description")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "skill_description",
+                      name: "skill_description",
+                      rows: "6"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" })
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", { attrs: { name: "manage-skilltree", classes: "h-75" } }, [
+    _c("div", { staticClass: "modal-body modal-content" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("header", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12 text-center" }, [
+            _c("h3", { staticClass: "modal-title" }, [
+              _vm._v("Update skilltree")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-6" },
+            [
+              _c("form", [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { id: "title", name: "title", type: "text" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "description" } }, [
+                    _vm._v("Description")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    attrs: { id: "description", name: "description", rows: "6" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group d-flex justify-content-end" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary mr-2",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$modal.hide("new-skilltree")
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Update Skilltree")]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._t("default")
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-6" }, [_vm._v("GOOGLE STUFFINGS")])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewSkilltreeModal.vue?vue&type=template&id=0c030663&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewSkilltreeModal.vue?vue&type=template&id=0c030663& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", { attrs: { name: "new-skilltree", classes: "h-75" } }, [
+    _c("div", { staticClass: "modal-body modal-content" }, [
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
+              }
+            }
+          },
+          [
+            _c("header", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12 text-center" }, [
+                _c("h3", { staticClass: "modal-title" }, [
                   _vm._v("Create a new skilltree")
                 ])
               ])
@@ -41094,15 +41419,71 @@ var render = function() {
       attrs: { id: "skill_" + _vm.id }
     },
     [
-      _c("div", { staticClass: "card-header" }, [
-        _vm._v(_vm._s(_vm.skill_title))
-      ]),
+      _c(
+        "div",
+        {
+          staticClass:
+            "card-header d-flex justify-content-between align-items-center"
+        },
+        [
+          _c("h2", { staticClass: "h5" }, [_vm._v(_vm._s(_vm.skill_title))]),
+          _vm._v(" "),
+          _vm.id != 0
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn btn-less",
+                  staticStyle: { padding: "0" },
+                  attrs: { href: "", role: "button", title: "Edit Skill" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.$modal.show("edit-skill")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "i",
+                    {
+                      staticClass: "material-icons",
+                      staticStyle: {
+                        "font-size": "1.25rem",
+                        "line-height": "1.2"
+                      }
+                    },
+                    [_vm._v("edit")]
+                  )
+                ]
+              )
+            : _vm._e()
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("p", { staticClass: "card-text" }, [
           _vm._v(_vm._s(_vm.skill_description))
         ])
       ]),
+      _vm._v(" "),
+      _vm.id != 0
+        ? _c(
+            "div",
+            { staticClass: "progress", staticStyle: { height: "5px" } },
+            [
+              _c("div", {
+                staticClass: "progress-bar bg-pink",
+                staticStyle: { width: "25%" },
+                attrs: {
+                  role: "progressbar",
+                  "aria-valuenow": "25",
+                  "aria-valuemin": "0",
+                  "aria-valuemax": "100"
+                }
+              })
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "button",
@@ -53491,7 +53872,9 @@ Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 Vue.component('addskill', __webpack_require__(/*! ./components/Addskill.vue */ "./resources/js/components/Addskill.vue")["default"]);
 Vue.component('skillzone', __webpack_require__(/*! ./components/Skillzone.vue */ "./resources/js/components/Skillzone.vue")["default"]);
+Vue.component('edit-skill-modal', __webpack_require__(/*! ./components/EditSkillModal.vue */ "./resources/js/components/EditSkillModal.vue")["default"]);
 Vue.component('new-skilltree-modal', __webpack_require__(/*! ./components/NewSkilltreeModal.vue */ "./resources/js/components/NewSkilltreeModal.vue")["default"]);
+Vue.component('manage-skilltree-modal', __webpack_require__(/*! ./components/ManageSkilltreeModal.vue */ "./resources/js/components/ManageSkilltreeModal.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53645,6 +54028,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Addskill_vue_vue_type_template_id_1133fbbb___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Addskill_vue_vue_type_template_id_1133fbbb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EditSkillModal.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/EditSkillModal.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditSkillModal.vue?vue&type=template&id=5e9088b1& */ "./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1&");
+/* harmony import */ var _EditSkillModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditSkillModal.vue?vue&type=script&lang=js& */ "./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EditSkillModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EditSkillModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSkillModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EditSkillModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSkillModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditSkillModal.vue?vue&type=template&id=5e9088b1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSkillModal_vue_vue_type_template_id_5e9088b1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ManageSkilltreeModal.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/ManageSkilltreeModal.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4& */ "./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4&");
+/* harmony import */ var _ManageSkilltreeModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManageSkilltreeModal.vue?vue&type=script&lang=js& */ "./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ManageSkilltreeModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ManageSkilltreeModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageSkilltreeModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ManageSkilltreeModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ManageSkilltreeModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageSkilltreeModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ManageSkilltreeModal.vue?vue&type=template&id=e4cfd2a4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageSkilltreeModal_vue_vue_type_template_id_e4cfd2a4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

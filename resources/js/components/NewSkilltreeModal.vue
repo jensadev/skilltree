@@ -1,11 +1,11 @@
 <template>
-    <modal name="new-skilltree" classes="h-50">
+    <modal name="new-skilltree" classes="h-75">
         <div class="modal-body modal-content">
             <div class="container">
                 <form @submit.prevent="submit">
                     <header class="row">
                         <div class="col-lg-12 text-center">
-                            <h5 class="modal-title">Create a new skilltree</h5>
+                            <h3 class="modal-title">Create a new skilltree</h3>
                         </div>
                     </header>
                     <div class="row">

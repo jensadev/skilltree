@@ -1,9 +1,34 @@
 <template>
     <div class="card skillcard" :id="'skill_' + id" v-draggable="draggableValue">
-        <div class="card-header">{{ skill_title }}</div>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="h5">{{ skill_title }}</h2>
+            <a
+                v-if="id != 0"
+                href
+                class="btn btn-less"
+                style="padding: 0;"
+                role="button"
+                @click.prevent="$modal.show('edit-skill')"
+                title="Edit Skill"
+            >
+                <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
+            </a>
+        </div>
         <div class="card-body">
             <p class="card-text">{{ skill_description }}</p>
         </div>
+
+        <div v-if="id != 0" class="progress" style="height: 5px;">
+            <div
+                class="progress-bar bg-pink"
+                role="progressbar"
+                style="width: 25%"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            ></div>
+        </div>
+
         <button class="btn btn-less lArr hideArr" @click="createConnection">
             <i class="material-icons" style="transform: scaleX(-1);">forward</i>
         </button>
@@ -35,8 +60,8 @@ export default {
                 document.getElementById("skill_" + this.id),
                 e.path[1],
                 {
-                    radius: 2,
-                    color: "#bbb"
+                    radius: 1,
+                    color: "#dd0890"
                 }
             );
             // remove handler
@@ -94,8 +119,8 @@ export default {
                         document.getElementById("skill_" + this.id),
                         document.getElementById(e),
                         {
-                            radius: 2,
-                            color: "#bbb"
+                            radius: 1,
+                            color: "#dd0890;"
                         }
                     );
                 }

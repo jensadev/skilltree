@@ -1,31 +1,56 @@
+// brandcolors
+
+$cyan: #0de1ec;
+$ultraviolett: #4b0082;
+$magenta: #dd0890;
+$ultramarin: #200c9c;
+$granitgra: #f0f0f0;
+$kolgra: #222222;
+
 // Colors
-$blue: #0de1ec;
-$indigo: #200c9c;
-$purple: #4b0082;
-$pink: #dd0890;
-$red: #e3342f;
+
+$blue: $magenta;
+$indigo: $ultramarin;
+$purple: $ultraviolett;
+$pink: $magenta;
+$red: darken($magenta, 5%);
 $orange: #f6993f;
 $yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
-$gray: #f0f0f0;
-$gray-dark: #222222;
-$light: #f0f0f0;
-$dark: #222222;
+$green: darken($cyan, 10%);
+$teal: $cyan;
+$cyan: $cyan;
+$gray: darken($granitgra, 10%);
+$gray-dark: $kolgra;
+$light: $granitgra;
+$dark: $kolgra;
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:800|Titillium+Web:300,400,600&display=swap');
 
-$font-xbold: 'Open Sans', sans-serif;
-$font-medium: 'Titillium Web', sans-serif;
-$font-regular: 'Titillium Web', sans-serif;
-$font-light: 'Titillium Web', sans-serif;
+@mixin font-xbold {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+}
+
+@mixin font-medium {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+}
+
+@mixin font-regular {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 400;
+}
+
+@mixin font-light {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 300;
+}
 
 // Body
-$body-bg: lighten($light, 45%);
+$body-bg: $light;
 
 // Typography
-$font-family-sans-serif: $font-regular;
-$font-size-base: 0.9rem;
+$font-family-sans-serif: 'Titillium Web', sans-serif;
+$font-size-base: 1rem;
 $line-height-base: 1.6;

@@ -40,8 +40,6 @@ export default {
 </script>
 <style>
 .addskill-content {
-    right: 0.2rem;
-    top: 0.6rem;
-    z-index: 5;
+    right: 15px;
 }
 </style>
