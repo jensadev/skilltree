@@ -57,6 +57,10 @@
                                 >Update Skilltree</button>
                             </div>
                         </div>
+                        <div class="col-lg-6">GOOGLE CONTENTS</div>
+                    </div>
+                    <div class="row">
+                        <slot></slot>
                     </div>
                 </form>
                 <footer class="row">

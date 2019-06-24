@@ -10777,3 +10777,7 @@ a.text-dark:focus {
   height: 100vh;
 }
 
+.smallform-content {
+  right: 15px;
+}
+

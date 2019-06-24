@@ -132,7 +132,6 @@ export default {
             });
         }
     },
-    name: "skillcard",
     props: ["tree", "id", "skill_title", "skill_description", "skill_tasks"]
 };
 </script>

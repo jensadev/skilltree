@@ -15,10 +15,9 @@
             @endif
             @if(isset($skilltree))
                 <addskill :url="'{{ $skilltree->path() . '/skills' }}'">
-                    <template v-slot:trigger>
-                        <i class="material-icons">add_box</i>
-                    </template>
                 </addskill>
+                <invite :url="'{{ $skilltree->path() . '/invitations' }}'">
+                </invite>
                 <a href="" class="btn dashbaricon" role="button" title="Save Skilltree">
                     <i class="material-icons">save</i>
                 </a>

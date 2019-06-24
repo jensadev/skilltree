@@ -1,7 +1,11 @@
 <template>
-    <div class="addskill">
-        <button class="btn dashbaricon" @click="isOpen = !isOpen" title="Add a new Skill">
-            <i class="material-icons">add_box</i>
+    <div class="inviteform">
+        <button
+            class="btn dashbaricon"
+            @click="isOpen = !isOpen"
+            title="Invite another admin user to your Skilltree"
+        >
+            <i class="material-icons">share</i>
         </button>
         <div v-show="isOpen" class="smallform-content position-absolute w-50">
             <div class="card shadow-sm bg-white">
@@ -9,26 +13,26 @@
                     <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
                         <div class="input-group">
                             <input
+                                id="email"
+                                name="email"
                                 type="text"
-                                name="skill_title"
-                                id="skill_title"
                                 class="form-control"
-                                placeholder="Skill title"
-                                aria-label="Skill title"
-                                :class="form.errors.skill_title ? 'is-invalid' : ''"
-                                v-model="form.skill_title"
+                                placeholder="Email address"
+                                aria-label="Email address"
+                                :class="form.errors.email ? 'is-invalid' : ''"
+                                v-model="form.email"
                             >
                             <div class="input-group-append">
                                 <button
                                     class="btn btn-outline-secondary"
                                     type="submit"
                                     :disabled="form.errorAny()"
-                                >Add skill</button>
+                                >Invite</button>
                             </div>
                             <div
                                 class="invalid-feedback"
-                                v-if="form.errors.skill_title"
-                                v-text="form.errors.skill_title[0]"
+                                v-if="form.errors.email"
+                                v-text="form.errors.email[0]"
                             ></div>
                         </div>
                     </form>
@@ -46,7 +50,7 @@ export default {
         return {
             isOpen: false,
             form: new Form({
-                skill_title: ""
+                email: ""
             })
         };
     },
@@ -55,13 +59,13 @@ export default {
         isOpen() {
             if (this.isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
-                document.getElementById("skill_title").autofocus = true;
+                document.getElementById("email").autofocus = true;
             }
         }
     },
     methods: {
         closeIfClickedOutside(event) {
-            if (!event.target.closest(".addskill")) {
+            if (!event.target.closest(".inviteform")) {
                 this.isOpen = false;
                 document.removeEventListener(
                     "click",

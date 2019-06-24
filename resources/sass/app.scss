@@ -95,6 +95,7 @@ $cards-per-line: (
         margin-bottom: 0.2rem;
     }
 }
+
 .root {
         background-color:  $pink;
                     color: $light;
@@ -124,4 +125,8 @@ $cards-per-line: (
 
 .skillzone {
     height: 100vh;
+}
+
+.smallform-content {
+    right: 15px;
 }
