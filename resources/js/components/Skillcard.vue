@@ -92,17 +92,19 @@ export default {
         createConnection: function() {
             document.addEventListener("click", this.handler, true);
         },
-        getCon() {
-            let con = false;
+        hasItems() {
+            let test = false;
             try {
-                con = localStorage.getItem([
+                test = localStorage.getItem([
                     "tree_" + this.tree + "_skill_" + this.id
                 ]);
             } catch {
-                con = false;
+                test = false;
             }
-
-            if (con != null) {
+            return test != null ? true : false;
+        },
+        getCon() {
+            if (this.hasItems()) {
                 this.storage = JSON.parse(
                     localStorage.getItem([
                         "tree_" + this.tree + "_skill_" + this.id
@@ -114,16 +116,7 @@ export default {
             return this.storage.connections;
         },
         getPos() {
-            let pos = false;
-            try {
-                pos = localStorage.getItem([
-                    "tree_" + this.tree + "_skill_" + this.id
-                ]);
-            } catch {
-                pos = false;
-            }
-
-            if (pos != null) {
+            if (this.hasItems()) {
                 this.storage = JSON.parse(
                     localStorage.getItem([
                         "tree_" + this.tree + "_skill_" + this.id

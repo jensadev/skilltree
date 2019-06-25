@@ -57,7 +57,7 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test **/
-    public function a_user_can_delete_a_skilltree()
+    function a_user_can_delete_a_skilltree()
     {
         //  
         $this->signIn();
@@ -72,7 +72,7 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test **/
-    public function a_user_can_update_a_skilltree()
+    function a_user_can_update_a_skilltree()
     {
         $this->withoutExceptionHandling();
         $this->signIn();
@@ -160,10 +160,19 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test **/
-    public function a_user_can_see_all_skilltrees_they_have_been_invited_to_on_their_dashboard()
+    function a_user_can_see_all_skilltrees_they_have_been_invited_to_on_their_dashboard()
     {
         $skilltree = tap(SkilltreeFactory::create())->invite($this->signIn()); // tap ensures we get a return value
 
         $this->get('/skilltrees')->assertSee($skilltree->title);
+    }
+
+    /** @test */
+    function a_user_can_retrieve_a_skilltrees_positions()
+    {
+        $user = $this->signIn();
+        $this->withoutExceptionHandling();
+        $skilltree = SkilltreeFactory::create();
+        $message = $this->get($skilltree->path() . '/pos');
     }
 }

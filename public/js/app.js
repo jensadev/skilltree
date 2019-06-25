@@ -2087,7 +2087,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     closeIfClickedOutside: function closeIfClickedOutside(event) {
-      if (!event.target.closest(".addskill")) {
+      if (!this.$el.contains(event.target)) {
         this.isOpen = false;
         document.removeEventListener("click", this.closeIfClickedOutside);
       }
@@ -2404,7 +2404,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     closeIfClickedOutside: function closeIfClickedOutside(event) {
-      if (!event.target.closest(".inviteform")) {
+      if (!this.$el.contains(event.target)) {
         this.isOpen = false;
         document.removeEventListener("click", this.closeIfClickedOutside);
       }
@@ -2774,10 +2774,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       message: "",
       errors: "",
-      storage: {}
+      positions: {}
     };
   },
-  props: ["tree", "skills"],
+  props: ["tree"],
   methods: {
     savePositions: function () {
       var _savePositions = _asyncToGenerator(
@@ -2787,26 +2787,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.patch("/skilltrees/" + this.tree + "/pos");
+                if (this.hasItems()) {
+                  this.positions = this.getStorage();
+                }
 
-              case 3:
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.post("/skilltrees/" + this.tree + "/pos", {
+                  positions: this.positions()
+                });
+
+              case 4:
                 this.message = _context.sent.data.message;
-                _context.next = 9;
+                console.log(this.message);
+                _context.next = 12;
                 break;
 
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](0);
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
                 this.errors = _context.t0.response;
+                console.log(this.errors);
 
-              case 9:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 6]]);
+        }, _callee, this, [[1, 8]]);
       }));
 
       function savePositions() {
@@ -2823,14 +2831,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log("load positions for " + this.tree);
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.get("/skilltrees/" + this.tree + "/pos");
 
-              case 1:
+              case 3:
+                this.message = _context2.sent.data.message;
+                console.log(this.message);
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                this.errors = _context2.t0.response;
+                console.log(this.errors);
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2, this, [[0, 7]]);
       }));
 
       function loadPositions() {
@@ -2838,24 +2860,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return loadPositions;
-    }()
+    }(),
+    hasItems: function hasItems() {
+      var test = false;
+
+      try {
+        test = localStorage.getItem(["tree_" + this.tree + "_skill_" + 0]);
+      } catch (_unused) {
+        test = false;
+      }
+
+      return test != null ? true : false;
+    },
+    getStorage: function getStorage() {
+      //let storage = JSON.parse(localStorage);
+      //console.log("storage");
+      var storage = [];
+      var needle = "tree_" + this.tree;
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.includes(needle)) {
+          console.log(localStorage.getItem(key));
+          storage.push(localStorage.getItem(key));
+        }
+      });
+      return storage; // for (let i = 0; i < localStorage.length; i++) {
+      //     console.log(localStorage.getItem(localStorage.key(i)));
+      // }
+    }
   },
-  mounted: function mounted() {
-    this.loadPositions(); // let storage = false;
-    // try {
-    //     storage = localStorage.getItem([
-    //         "tree_" + this.tree + "_skill_" + this.id
-    //         ]);
-    //     } catch {
-    //         con = false;
-    //     }
-    //     if (con != null) {
-    //         this.storage = JSON.parse(
-    //             localStorage.getItem([
-    //                 "tree_" + this.tree + "_skill_" + this.id
-    //             ])
-    //         );
-    //        this.submit();
+  beforeMount: function beforeMount() {
+    this.loadPositions();
   }
 });
 

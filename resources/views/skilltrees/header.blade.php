@@ -18,7 +18,7 @@
                 </add-skill>
                 <invite-skilltree-member :url="'{{ $skilltree->path() . '/invitations' }}'">
                 </invite-skilltree-member>
-                <save-skilltree-positions :tree="'{{ $skilltree->id }}'" :skills="{{ $skilltree->skills }}">
+                <save-skilltree-positions :tree="'{{ $skilltree->id }}'">
                 </save-skilltree-positions>
                 <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Skilltree Settings">
                     <i class="material-icons">settings</i>

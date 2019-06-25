@@ -16,43 +16,71 @@ export default {
         return {
             message: "",
             errors: "",
-            storage: {}
+            positions: {}
         };
     },
-    props: ["tree", "skills"],
+    props: ["tree"],
     methods: {
         async savePositions() {
+            if (this.hasItems()) {
+                this.positions = this.getStorage();
+            }
             try {
-                this.message = (await axios.patch(
-                    "/skilltrees/" + this.tree + "/pos"
+                this.message = (await axios.post(
+                    "/skilltrees/" + this.tree + "/pos",
+                    {
+                        positions: this.positions()
+                    }
                 )).data.message;
+                console.log(this.message);
             } catch (error) {
                 this.errors = error.response;
+                console.log(this.errors);
             }
         },
         async loadPositions() {
-            console.log("load positions for " + this.tree);
+            try {
+                this.message = (await axios.get(
+                    "/skilltrees/" + this.tree + "/pos"
+                )).data.message;
+                console.log(this.message);
+            } catch (error) {
+                this.errors = error.response;
+                console.log(this.errors);
+            }
+        },
+        hasItems() {
+            let test = false;
+            try {
+                test = localStorage.getItem([
+                    "tree_" + this.tree + "_skill_" + 0
+                ]);
+            } catch {
+                test = false;
+            }
+            return test != null ? true : false;
+        },
+        getStorage() {
+            //let storage = JSON.parse(localStorage);
+            //console.log("storage");
+            let storage = [];
+            let needle = "tree_" + this.tree;
+            Object.keys(localStorage).forEach(function(key) {
+                if (key.includes(needle)) {
+                    console.log(localStorage.getItem(key));
+                    storage.push(localStorage.getItem(key));
+                }
+            });
+
+            return storage;
+
+            // for (let i = 0; i < localStorage.length; i++) {
+            //     console.log(localStorage.getItem(localStorage.key(i)));
+            // }
         }
     },
-    mounted() {
+    beforeMount() {
         this.loadPositions();
-
-        // let storage = false;
-        // try {
-        //     storage = localStorage.getItem([
-        //         "tree_" + this.tree + "_skill_" + this.id
-        //         ]);
-        //     } catch {
-        //         con = false;
-        //     }
-
-        //     if (con != null) {
-        //         this.storage = JSON.parse(
-        //             localStorage.getItem([
-        //                 "tree_" + this.tree + "_skill_" + this.id
-        //             ])
-        //         );
-        //        this.submit();
     }
 };
 </script>

@@ -16,10 +16,13 @@ Route::group(
     function () {
         Route::get('/', 'SkilltreesController@index');
         Route::resource('skilltrees', 'SkilltreesController');
+
+        Route::get('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@show');
+        Route::post('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@store');
+
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
-        //        Route::patch('/skilltrees/{skilltree}/skills/{skill}/pos', 'SkilltreeSkillsController@pos');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
         //classroom test routes

@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         closeIfClickedOutside(event) {
-            if (!event.target.closest(".addskill")) {
+            if (!this.$el.contains(event.target)) {
                 this.isOpen = false;
                 document.removeEventListener(
                     "click",

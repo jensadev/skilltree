@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Skill;
 use App\Activity;
+use Appstract\Meta\Metable;
 
 class Skilltree extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Metable;
 
     protected $guarded = [];
 
@@ -61,5 +62,18 @@ class Skilltree extends Model
     public function members()
     {
         return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps();
+    }
+
+    public function showPositions()
+    {
+        if ($this->hasMeta('positions')) {
+            return $this->getMeta('positions');
+        }
+        return "No positions found";
+    }
+
+    public function storePositions($positions)
+    {
+        return $this->addMeta('positions', $positions);
     }
 }

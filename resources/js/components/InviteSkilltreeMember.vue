@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         closeIfClickedOutside(event) {
-            if (!event.target.closest(".inviteform")) {
+            if (!this.$el.contains(event.target)) {
                 this.isOpen = false;
                 document.removeEventListener(
                     "click",
