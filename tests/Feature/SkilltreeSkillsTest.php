@@ -22,6 +22,7 @@ class SkilltreeSkillsTest extends TestCase
     /** @test */
     function a_skilltree_can_have_skills()
     {
+        $this->withoutExceptionHandling();
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)

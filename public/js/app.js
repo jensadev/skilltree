@@ -2135,7 +2135,79 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2177,7 +2249,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tree: 0,
+      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        skill_id: 0,
+        skill_title: "",
+        skill_description: "",
+        skill_tasks: [{
+          body: ""
+        }]
+      })
+    };
+  },
+  methods: {
+    beforeOpen: function beforeOpen(event) {
+      this.tree = event.params.tree;
+      this.form.skill_id = event.params.skill_id;
+      this.form.skill_title = event.params.skill_title;
+      this.form.skill_description = event.params.skill_description;
+
+      if (event.params.skill_tasks) {
+        this.form.skill_tasks = event.params.skill_tasks;
+      } else {
+        this.form.skill_tasks = [{
+          body: ""
+        }];
+      }
+    },
+    addTask: function addTask() {
+      this.form.skill_tasks.push({
+        body: ""
+      });
+    },
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.form.skill_tasks[0].body) {
+                  delete this.form.originalData.skill_tasks;
+                }
+
+                this.form.submit("/skilltrees/" + this.tree + /skills/ + this.form.skill_id, "patch").then(function (response) {
+                  return location = response.data.message;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
+  }
+});
 
 /***/ }),
 
@@ -41207,68 +41346,248 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("modal", { attrs: { name: "edit-skill", classes: "h-75" } }, [
-    _c("div", { staticClass: "modal-body modal-content" }, [
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.submit($event)
+  return _c(
+    "modal",
+    {
+      attrs: { name: "edit-skill", classes: "h-75" },
+      on: { "before-open": _vm.beforeOpen }
+    },
+    [
+      _c("div", { staticClass: "modal-body modal-content" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("header", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 text-center" }, [
+              _c("h3", { staticClass: "modal-title" }, [_vm._v("Edit skill")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                },
+                keydown: function($event) {
+                  return _vm.form.errorClear($event.target.name)
+                }
               }
-            }
-          },
-          [
-            _c("header", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-12 text-center" }, [
-                _c("h3", { staticClass: "modal-title" }, [_vm._v("Edit skill")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "skill_title" } }, [
-                    _vm._v("Title")
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "skill_title" } }, [
+                      _vm._v("Title")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.skill_title,
+                          expression: "form.skill_title"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: _vm.form.errors.skill_title ? "is-invalid" : "",
+                      attrs: {
+                        id: "skill_title",
+                        name: "skill_title",
+                        type: "text",
+                        value: "form.skill_title"
+                      },
+                      domProps: { value: _vm.form.skill_title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "skill_title", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.form.errors.skill_title
+                      ? _c("div", {
+                          staticClass: "invalid-feedback",
+                          domProps: {
+                            textContent: _vm._s(_vm.form.errors.skill_title[0])
+                          }
+                        })
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: {
-                      id: "skill_title",
-                      name: "skill_title",
-                      type: "text"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" })
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "skill_description" } }, [
+                      _vm._v("Description")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "textarea",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.skill_description,
+                            expression: "form.skill_description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.form.errors.skill_description
+                          ? "is-invalid"
+                          : "",
+                        attrs: {
+                          id: "skill_description",
+                          name: "skill_description",
+                          rows: "6"
+                        },
+                        domProps: { value: _vm.form.skill_description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "skill_description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("form.skill_description")]
+                    ),
+                    _vm._v(" "),
+                    _vm.form.errors.skill_description
+                      ? _c("div", {
+                          staticClass: "invalid-feedback",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.form.errors.skill_description[0]
+                            )
+                          }
+                        })
+                      : _vm._e()
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "skill_description" } }, [
-                    _vm._v("Description")
-                  ]),
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Tasks")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.skill_tasks, function(task, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "input-group" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: task.body,
+                                  expression: "task.body"
+                                }
+                              ],
+                              staticClass: "form-control mb-2",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Task " + (index + 1),
+                                value: "task.body"
+                              },
+                              domProps: { value: task.body },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(task, "body", $event.target.value)
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  ),
                   _vm._v(" "),
-                  _c("textarea", {
-                    staticClass: "form-control",
-                    attrs: {
-                      id: "skill_description",
-                      name: "skill_description",
-                      rows: "6"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "invalid-feedback" })
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "d-flex align-items-center border-0 bg-transparent",
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.addTask($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "material-icons" }, [
+                          _vm._v("add_circle_outline")
+                        ]),
+                        _vm._v(" "),
+                        _c("small", { staticClass: "text-muted pl-2" }, [
+                          _vm._v("Add a Task")
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("footer", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group d-flex justify-content-end" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-primary mr-2",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.$modal.hide("edit-skill")
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: {
+                            type: "submit",
+                            disabled: _vm.form.errorAny()
+                          }
+                        },
+                        [_vm._v("Update Skill")]
+                      )
+                    ]
+                  )
                 ])
               ])
-            ])
-          ]
-        )
+            ]
+          )
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41866,7 +42185,13 @@ var render = function() {
                   on: {
                     click: function($event) {
                       $event.preventDefault()
-                      return _vm.$modal.show("edit-skill")
+                      return _vm.$modal.show("edit-skill", {
+                        tree: _vm.tree,
+                        skill_id: _vm.id,
+                        skill_title: _vm.skill_title,
+                        skill_description: _vm.skill_description,
+                        skill_tasks: _vm.skill_tasks
+                      })
                     }
                   }
                 },
@@ -41918,10 +42243,10 @@ var render = function() {
             [
               _c("div", {
                 staticClass: "progress-bar bg-pink",
-                staticStyle: { width: "25%" },
+                staticStyle: { width: "0%" },
                 attrs: {
                   role: "progressbar",
-                  "aria-valuenow": "25",
+                  "aria-valuenow": "0",
                   "aria-valuemin": "0",
                   "aria-valuemax": "100"
                 }

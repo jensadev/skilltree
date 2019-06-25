@@ -57,6 +57,11 @@ class Skill extends Model
         return $this->tasks()->create(compact('body'));
     }
 
+    public function addTasks($tasks)
+    {
+        return $this->tasks()->createMany($tasks);
+    }
+
     /**
      * Handle for skill path
      *

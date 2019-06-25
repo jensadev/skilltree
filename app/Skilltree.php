@@ -33,9 +33,9 @@ class Skilltree extends Model
      * 
      * @param string $skill_title
      */
-    public function addSkill($skill_title)
+    public function addSkill($skill)
     {
-        return $this->skills()->create(compact('skill_title'));
+        return $this->skills()->create($skill);
     }
 
     /**

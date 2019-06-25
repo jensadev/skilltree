@@ -52,7 +52,7 @@ class TriggerActivityTest extends TestCase
     function creating_a_new_skill()
     {
         $skilltree = SkilltreeFactory::create();
-        $skilltree->addSkill('Some skill');
+        $skilltree->addSkill(['skill_title' => 'Some skill']);
         $this->assertCount(2, $skilltree->activity);
         tap($skilltree->activity->last(), function ($activity) {
             $this->assertEquals('created_skill', $activity->description);

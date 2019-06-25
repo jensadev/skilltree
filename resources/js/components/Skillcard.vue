@@ -8,7 +8,7 @@
                 class="btn btn-less"
                 style="padding: 0;"
                 role="button"
-                @click.prevent="$modal.show('edit-skill')"
+                @click.prevent="$modal.show('edit-skill', { tree: tree, skill_id: id,  skill_title: skill_title, skill_description: skill_description, skill_tasks: skill_tasks})"
                 title="Edit Skill"
             >
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
@@ -26,8 +26,8 @@
             <div
                 class="progress-bar bg-pink"
                 role="progressbar"
-                style="width: 25%"
-                aria-valuenow="25"
+                style="width: 0%"
+                aria-valuenow="0"
                 aria-valuemin="0"
                 aria-valuemax="100"
             ></div>
