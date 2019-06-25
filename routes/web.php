@@ -19,6 +19,7 @@ Route::group(
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
+        //        Route::patch('/skilltrees/{skilltree}/skills/{skill}/pos', 'SkilltreeSkillsController@pos');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
         //classroom test routes

@@ -57,26 +57,34 @@ export default {
                 onDragEnd: this.onDragEnd,
                 initialPosition: this.getPos()
             },
-            connections: []
+            storage: {
+                position: {},
+                connections: this.getCon()
+            }
         };
+        console.log(this.storage);
     },
     methods: {
         handler: function(e) {
-            console.log();
             if (e.target.offsetParent.id.includes("skill")) {
                 jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
                     radius: this.thickness,
                     color: this.color
                 });
 
-                if (!this.connections.includes(e.target.offsetParent.id)) {
-                    this.connections.push(e.target.offsetParent.id);
-
-                    localStorage.setItem(
-                        "tree_" + this.tree + "_" + this.id,
-                        JSON.stringify(this.connections)
-                    );
+                if (
+                    !this.storage.connections.includes(
+                        e.target.offsetParent.id
+                    ) &&
+                    "skill_" + this.id !== e.target.offsetParent.id
+                ) {
+                    this.storage.connections.push(e.target.offsetParent.id);
                 }
+
+                localStorage.setItem(
+                    ["tree_" + this.tree + "_skill_" + this.id],
+                    JSON.stringify(this.storage)
+                );
             }
             // remove handler
             document.removeEventListener("click", this.handler, true);
@@ -84,43 +92,86 @@ export default {
         createConnection: function() {
             document.addEventListener("click", this.handler, true);
         },
-        getPos: function() {
-            let pos = JSON.parse(localStorage.getItem("skill_" + this.id));
-            if (pos) {
-                return { left: pos[0], top: pos[1] };
+        getCon() {
+            let con = false;
+            try {
+                con = localStorage.getItem([
+                    "tree_" + this.tree + "_skill_" + this.id
+                ]);
+            } catch {
+                con = false;
+            }
+
+            if (con != null) {
+                this.storage = JSON.parse(
+                    localStorage.getItem([
+                        "tree_" + this.tree + "_skill_" + this.id
+                    ])
+                );
             } else {
-                return {
-                    left: this.random(200, window.innerWidth - 300),
-                    top: this.random(200, window.innerHeight - 300)
+                this.storage.connections = [];
+            }
+            return this.storage.connections;
+        },
+        getPos() {
+            let pos = false;
+            try {
+                pos = localStorage.getItem([
+                    "tree_" + this.tree + "_skill_" + this.id
+                ]);
+            } catch {
+                pos = false;
+            }
+
+            if (pos != null) {
+                this.storage = JSON.parse(
+                    localStorage.getItem([
+                        "tree_" + this.tree + "_skill_" + this.id
+                    ])
+                );
+            } else {
+                this.storage = {
+                    position: {
+                        left: this.random(200, window.innerWidth - 200),
+                        top: this.random(200, window.innerWidth - 200)
+                    }
                 };
             }
+            return this.storage.position;
         },
         onPosChanged: function(positionDiff, absolutePosition, event) {
             if (absolutePosition) {
+                this.storage.position = absolutePosition;
+
                 localStorage.setItem(
-                    "skill_" + this.id,
-                    JSON.stringify([
-                        absolutePosition.left,
-                        absolutePosition.top
-                    ])
+                    ["tree_" + this.tree + "_skill_" + this.id],
+                    JSON.stringify(this.storage)
                 );
             }
             jqSimpleConnect.repaintAll();
         },
         onDragEnd: function() {
             // make db call to save positions
+            //this.saveStorage();
         },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
+        },
+        async saveStorage() {
+            let message;
+            try {
+                message = await axios.post(
+                    "/skilltrees/" + this.tree + "/skills/" + this.id + "/pos"
+                ).data.message;
+            } catch (error) {
+                message = error.response;
+            }
+            console.log(message);
         }
     },
     mounted() {
-        let temp = JSON.parse(
-            localStorage.getItem("tree_" + this.tree + "_" + this.id)
-        );
-        if (temp) {
-            this.connections = temp;
-            this.connections.forEach(e => {
+        if (typeof this.storage.connections !== "undefined") {
+            this.storage.connections.forEach(e => {
                 if (e) {
                     jqSimpleConnect.connect(
                         this.$el,

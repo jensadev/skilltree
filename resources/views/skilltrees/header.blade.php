@@ -14,13 +14,12 @@
                 </a>
             @endif
             @if(isset($skilltree))
-                <addskill :url="'{{ $skilltree->path() . '/skills' }}'">
-                </addskill>
-                <invite :url="'{{ $skilltree->path() . '/invitations' }}'">
-                </invite>
-                <a href="" class="btn dashbaricon" role="button" title="Save Skilltree">
-                    <i class="material-icons">save</i>
-                </a>
+                <add-skill :url="'{{ $skilltree->path() . '/skills' }}'">
+                </add-skill>
+                <invite-skilltree-member :url="'{{ $skilltree->path() . '/invitations' }}'">
+                </invite-skilltree-member>
+                <save-skilltree-positions :tree="'{{ $skilltree->id }}'" :skills="{{ $skilltree->skills }}">
+                </save-skilltree-positions>
                 <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Skilltree Settings">
                     <i class="material-icons">settings</i>
                 </a>

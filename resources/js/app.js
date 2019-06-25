@@ -23,12 +23,10 @@ Vue.use(VModal);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
-//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-//Vue.component('sidebar', require('./components/Sidebar.vue').default);
-Vue.component('addskill', require('./components/Addskill.vue').default);
-Vue.component('invite', require('./components/Invite.vue').default);
-//Vue.component('skillzone', require('./components/Skillzone.vue').default);
-Vue.component('skillcard', require('./components/Skillcard.vue').default);
+Vue.component('add-skill', require('./components/AddSkill.vue').default);
+Vue.component('invite-skilltree-member', require('./components/InviteSkilltreeMember.vue').default);
+Vue.component('save-skilltree-positions', require('./components/SaveSkilltreePositions.vue').default);
+Vue.component('skill-card', require('./components/SkillCard.vue').default);
 Vue.component('edit-skill-modal', require('./components/EditSkillModal.vue').default);
 Vue.component('new-skilltree-modal', require('./components/NewSkilltreeModal.vue').default);
 Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeModal.vue').default);

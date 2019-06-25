@@ -1,6 +1,6 @@
 <template>
-    <div class="addskill">
-        <button class="btn dashbaricon" @click="isOpen = !isOpen" title="Add a new Skill">
+    <div class="add-skill">
+        <button class="btn dashbaricon" @click.prevent="isOpen = !isOpen" title="Add a new Skill">
             <i class="material-icons">add_box</i>
         </button>
         <div v-show="isOpen" class="smallform-content position-absolute w-50">
@@ -54,7 +54,6 @@ export default {
     watch: {
         isOpen() {
             if (this.isOpen) {
-                console.log("isopen");
                 document.addEventListener("click", this.closeIfClickedOutside);
 
                 window.setTimeout(function() {

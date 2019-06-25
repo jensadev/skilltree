@@ -1,5 +1,5 @@
 <template>
-    <div class="inviteform">
+    <div class="invite-skilltree-member">
         <button
             class="btn dashbaricon"
             @click="isOpen = !isOpen"
