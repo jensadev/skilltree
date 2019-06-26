@@ -116,6 +116,7 @@ export default {
             return this.storage.connections;
         },
         getPos() {
+            console.log("when is a skillcard initiated");
             if (this.hasItems()) {
                 this.storage = JSON.parse(
                     localStorage.getItem([

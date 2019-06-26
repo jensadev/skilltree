@@ -2753,6 +2753,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2769,11 +2771,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      message: "",
-      errors: "",
+      load: this.loadPositions(),
+      isLoading: false,
       positions: {}
     };
   },
@@ -2787,34 +2799,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.isLoading = true;
+
                 if (this.hasItems()) {
                   this.positions = this.getStorage();
                 }
 
-                _context.prev = 1;
-                _context.next = 4;
+                _context.prev = 2;
+                _context.next = 5;
                 return axios.post("/skilltrees/" + this.tree + "/pos", {
-                  positions: this.positions()
+                  positions: this.positions
+                }).then(function (response) {
+                  console.log(response.status);
                 });
 
-              case 4:
-                this.message = _context.sent.data.message;
-                console.log(this.message);
-                _context.next = 12;
+              case 5:
+                _context.next = 11;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
-                this.errors = _context.t0.response;
-                console.log(this.errors);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](2);
+                this.errors = _context.t0;
+                console.log("error" + this.errors);
+
+              case 11:
+                this.isLoading = false;
 
               case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[2, 7]]);
       }));
 
       function savePositions() {
@@ -2827,32 +2844,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _loadPositions = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var needle;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.get("/skilltrees/" + this.tree + "/pos");
+                //if (!this.hasItems()) {
+                this.isLoading = true;
+                needle = "tree_" + this.tree;
+                _context2.next = 4;
+                return axios.get("/skilltrees/" + this.tree + "/pos").then(function (response) {
+                  var data = response.data.message.value;
+                  console.log(response.status);
 
-              case 3:
-                this.message = _context2.sent.data.message;
-                console.log(this.message);
-                _context2.next = 11;
-                break;
+                  if (response.status == 200) {
+                    data.forEach(function (element) {
+                      //console.log(needle);
+                      //console.log(element);
+                      Object.keys(element).forEach(function (key) {
+                        if (key.includes(needle)) {
+                          console.log(element[key]);
+                          localStorage.setItem(key, element[key]);
+                        }
+                      });
+                    });
+                  }
+                })["catch"](function (error) {
+                  console.log(error);
+                });
 
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                this.errors = _context2.t0.response;
-                console.log(this.errors);
+              case 4:
+                //}
+                this.isLoading = false;
 
-              case 11:
+              case 5:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 7]]);
+        }, _callee2, this);
       }));
 
       function loadPositions() {
@@ -2875,21 +2905,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getStorage: function getStorage() {
       //let storage = JSON.parse(localStorage);
       //console.log("storage");
-      var storage = [];
+      var temp = [];
       var needle = "tree_" + this.tree;
       Object.keys(localStorage).forEach(function (key) {
         if (key.includes(needle)) {
-          console.log(localStorage.getItem(key));
-          storage.push(localStorage.getItem(key));
+          //temp.push(localStorage.getItem(key));
+          if (key.includes(needle)) {
+            temp.push(_defineProperty({}, key, localStorage.getItem(key)));
+          }
         }
       });
-      return storage; // for (let i = 0; i < localStorage.length; i++) {
+      return temp; // for (let i = 0; i < localStorage.length; i++) {
       //     console.log(localStorage.getItem(localStorage.key(i)));
       // }
     }
   },
-  beforeMount: function beforeMount() {
-    this.loadPositions();
+  beforeMount: function beforeMount() {// if (!this.hasItems) {
+    //     this.loadPositions();
+    // }
   }
 });
 
@@ -42383,17 +42416,42 @@ var render = function() {
   return _c("div", { staticClass: "save-skilltree-positions" }, [
     _c(
       "button",
-      {
-        staticClass: "btn dashbaricon",
-        attrs: { title: "Save Skilltree positions" },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.savePositions($event)
+      _vm._b(
+        {
+          staticClass: "btn dashbaricon",
+          attrs: { title: "Save Skilltree positions", disabled: _vm.isLoading },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.savePositions($event)
+            }
           }
-        }
-      },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("save")])]
+        },
+        "button",
+        { isLoading: _vm.isLoading },
+        false
+      ),
+      [
+        _vm.isLoading == false
+          ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isLoading
+          ? _c(
+              "div",
+              {
+                staticClass: "spinner-border",
+                staticStyle: {
+                  width: "24px",
+                  height: "24px",
+                  "margin-left": "14px"
+                },
+                attrs: { role: "status" }
+              },
+              [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+            )
+          : _vm._e()
+      ]
     )
   ])
 }
