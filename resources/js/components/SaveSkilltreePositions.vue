@@ -17,8 +17,8 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </button>
+        <!--v-if="save"-->
         <button
-            v-if="save"
             class="btn dashbaricon"
             @click.prevent="savePositions"
             title="Save Skilltree positions"
