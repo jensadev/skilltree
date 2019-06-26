@@ -1,5 +1,5 @@
 <template>
-    <div class="card skillcard" :id="'skill_' + id" v-draggable="draggableValue">
+    <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h2 class="h5">{{ skill_title }}</h2>
             <a
@@ -50,6 +50,7 @@ export default {
     },
     data() {
         return {
+            init: this.loadInit(),
             color: "#0de1ec",
             thickness: 1,
             draggableValue: {
@@ -62,9 +63,31 @@ export default {
                 connections: this.getCon()
             }
         };
-        console.log(this.storage);
     },
     methods: {
+        async loadInit() {
+            if (!this.hasItems() && this.id == 0) {
+                let needle = "tree_" + this.tree;
+                await axios
+                    .get("/skilltrees/" + this.tree + "/pos")
+                    .then(function(response) {
+                        console.log(response.status);
+                        if (response.status == 200) {
+                            response.data.message.value.forEach(element => {
+                                Object.keys(element).forEach(function(key) {
+                                    localStorage.setItem(key, element[key]);
+                                });
+                            });
+                        }
+                    })
+                    .then(function() {
+                        location.reload();
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            }
+        },
         handler: function(e) {
             if (e.target.offsetParent.id.includes("skill")) {
                 jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
@@ -116,7 +139,6 @@ export default {
             return this.storage.connections;
         },
         getPos() {
-            console.log("when is a skillcard initiated");
             if (this.hasItems()) {
                 this.storage = JSON.parse(
                     localStorage.getItem([
@@ -150,17 +172,6 @@ export default {
         },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
-        },
-        async saveStorage() {
-            let message;
-            try {
-                message = await axios.post(
-                    "/skilltrees/" + this.tree + "/skills/" + this.id + "/pos"
-                ).data.message;
-            } catch (error) {
-                message = error.response;
-            }
-            console.log(message);
         }
     },
     mounted() {
@@ -189,7 +200,7 @@ export default {
     z-index: -1;
 }
 
-.skillcard:hover .hideArr {
+.skill-card:hover .hideArr {
     visibility: visible;
 }
 

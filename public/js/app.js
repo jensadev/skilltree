@@ -2781,15 +2781,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      load: this.loadPositions(),
       isLoading: false,
       positions: {}
     };
   },
-  props: ["tree"],
+  props: ["tree", "save"],
   methods: {
     savePositions: function () {
       var _savePositions = _asyncToGenerator(
@@ -2840,57 +2857,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return savePositions;
     }(),
-    loadPositions: function () {
-      var _loadPositions = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var needle;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                //if (!this.hasItems()) {
-                this.isLoading = true;
-                needle = "tree_" + this.tree;
-                _context2.next = 4;
-                return axios.get("/skilltrees/" + this.tree + "/pos").then(function (response) {
-                  var data = response.data.message.value;
-                  console.log(response.status);
-
-                  if (response.status == 200) {
-                    data.forEach(function (element) {
-                      //console.log(needle);
-                      //console.log(element);
-                      Object.keys(element).forEach(function (key) {
-                        if (key.includes(needle)) {
-                          console.log(element[key]);
-                          localStorage.setItem(key, element[key]);
-                        }
-                      });
-                    });
-                  }
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 4:
-                //}
-                this.isLoading = false;
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function loadPositions() {
-        return _loadPositions.apply(this, arguments);
-      }
-
-      return loadPositions;
-    }(),
     hasItems: function hasItems() {
       var test = false;
 
@@ -2903,26 +2869,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return test != null ? true : false;
     },
     getStorage: function getStorage() {
-      //let storage = JSON.parse(localStorage);
-      //console.log("storage");
       var temp = [];
       var needle = "tree_" + this.tree;
       Object.keys(localStorage).forEach(function (key) {
         if (key.includes(needle)) {
-          //temp.push(localStorage.getItem(key));
           if (key.includes(needle)) {
             temp.push(_defineProperty({}, key, localStorage.getItem(key)));
           }
         }
       });
-      return temp; // for (let i = 0; i < localStorage.length; i++) {
-      //     console.log(localStorage.getItem(localStorage.key(i)));
-      // }
+      return temp;
+    },
+    restorePositions: function restorePositions() {
+      this.isLoading = true;
+      var needle = "tree_" + this.tree;
+      Object.keys(localStorage).forEach(function (key) {
+        if (key.includes(needle)) {
+          if (key.includes(needle)) {
+            localStorage.removeItem(key);
+          }
+        }
+      });
+      location.reload();
     }
-  },
-  beforeMount: function beforeMount() {// if (!this.hasItems) {
-    //     this.loadPositions();
-    // }
   }
 });
 
@@ -2997,6 +2966,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      init: this.loadInit(),
       color: "#0de1ec",
       thickness: 1,
       draggableValue: {
@@ -3009,9 +2979,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         connections: this.getCon()
       }
     };
-    console.log(this.storage);
   },
   methods: {
+    loadInit: function () {
+      var _loadInit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var needle;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(!this.hasItems() && this.id == 0)) {
+                  _context.next = 4;
+                  break;
+                }
+
+                needle = "tree_" + this.tree;
+                _context.next = 4;
+                return axios.get("/skilltrees/" + this.tree + "/pos").then(function (response) {
+                  console.log(response.status);
+
+                  if (response.status == 200) {
+                    response.data.message.value.forEach(function (element) {
+                      Object.keys(element).forEach(function (key) {
+                        localStorage.setItem(key, element[key]);
+                      });
+                    });
+                  }
+                }).then(function () {
+                  location.reload();
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function loadInit() {
+        return _loadInit.apply(this, arguments);
+      }
+
+      return loadInit;
+    }(),
     handler: function handler(e) {
       if (e.target.offsetParent.id.includes("skill")) {
         jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
@@ -3032,16 +3047,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     createConnection: function createConnection() {
       document.addEventListener("click", this.handler, true);
     },
-    getCon: function getCon() {
-      var con = false;
+    hasItems: function hasItems() {
+      var test = false;
 
       try {
-        con = localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]);
+        test = localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]);
       } catch (_unused) {
-        con = false;
+        test = false;
       }
 
-      if (con != null) {
+      return test != null ? true : false;
+    },
+    getCon: function getCon() {
+      if (this.hasItems()) {
         this.storage = JSON.parse(localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]));
       } else {
         this.storage.connections = [];
@@ -3050,15 +3068,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.storage.connections;
     },
     getPos: function getPos() {
-      var pos = false;
-
-      try {
-        pos = localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]);
-      } catch (_unused2) {
-        pos = false;
-      }
-
-      if (pos != null) {
+      if (this.hasItems()) {
         this.storage = JSON.parse(localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]));
       } else {
         this.storage = {
@@ -3084,47 +3094,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     random: function random(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
-    },
-    saveStorage: function () {
-      var _saveStorage = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var message;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.post("/skilltrees/" + this.tree + "/skills/" + this.id + "/pos").data.message;
-
-              case 3:
-                message = _context.sent;
-                _context.next = 9;
-                break;
-
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](0);
-                message = _context.t0.response;
-
-              case 9:
-                console.log(message);
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[0, 6]]);
-      }));
-
-      function saveStorage() {
-        return _saveStorage.apply(this, arguments);
-      }
-
-      return saveStorage;
-    }()
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -7720,7 +7690,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skillcard:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
+exports.push([module.i, "\n.line {\r\n    position: absolute;\r\n    border: 0.5px #00000010 dashed;\r\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\r\n    visibility: visible;\n}\n.hideArr {\r\n    visibility: hidden;\n}\n.rArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    right: -36px;\r\n    transform: translate(0, -50%);\n}\n.lArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: -36px;\r\n    transform: translate(0, -50%);\n}\r\n", ""]);
 
 // exports
 
@@ -42419,11 +42389,14 @@ var render = function() {
       _vm._b(
         {
           staticClass: "btn dashbaricon",
-          attrs: { title: "Save Skilltree positions", disabled: _vm.isLoading },
+          attrs: {
+            title: "Restore Skilltree positions",
+            disabled: _vm.isLoading
+          },
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.savePositions($event)
+              return _vm.restorePositions($event)
             }
           }
         },
@@ -42433,7 +42406,7 @@ var render = function() {
       ),
       [
         _vm.isLoading == false
-          ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
+          ? _c("i", { staticClass: "material-icons" }, [_vm._v("restore_page")])
           : _vm._e(),
         _vm._v(" "),
         _vm.isLoading
@@ -42452,7 +42425,56 @@ var render = function() {
             )
           : _vm._e()
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.save
+      ? _c(
+          "button",
+          _vm._b(
+            {
+              staticClass: "btn dashbaricon",
+              attrs: {
+                title: "Save Skilltree positions",
+                disabled: _vm.isLoading
+              },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.savePositions($event)
+                }
+              }
+            },
+            "button",
+            { isLoading: _vm.isLoading },
+            false
+          ),
+          [
+            _vm.isLoading == false
+              ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isLoading
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "spinner-border",
+                    staticStyle: {
+                      width: "24px",
+                      height: "24px",
+                      "margin-left": "14px"
+                    },
+                    attrs: { role: "status" }
+                  },
+                  [
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Loading...")
+                    ])
+                  ]
+                )
+              : _vm._e()
+          ]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -42488,7 +42510,7 @@ var render = function() {
           expression: "draggableValue"
         }
       ],
-      staticClass: "card skillcard",
+      staticClass: "card skill-card",
       attrs: { id: "skill_" + _vm.id }
     },
     [
@@ -55526,14 +55548,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/SkillCard.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SkillCard_vue_vue_type_template_id_3adb6aa6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=template&id=3adb6aa6& */ "./resources/js/components/SkillCard.vue?vue&type=template&id=3adb6aa6&");
 /* harmony import */ var _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=script&lang=js& */ "./resources/js/components/SkillCard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _SkillCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/SkillCard.vue?vue&type=style&index=0&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _SkillCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/SkillCard.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -55565,7 +55588,7 @@ component.options.__file = "resources/js/components/SkillCard.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/SkillCard.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -10721,7 +10721,7 @@ a.text-dark:focus {
   box-shadow: none;
 }
 
-.skillcard {
+.skill-card {
   position: absolute;
   width: 180px;
   z-index: 5;
