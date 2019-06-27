@@ -5,7 +5,7 @@
     </div>
     <div class="card-footer d-flex justify-content-between">
         <div>
-            @foreach ($skilltree->members as $member)
+            @foreach ($skilltree->members->take(5) as $member)
                 <img
                     src="{{ $member->avatar }}"
                     alt="{{ $member->name }}'s avatar"
