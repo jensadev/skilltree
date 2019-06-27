@@ -135,12 +135,14 @@ $cards-per-line: (
     right: 15px;
 }
 
-.loginheader {
-    padding-bottom: 100px;
+.loginheader-padding {
+    padding-left: 5.3rem;
 }
 
 .loginheader-text {
     line-height: 2;
+    padding-left: 5rem;
+    letter-spacing: 1rem;
 }
 
 .loginheader-text::after {
@@ -148,15 +150,16 @@ $cards-per-line: (
     display:block;
     width:50%;
     margin-left: 50%;
-    height:10px;
     padding:0;
+    border-bottom: 10px solid $light;
     background-color: $light;
+    margin-bottom: -8px;
 }
 
 .loginheader-border {
-    width: 600px !important;
     border-top: 10px solid $light;
     border-right: 10px solid $light;
+    padding: 0px;
 }
 
 .loginheader-left {
@@ -164,20 +167,3 @@ $cards-per-line: (
     height: 123px;
     border-right: 10px solid $light;
 }
-
-.loginheader-content {
-    width: 600px;
-    padding-left: 70px;
-    padding-top: 3rem;
-}
-
-/*
-.loginheader-text::before {
-    content: "";
-    display:block;
-    width:8px;
-    height:50%;
-    padding:0;
-    background-color: $light;
-}
-*/
