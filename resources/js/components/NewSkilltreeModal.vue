@@ -20,6 +20,7 @@
                                     type="text"
                                     placeholder="e.g Design"
                                     v-model="form.title"
+                                    required
                                 >
                                 <div
                                     class="invalid-feedback"
@@ -37,6 +38,7 @@
                                     rows="6"
                                     v-model="form.description"
                                     placeholder="Add a short description..."
+                                    required
                                 ></textarea>
                                 <div
                                     class="invalid-feedback"

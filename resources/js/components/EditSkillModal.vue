@@ -20,6 +20,7 @@
                                     v-model="form.skill_title"
                                     value="form.skill_title"
                                     :class="form.errors.skill_title ? 'is-invalid' : ''"
+                                    required
                                 >
                                 <div
                                     class="invalid-feedback"

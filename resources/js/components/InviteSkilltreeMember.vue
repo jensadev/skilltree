@@ -21,6 +21,7 @@
                                 aria-label="Email address"
                                 :class="form.errors.email ? 'is-invalid' : ''"
                                 v-model="form.email"
+                                required
                             >
                             <div class="input-group-append">
                                 <button

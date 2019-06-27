@@ -20,6 +20,7 @@
                                     type="text"
                                     placeholder="e.g Design"
                                     v-model="form.title"
+                                    required
                                 >
                                 <div
                                     class="invalid-feedback"
@@ -37,6 +38,7 @@
                                     rows="6"
                                     placeholder="Add a short description of your Skilltree"
                                     v-model="form.description"
+                                    required
                                 ></textarea>
                                 <div
                                     class="invalid-feedback"
@@ -61,7 +63,18 @@
                     </div>
                 </form>
                 <footer class="row">
-                    <div class="col-lg-12"></div>
+                    <div class="col-lg-12">
+                        <div v-if="members">
+                            <img
+                                v-for="(member, index) in members"
+                                :key="index"
+                                :src="member.avatar"
+                                :alt="member.name"
+                                class="rounded-circle mr-1"
+                                style="width: 24px;"
+                            >
+                        </div>
+                    </div>
                 </footer>
             </div>
         </div>
@@ -79,7 +92,7 @@ export default {
             })
         };
     },
-    props: ["id", "title", "description"],
+    props: ["id", "title", "description", "members"],
     methods: {
         async submit() {
             this.form

@@ -17,6 +17,7 @@
                                 aria-label="Skill title"
                                 :class="form.errors.skill_title ? 'is-invalid' : ''"
                                 v-model="form.skill_title"
+                                required
                             >
                             <div class="input-group-append">
                                 <button
