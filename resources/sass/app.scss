@@ -41,6 +41,7 @@ $cards-per-line: (
     background:url(
         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAHElEQVQoU2P88OHDfwYCgBGkSEBAgBGfulFFDABtzCPZKslCrgAAAABJRU5ErkJggg==
         ) repeat;
+    width: 100%;
 }
 
 .ptop {
@@ -112,6 +113,9 @@ $cards-per-line: (
     @include font-medium;
 }
 
+.h3 {
+    @include font-regular;
+}
 .h5 {
     @include font-regular;
 }
@@ -132,5 +136,48 @@ $cards-per-line: (
 }
 
 .loginheader {
-    height: 40vh;
+    padding-bottom: 100px;
 }
+
+.loginheader-text {
+    line-height: 2;
+}
+
+.loginheader-text::after {
+    content: "";
+    display:block;
+    width:50%;
+    margin-left: 50%;
+    height:10px;
+    padding:0;
+    background-color: $light;
+}
+
+.loginheader-border {
+    width: 600px !important;
+    border-top: 10px solid $light;
+    border-right: 10px solid $light;
+}
+
+.loginheader-left {
+    position: absolute;
+    height: 123px;
+    border-right: 10px solid $light;
+}
+
+.loginheader-content {
+    width: 600px;
+    padding-left: 70px;
+    padding-top: 3rem;
+}
+
+/*
+.loginheader-text::before {
+    content: "";
+    display:block;
+    width:8px;
+    height:50%;
+    padding:0;
+    background-color: $light;
+}
+*/
