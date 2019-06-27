@@ -2064,6 +2064,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2143,6 +2144,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -2381,6 +2383,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2529,17 +2532,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isLoading: false,
+      courses: [],
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         title: this.title,
         description: this.description
       })
     };
   },
-  props: ["id", "title", "description"],
+  props: ["id", "title", "description", "members"],
   methods: {
     submit: function () {
       var _submit = _asyncToGenerator(
@@ -2568,8 +2609,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return submit;
+    }(),
+    getCourses: function () {
+      var _getCourses = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var courses;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isLoading = true;
+                _context2.next = 3;
+                return axios.get("/courses").then(function (response) {
+                  console.log(response);
+                  courses = response.data.message;
+                });
+
+              case 3:
+                this.courses = courses;
+                this.isLoading = false;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getCourses() {
+        return _getCourses.apply(this, arguments);
+      }
+
+      return getCourses;
     }()
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -2592,6 +2668,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -7690,7 +7768,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\r\n    position: absolute;\r\n    border: 0.5px #00000010 dashed;\r\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\r\n    visibility: visible;\n}\n.hideArr {\r\n    visibility: hidden;\n}\n.rArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    right: -36px;\r\n    transform: translate(0, -50%);\n}\n.lArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: -36px;\r\n    transform: translate(0, -50%);\n}\r\n", ""]);
+exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -41515,7 +41593,8 @@ var render = function() {
                       name: "skill_title",
                       id: "skill_title",
                       placeholder: "Skill title",
-                      "aria-label": "Skill title"
+                      "aria-label": "Skill title",
+                      required: ""
                     },
                     domProps: { value: _vm.form.skill_title },
                     on: {
@@ -41629,7 +41708,8 @@ var render = function() {
                         id: "skill_title",
                         name: "skill_title",
                         type: "text",
-                        value: "form.skill_title"
+                        value: "form.skill_title",
+                        required: ""
                       },
                       domProps: { value: _vm.form.skill_title },
                       on: {
@@ -41905,7 +41985,8 @@ var render = function() {
                       name: "email",
                       type: "text",
                       placeholder: "Email address",
-                      "aria-label": "Email address"
+                      "aria-label": "Email address",
+                      required: ""
                     },
                     domProps: { value: _vm.form.email },
                     on: {
@@ -42013,7 +42094,8 @@ var render = function() {
                       id: "title",
                       name: "title",
                       type: "text",
-                      placeholder: "e.g Design"
+                      placeholder: "e.g Design",
+                      required: ""
                     },
                     domProps: { value: _vm.form.title },
                     on: {
@@ -42056,7 +42138,8 @@ var render = function() {
                       id: "description",
                       name: "description",
                       rows: "6",
-                      placeholder: "Add a short description of your Skilltree"
+                      placeholder: "Add a short description of your Skilltree",
+                      required: ""
                     },
                     domProps: { value: _vm.form.description },
                     on: {
@@ -42109,15 +42192,90 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6" }, [
-                _vm._v("GOOGLE CONTENTS")
-              ])
+              _c(
+                "div",
+                { staticClass: "col-lg-6" },
+                [
+                  _c("p", [_vm._v("GOOGLE CONTENTS")]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    _vm._b(
+                      {
+                        staticClass: "btn dashbaricon",
+                        attrs: { title: " w " },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.getCourses($event)
+                          }
+                        }
+                      },
+                      "button",
+                      { isLoading: _vm.isLoading },
+                      false
+                    ),
+                    [
+                      _vm.isLoading == false
+                        ? _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("cloud_download")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.isLoading
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "spinner-border",
+                              staticStyle: {
+                                width: "24px",
+                                height: "24px",
+                                "margin-left": "14px"
+                              },
+                              attrs: { role: "status" }
+                            },
+                            [
+                              _c("span", { staticClass: "sr-only" }, [
+                                _vm._v("Loading...")
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.courses, function(course, index) {
+                    return _c("p", {
+                      key: index,
+                      domProps: {
+                        textContent: _vm._s(course.descriptionHeading)
+                      }
+                    })
+                  })
+                ],
+                2
+              )
             ])
           ]
         ),
         _vm._v(" "),
         _c("footer", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-12" })
+          _c("div", { staticClass: "col-lg-12" }, [
+            _vm.members
+              ? _c(
+                  "div",
+                  _vm._l(_vm.members, function(member, index) {
+                    return _c("img", {
+                      key: index,
+                      staticClass: "rounded-circle mr-1",
+                      staticStyle: { width: "24px" },
+                      attrs: { src: member.avatar, alt: member.name }
+                    })
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
         ])
       ])
     ])
@@ -42190,7 +42348,8 @@ var render = function() {
                       id: "title",
                       name: "title",
                       type: "text",
-                      placeholder: "e.g Design"
+                      placeholder: "e.g Design",
+                      required: ""
                     },
                     domProps: { value: _vm.form.title },
                     on: {
@@ -42233,7 +42392,8 @@ var render = function() {
                       id: "description",
                       name: "description",
                       rows: "6",
-                      placeholder: "Add a short description..."
+                      placeholder: "Add a short description...",
+                      required: ""
                     },
                     domProps: { value: _vm.form.description },
                     on: {
@@ -42427,54 +42587,45 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.save
-      ? _c(
-          "button",
-          _vm._b(
-            {
-              staticClass: "btn dashbaricon",
-              attrs: {
-                title: "Save Skilltree positions",
-                disabled: _vm.isLoading
+    _c(
+      "button",
+      _vm._b(
+        {
+          staticClass: "btn dashbaricon",
+          attrs: { title: "Save Skilltree positions", disabled: _vm.isLoading },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.savePositions($event)
+            }
+          }
+        },
+        "button",
+        { isLoading: _vm.isLoading },
+        false
+      ),
+      [
+        _vm.isLoading == false
+          ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isLoading
+          ? _c(
+              "div",
+              {
+                staticClass: "spinner-border",
+                staticStyle: {
+                  width: "24px",
+                  height: "24px",
+                  "margin-left": "14px"
+                },
+                attrs: { role: "status" }
               },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.savePositions($event)
-                }
-              }
-            },
-            "button",
-            { isLoading: _vm.isLoading },
-            false
-          ),
-          [
-            _vm.isLoading == false
-              ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isLoading
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "spinner-border",
-                    staticStyle: {
-                      width: "24px",
-                      height: "24px",
-                      "margin-left": "14px"
-                    },
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
-                  ]
-                )
-              : _vm._e()
-          ]
-        )
-      : _vm._e()
+              [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -55548,15 +55699,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/SkillCard.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SkillCard_vue_vue_type_template_id_3adb6aa6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=template&id=3adb6aa6& */ "./resources/js/components/SkillCard.vue?vue&type=template&id=3adb6aa6&");
 /* harmony import */ var _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=script&lang=js& */ "./resources/js/components/SkillCard.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _SkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _SkillCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/SkillCard.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _SkillCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SkillCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/SkillCard.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -55588,7 +55738,7 @@ component.options.__file = "resources/js/components/SkillCard.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/SkillCard.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

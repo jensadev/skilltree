@@ -3,7 +3,7 @@
 @section('content')
 <header class="loginheader w-100 ptop bg-dark">
     <div class="container">
-        <div class="row">
+        <div class="row"> <!-- justify-content-center -->
             <div class="col-lg-8 loginheader-border">
                 <div class="loginheader-left"></div>
                 <h1 class="h1 text-uppercase display-2 text-light loginheader-text">Skilltree</h1>

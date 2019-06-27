@@ -38,6 +38,11 @@ class ClassroomController extends Controller
         foreach ($coursesResult->getCourses() as $course) {
             array_push($dump, $course);
         }
+
+        if (request()->wantsJson()) {
+            return ['message' => $dump];
+        }
+
         return $dump;
     }
 

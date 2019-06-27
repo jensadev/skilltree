@@ -59,7 +59,30 @@
                                 >Update Skilltree</button>
                             </div>
                         </div>
-                        <div class="col-lg-6">GOOGLE CONTENTS</div>
+                        <div class="col-lg-6">
+                            <p>GOOGLE CONTENTS</p>
+                            <button
+                                class="btn dashbaricon"
+                                @click.prevent="getCourses"
+                                v-bind="{isLoading}"
+                                title=" w "
+                            >
+                                <i class="material-icons" v-if="isLoading == false">cloud_download</i>
+                                <div
+                                    class="spinner-border"
+                                    role="status"
+                                    v-if="isLoading"
+                                    style="width:24px; height:24px; margin-left:14px;"
+                                >
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </button>
+                            <p
+                                v-for="(course, index) in courses"
+                                :key="index"
+                                v-text="course.descriptionHeading"
+                            ></p>
+                        </div>
                     </div>
                 </form>
                 <footer class="row">
@@ -86,6 +109,8 @@ import Form from "./Form";
 export default {
     data() {
         return {
+            isLoading: false,
+            courses: [],
             form: new Form({
                 title: this.title,
                 description: this.description
@@ -99,8 +124,19 @@ export default {
                 .submit("/skilltrees/" + this.id, "patch")
                 .then(response => (location = response.data.message))
                 .catch(error => console.log(error));
+        },
+        async getCourses() {
+            let courses;
+            this.isLoading = true;
+            await axios.get("/courses").then(function(response) {
+                console.log(response);
+                courses = response.data.message;
+            });
+            this.courses = courses;
+            this.isLoading = false;
         }
-    }
+    },
+    computed: {}
 };
 </script>
 
