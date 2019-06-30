@@ -1,15 +1,42 @@
 <template>
-    <modal name="manage-skilltree" classes="h-75">
+    <modal
+        name="manage-skilltree"
+        classes="rounded"
+        transition="nice-modal-fade"
+        :adaptive="true"
+        :scrollable="true"
+        :reset="true"
+        :pivot-y="0.25"
+        :draggable="true"
+        width="60%"
+        height="auto"
+    >
         <div class="modal-body modal-content">
             <div class="container">
-                <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
-                    <header class="row">
-                        <div class="col-lg-12 text-center">
-                            <h3 class="modal-title">Manage skilltree</h3>
+                <header class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h3 class="modal-title">Manage skilltree</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <div v-if="members" class="d-flex justify-content-end">
+                            <img
+                                v-for="(member, index) in members"
+                                :key="index"
+                                :src="member.avatar"
+                                :alt="member.name"
+                                title="User is allowed to edit Skilltree"
+                                class="rounded-circle mr-1"
+                                style="width: 24px;"
+                            />
                         </div>
-                    </header>
-                    <div class="row">
-                        <div class="col-lg-6">
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form
+                            @submit.prevent="submit"
+                            @keydown="form.errorClear($event.target.name)"
+                        >
                             <div class="form-group">
                                 <label for="title">Title</label>
                                 <input
@@ -21,7 +48,7 @@
                                     placeholder="e.g Design"
                                     v-model="form.title"
                                     required
-                                >
+                                />
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.title"
@@ -46,26 +73,32 @@
                                     v-text="form.errors.description[0]"
                                 ></div>
                             </div>
-                            <div class="form-group d-flex justify-content-end">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary mr-2"
-                                    @click="$modal.hide('manage-skilltree')"
-                                >Cancel</button>
-                                <button
-                                    class="btn btn-primary"
-                                    type="submit"
-                                    :disabled="form.errorAny()"
-                                >Update Skilltree</button>
+                            <div class="form-group">
+                                <div class="d-flex justify-content-end">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary mr-2"
+                                        @click="$modal.hide('manage-skilltree')"
+                                    >Cancel</button>
+                                    <button
+                                        class="btn btn-primary"
+                                        type="submit"
+                                        :disabled="form.errorAny()"
+                                    >Update Skilltree</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <p>GOOGLE CONTENTS</p>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <p>Google Classroom</p>
+                        <div v-if="this.courses.length < 1">
+                            <label for="load-classroom">Load courses from Google Classroom</label>
                             <button
                                 class="btn dashbaricon"
+                                id="load-classroom"
                                 @click.prevent="getCourses"
                                 v-bind="{isLoading}"
-                                title=" w "
                             >
                                 <i class="material-icons" v-if="isLoading == false">cloud_download</i>
                                 <div
@@ -77,27 +110,25 @@
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </button>
-                            <p
+                        </div>
+                        <select
+                            v-if="this.courses.length > 0"
+                            class="form-control"
+                            id="classroomid"
+                            name="classroomid"
+                        >
+                            <option
                                 v-for="(course, index) in courses"
                                 :key="index"
+                                :value="course.id"
                                 v-text="course.descriptionHeading"
-                            ></p>
-                        </div>
+                            ></option>
+                        </select>
                     </div>
-                </form>
+                </div>
                 <footer class="row">
-                    <div class="col-lg-12">
-                        <div v-if="members">
-                            <img
-                                v-for="(member, index) in members"
-                                :key="index"
-                                :src="member.avatar"
-                                :alt="member.name"
-                                class="rounded-circle mr-1"
-                                style="width: 24px;"
-                            >
-                        </div>
-                    </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6"></div>
                 </footer>
             </div>
         </div>

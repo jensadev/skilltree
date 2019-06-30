@@ -47,6 +47,21 @@ class SkilltreeSkillsTest extends TestCase
         ]);
     }
 
+    /** @test */
+    function a_user_can_delete_a_skill()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+        $skilltree = factory('App\Skilltree')->create();
+        $skill = $skilltree->addSkill(["skill_title" => "delete me"]);
+
+        $this->actingAs($skilltree->owner)
+            ->delete($skill->path())
+            ->assertRedirect($skilltree->path());
+
+        $this->assertDatabaseMissing('skills', $skill->only('id'));
+    }
+
     /** @test **/
     function only_the_owner_of_a_skilltree_may_add_skills()
     {

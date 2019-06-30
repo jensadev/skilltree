@@ -177,7 +177,7 @@ export default {
     mounted() {
         if (typeof this.storage.connections !== "undefined") {
             this.storage.connections.forEach(e => {
-                if (e) {
+                if (e && document.getElementById(e)) {
                     jqSimpleConnect.connect(
                         this.$el,
                         document.getElementById(e),

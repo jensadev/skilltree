@@ -1,5 +1,16 @@
 <template>
-    <modal name="new-skilltree" classes="h-75">
+    <modal
+        name="new-skilltree"
+        classes="rounded"
+        transition="nice-modal-fade"
+        :adaptive="true"
+        :scrollable="true"
+        :reset="true"
+        :pivot-y="0.25"
+        :draggable="true"
+        width="60%"
+        height="auto"
+    >
         <div class="modal-body modal-content">
             <div class="container">
                 <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">

@@ -10,7 +10,8 @@ use Appstract\Meta\Metable;
 
 class Skilltree extends Model
 {
-    use RecordsActivity, Metable;
+    //use RecordsActivity;
+    use Metable;
 
     protected $guarded = [];
 
@@ -78,5 +79,13 @@ class Skilltree extends Model
             return $this->updateMeta('positions', $positions);
         }
         return $this->addMeta('positions', $positions);
+    }
+
+    public function storeClassroomid($classroomid)
+    {
+        if ($this->hasMeta('classroomid')) {
+            return $this->updateMeta('classroomid', $classroomid);
+        }
+        return $this->addMeta('classroomid', $classroomid);
     }
 }

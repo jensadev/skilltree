@@ -20,14 +20,18 @@ Route::group(
         Route::get('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@show');
         Route::post('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@store');
 
+        Route::get('/skilltrees/{skilltree}/classroom', 'SkilltreeClassroomsController@show');
+        Route::post('/skilltrees/{skilltree}/classroom', 'SkilltreeClassroomsController@store');
+
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
         Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
+        Route::delete('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@destroy');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
         //classroom test routes
         Route::get('/courses', 'ClassroomController@getCourses');
-        Route::get('/topics', 'ClassroomController@getTopics');
+        Route::get('/topics/{courseid}', 'ClassroomController@getTopics');
     }
 );
 

@@ -8,7 +8,8 @@ use Appstract\Meta\Metable;
 
 class Skill extends Model
 {
-    use RecordsActivity, Metable;
+    //use RecordsActivity;
+    use Metable;
 
 
     /**

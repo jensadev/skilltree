@@ -83,9 +83,7 @@ export default {
             let needle = "tree_" + this.tree;
             Object.keys(localStorage).forEach(function(key) {
                 if (key.includes(needle)) {
-                    if (key.includes(needle)) {
-                        temp.push({ [key]: localStorage.getItem(key) });
-                    }
+                    temp.push({ [key]: localStorage.getItem(key) });
                 }
             });
 
@@ -96,9 +94,7 @@ export default {
             let needle = "tree_" + this.tree;
             Object.keys(localStorage).forEach(function(key) {
                 if (key.includes(needle)) {
-                    if (key.includes(needle)) {
-                        localStorage.removeItem(key);
-                    }
+                    localStorage.removeItem(key);
                 }
             });
             location.reload();

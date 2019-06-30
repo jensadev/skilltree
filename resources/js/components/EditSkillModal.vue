@@ -1,5 +1,17 @@
 <template>
-    <modal name="edit-skill" classes="h-75" @before-open="beforeOpen">
+    <modal
+        name="edit-skill"
+        classes="rounded"
+        transition="nice-modal-fade"
+        :adaptive="true"
+        :scrollable="true"
+        :reset="true"
+        :pivot-y="0.25"
+        :draggable="true"
+        width="60%"
+        height="auto"
+        @before-open="beforeOpen"
+    >
         <div class="modal-body modal-content">
             <div class="container">
                 <header class="row">
@@ -90,6 +102,23 @@
                                     @click="$modal.hide('edit-skill')"
                                 >Cancel</button>
                                 <button
+                                    class="btn btn-outline-danger mr-2"
+                                    type="button"
+                                    @click="deleteSkill"
+                                    v-bind="{isLoading}"
+                                    :disabled="isLoading"
+                                >
+                                    Delete Skill
+                                    <div
+                                        class="spinner-border"
+                                        role="status"
+                                        v-if="isLoading"
+                                        style="width:24px; height:24px; margin-left:14px;"
+                                    >
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </button>
+                                <button
                                     class="btn btn-primary"
                                     type="submit"
                                     :disabled="form.errorAny()"
@@ -109,6 +138,7 @@ import Form from "./Form";
 export default {
     data() {
         return {
+            isLoading: false,
             tree: 0,
             form: new Form({
                 skill_id: 0,
@@ -119,6 +149,30 @@ export default {
         };
     },
     methods: {
+        async deleteSkill() {
+            this.isLoading = true;
+            let lsKey = "tree_" + this.tree + "_skill_" + this.form.skill_id;
+            let skillNeedle = "skill_" + this.form.skill_id;
+            let needle = "tree_" + this.tree;
+            try {
+                await axios
+                    .delete(
+                        "/skilltrees/" +
+                            this.tree +
+                            "/skills/" +
+                            this.form.skill_id
+                    )
+                    .then(function(response) {
+                        localStorage.removeItem(lsKey);
+                        // needs to clear connections
+                        location = response.data.message;
+                    });
+            } catch (error) {
+                this.errors = error;
+                console.log("error" + this.errors);
+            }
+            this.isLoading = false;
+        },
         beforeOpen(event) {
             this.tree = event.params.tree;
             this.form.skill_id = event.params.skill_id;

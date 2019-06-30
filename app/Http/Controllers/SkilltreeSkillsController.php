@@ -9,7 +9,6 @@ use App\Task;
 
 class SkilltreeSkillsController extends Controller
 {
-
     public function store(Skilltree $skilltree)
     {
         $this->authorize('update', $skilltree);
@@ -31,6 +30,19 @@ class SkilltreeSkillsController extends Controller
         }
 
         $skill->update($this->validateRequest());
+
+        if (request()->wantsJson()) {
+            return ['message' => $skilltree->path()];
+        }
+
+        return redirect($skilltree->path());
+    }
+
+    public function destroy(Skilltree $skilltree, Skill $skill)
+    {
+        $this->authorize('manage', $skill->skilltree);
+
+        $skill->delete();
 
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
