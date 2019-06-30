@@ -4,7 +4,6 @@
         classes="rounded"
         transition="nice-modal-fade"
         :adaptive="true"
-        :scrollable="true"
         :reset="true"
         :pivot-y="0.25"
         :draggable="true"
@@ -33,7 +32,7 @@
                                     value="form.skill_title"
                                     :class="form.errors.skill_title ? 'is-invalid' : ''"
                                     required
-                                >
+                                />
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.skill_title"
@@ -71,7 +70,7 @@
                                         v-model="task.body"
                                         :placeholder="'Task ' + (index + 1)"
                                         value="task.body"
-                                    >
+                                    />
                                     <!--                                <div class="input-group-append">
                                         <select class="custom-select" id="inputGroupSelect02">
                                             <option selected>Value...</option>

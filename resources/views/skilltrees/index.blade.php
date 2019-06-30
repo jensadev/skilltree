@@ -16,4 +16,5 @@
             @endforelse
         </section>
     </div>
+    <new-skilltree-modal></new-skilltree-modal>
 @endsection

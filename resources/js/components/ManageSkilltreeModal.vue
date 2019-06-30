@@ -4,7 +4,6 @@
         classes="rounded"
         transition="nice-modal-fade"
         :adaptive="true"
-        :scrollable="true"
         :reset="true"
         :pivot-y="0.25"
         :draggable="true"

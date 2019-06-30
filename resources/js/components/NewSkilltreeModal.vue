@@ -4,7 +4,6 @@
         classes="rounded"
         transition="nice-modal-fade"
         :adaptive="true"
-        :scrollable="true"
         :reset="true"
         :pivot-y="0.25"
         :draggable="true"
@@ -32,7 +31,7 @@
                                     placeholder="e.g Design"
                                     v-model="form.title"
                                     required
-                                >
+                                />
                                 <div
                                     class="invalid-feedback"
                                     v-if="form.errors.title"
@@ -68,7 +67,7 @@
                                     v-for="(skill,index) in form.skills"
                                     v-model="skill.skill_title"
                                     :key="index"
-                                >
+                                />
                             </div>
                             <div class="form-group">
                                 <a

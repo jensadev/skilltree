@@ -42,7 +42,12 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a href="{{ route('login.provider', 'google') }}" class="btn btn-sm btn-light">
+                                    <img src="/img/google_g_logo.svg">
+                                    {{ __('Google Sign in') }}
+                                </a>
+
+<!--                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> -->
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
