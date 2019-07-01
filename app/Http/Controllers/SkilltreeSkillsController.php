@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Skilltree;
 use App\Skill;
 use App\Task;
+use Appstract\Meta\Metable;
 
 class SkilltreeSkillsController extends Controller
 {
+    use Metable;
+
     public function store(Skilltree $skilltree)
     {
         $this->authorize('update', $skilltree);
@@ -41,6 +44,8 @@ class SkilltreeSkillsController extends Controller
     public function destroy(Skilltree $skilltree, Skill $skill)
     {
         $this->authorize('manage', $skill->skilltree);
+
+        $skill->deleteAllMeta();
 
         $skill->delete();
 

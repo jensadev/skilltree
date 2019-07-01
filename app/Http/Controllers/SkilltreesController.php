@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Skilltree;
+use Appstract\Meta\Metable;
 
 class SkilltreesController extends Controller
 {
+    use Metable;
+
     public function index()
     {
         $skilltrees = auth()->user()->accessibleSkilltrees();
@@ -63,7 +66,14 @@ class SkilltreesController extends Controller
     public function destroy(Skilltree $skilltree)
     {
         $this->authorize('manage', $skilltree);
+
+        $skilltree->deleteAllMeta();
+
         $skilltree->delete();
+
+        if (request()->wantsJson()) {
+            return ['message' => '/skilltrees'];
+        }
         return redirect('/skilltrees');
     }
 

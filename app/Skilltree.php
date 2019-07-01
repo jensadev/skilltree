@@ -75,17 +75,11 @@ class Skilltree extends Model
 
     public function storePositions($positions)
     {
-        if ($this->hasMeta('positions')) {
-            return $this->updateMeta('positions', $positions);
-        }
-        return $this->addMeta('positions', $positions);
+        return $this->addOrUpdateMeta('positions', $positions);
     }
 
     public function storeClassroomid($classroomid)
     {
-        if ($this->hasMeta('classroomid')) {
-            return $this->updateMeta('classroomid', $classroomid);
-        }
-        return $this->addMeta('classroomid', $classroomid);
+        return $this->addOrUpdateMeta('classroomid', $classroomid);
     }
 }

@@ -80,6 +80,23 @@
                                         @click="$modal.hide('manage-skilltree')"
                                     >Cancel</button>
                                     <button
+                                        class="btn btn-outline-danger mr-2"
+                                        type="button"
+                                        @click="deleteSkilltree"
+                                        v-bind="{isLoading}"
+                                        :disabled="isLoading"
+                                    >
+                                        Delete Skilltree
+                                        <div
+                                            class="spinner-border"
+                                            role="status"
+                                            v-if="isLoading"
+                                            style="width:24px; height:24px; margin-left:14px;"
+                                        >
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </button>
+                                    <button
                                         class="btn btn-primary"
                                         type="submit"
                                         :disabled="form.errorAny()"
@@ -149,6 +166,20 @@ export default {
     },
     props: ["id", "title", "description", "members"],
     methods: {
+        async deleteSkilltree() {
+            this.isLoading = true;
+            try {
+                await axios
+                    .delete("/skilltrees/" + this.id)
+                    .then(function(response) {
+                        location = response.data.message;
+                    });
+            } catch (error) {
+                this.errors = error;
+                console.log("error" + this.errors);
+            }
+            this.isLoading = false;
+        },
         async submit() {
             this.form
                 .submit("/skilltrees/" + this.id, "patch")

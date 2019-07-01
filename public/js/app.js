@@ -2675,6 +2675,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2689,13 +2706,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["id", "title", "description", "members"],
   methods: {
-    submit: function () {
-      var _submit = _asyncToGenerator(
+    deleteSkilltree: function () {
+      var _deleteSkilltree = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
+              case 0:
+                this.isLoading = true;
+                _context.prev = 1;
+                _context.next = 4;
+                return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
+                  location = response.data.message;
+                });
+
+              case 4:
+                _context.next = 10;
+                break;
+
+              case 6:
+                _context.prev = 6;
+                _context.t0 = _context["catch"](1);
+                this.errors = _context.t0;
+                console.log("error" + this.errors);
+
+              case 10:
+                this.isLoading = false;
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 6]]);
+      }));
+
+      function deleteSkilltree() {
+        return _deleteSkilltree.apply(this, arguments);
+      }
+
+      return deleteSkilltree;
+    }(),
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   return location = response.data.message;
@@ -2705,10 +2764,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function submit() {
@@ -2720,14 +2779,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCourses: function () {
       var _getCourses = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var courses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.isLoading = true;
-                _context2.next = 3;
+                _context3.next = 3;
                 return axios.get("/courses").then(function (response) {
                   console.log(response);
                   courses = response.data.message;
@@ -2739,10 +2798,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function getCourses() {
@@ -42375,6 +42434,44 @@ var render = function() {
                           }
                         },
                         [_vm._v("Cancel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        _vm._b(
+                          {
+                            staticClass: "btn btn-outline-danger mr-2",
+                            attrs: { type: "button", disabled: _vm.isLoading },
+                            on: { click: _vm.deleteSkilltree }
+                          },
+                          "button",
+                          { isLoading: _vm.isLoading },
+                          false
+                        ),
+                        [
+                          _vm._v(
+                            "\n                                    Delete Skilltree\n                                    "
+                          ),
+                          _vm.isLoading
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass: "spinner-border",
+                                  staticStyle: {
+                                    width: "24px",
+                                    height: "24px",
+                                    "margin-left": "14px"
+                                  },
+                                  attrs: { role: "status" }
+                                },
+                                [
+                                  _c("span", { staticClass: "sr-only" }, [
+                                    _vm._v("Loading...")
+                                  ])
+                                ]
+                              )
+                            : _vm._e()
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
