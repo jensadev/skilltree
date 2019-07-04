@@ -57,6 +57,11 @@ class SkilltreesController extends Controller
         $this->authorize('update', $skilltree);
 
         $skilltree->update($this->validateRequest());
+
+        // if ($crid = request('classroomid')) {
+        //     $skilltree->addOrUpdateMeta('classroomid', $crid);
+        // }
+
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
         }
@@ -68,7 +73,6 @@ class SkilltreesController extends Controller
         $this->authorize('manage', $skilltree);
 
         $skilltree->deleteAllMeta();
-
         $skilltree->delete();
 
         if (request()->wantsJson()) {

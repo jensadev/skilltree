@@ -6,7 +6,6 @@
         :adaptive="true"
         :reset="true"
         :pivot-y="0.25"
-        :draggable="true"
         width="60%"
         height="auto"
     >
@@ -30,11 +29,13 @@
                         </div>
                     </div>
                 </header>
+
                 <div class="row">
                     <div class="col-lg-6">
                         <form
                             @submit.prevent="submit"
                             @keydown="form.errorClear($event.target.name)"
+                            id="treeform"
                         >
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -72,79 +73,154 @@
                                     v-text="form.errors.description[0]"
                                 ></div>
                             </div>
-                            <div class="form-group">
-                                <div class="d-flex justify-content-end">
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-primary mr-2"
-                                        @click="$modal.hide('manage-skilltree')"
-                                    >Cancel</button>
-                                    <button
-                                        class="btn btn-outline-danger mr-2"
-                                        type="button"
-                                        @click="deleteSkilltree"
-                                        v-bind="{isLoading}"
-                                        :disabled="isLoading"
-                                    >
-                                        Delete Skilltree
-                                        <div
-                                            class="spinner-border"
-                                            role="status"
-                                            v-if="isLoading"
-                                            style="width:24px; height:24px; margin-left:14px;"
-                                        >
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                    </button>
-                                    <button
-                                        class="btn btn-primary"
-                                        type="submit"
-                                        :disabled="form.errorAny()"
-                                    >Update Skilltree</button>
-                                </div>
-                            </div>
                         </form>
                     </div>
 
                     <div class="col-lg-6">
-                        <p>Google Classroom</p>
-                        <div v-if="this.courses.length < 1">
-                            <label for="load-classroom">Load courses from Google Classroom</label>
+                        <form
+                            @submit.prevent="connectCourse"
+                            @keydown="form.errorClear($event.target.name)"
+                        >
+                            <div class="form-group">
+                                <label for="courseId">Google Classroom</label>
+                                <div
+                                    v-if="this.courses.length < 1"
+                                    class="d-flex align-items-center"
+                                >
+                                    <label for="load-courses">Load Courses from Google Classroom</label>
+                                    <button
+                                        class="btn dashbaricon"
+                                        id="load-courses"
+                                        @click.prevent="getCourses"
+                                        v-bind="{isLoadingCourses}"
+                                    >
+                                        <i
+                                            class="material-icons"
+                                            v-if="isLoadingCourses == false"
+                                        >cloud_download</i>
+                                        <div
+                                            class="spinner-border"
+                                            role="status"
+                                            v-if="isLoadingCourses"
+                                            style="width: 30px; height: 30px; margin-left: 8px;"
+                                        >
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </button>
+                                </div>
+                                <select
+                                    v-if="this.courses.length > 0"
+                                    class="form-control"
+                                    id="courseId"
+                                    name="courseId"
+                                    v-model="courseId"
+                                >
+                                    <option disabled value>Please select one</option>
+                                    <option
+                                        v-for="(course, index) in courses"
+                                        :key="index"
+                                        :value="course.id"
+                                        v-text="course.descriptionHeading"
+                                    ></option>
+                                </select>
+                            </div>
                             <button
-                                class="btn dashbaricon"
-                                id="load-classroom"
-                                @click.prevent="getCourses"
-                                v-bind="{isLoading}"
+                                v-if="this.courses.length > 0"
+                                class="btn btn-primary"
+                                type="submit"
+                                :disabled="isConnectingCourse"
+                                v-bind="{isConnectingCourse}"
                             >
-                                <i class="material-icons" v-if="isLoading == false">cloud_download</i>
+                                Connect Course
                                 <div
                                     class="spinner-border"
                                     role="status"
-                                    v-if="isLoading"
+                                    v-if="isConnectingCourse"
                                     style="width:24px; height:24px; margin-left:14px;"
                                 >
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </button>
-                        </div>
-                        <select
-                            v-if="this.courses.length > 0"
-                            class="form-control"
-                            id="classroomid"
-                            name="classroomid"
+                        </form>
+                        <form
+                            @submit.prevent="addTopics"
+                            @keydown="form.errorClear($event.target.name)"
                         >
-                            <option
-                                v-for="(course, index) in courses"
-                                :key="index"
-                                :value="course.id"
-                                v-text="course.descriptionHeading"
-                            ></option>
-                        </select>
+                            <div class="form-group">
+                                <div
+                                    v-if="this.courseId != 0 && this.topics.length < 1"
+                                    class="d-flex align-items-center"
+                                >
+                                    <label for="load-topics">Load Topics from Google Classroom</label>
+                                    <button
+                                        class="btn dashbaricon"
+                                        id="load-topics"
+                                        @click.prevent="getTopics"
+                                        v-bind="{isLoadingTopics}"
+                                    >
+                                        <i
+                                            class="material-icons"
+                                            v-if="isLoadingTopics == false"
+                                        >cloud_download</i>
+                                        <div
+                                            class="spinner-border"
+                                            role="status"
+                                            v-if="isLoadingTopics"
+                                            style="width: 30px; height: 30px; margin-left: 8px;"
+                                        >
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </button>
+                                </div>
+                                <select
+                                    v-if="this.topics.length > 0"
+                                    class="form-control"
+                                    id="topicid"
+                                    name="topicid"
+                                    v-model="selectedTopics"
+                                    multiple
+                                >
+                                    <option
+                                        v-for="(topic, index) in topics"
+                                        :key="index"
+                                        :value="topic.name"
+                                        v-text="topic.name"
+                                    ></option>
+                                </select>
+                                <span>Selected: {{ selectedTopics }}</span>
+                            </div>
+                            <button
+                                v-if="this.topics.length > 0"
+                                class="btn btn-primary"
+                                type="submit"
+                                :disabled="form.errorAny()"
+                            >Add Topics</button>
+                        </form>
                     </div>
                 </div>
                 <footer class="row">
-                    <div class="col-lg-6"></div>
-                    <div class="col-lg-6"></div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="d-flex justify-content-end">
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-primary mr-2"
+                                    @click="$modal.hide('manage-skilltree')"
+                                >Cancel</button>
+                                <button
+                                    class="btn btn-outline-danger mr-2"
+                                    type="button"
+                                    @click="deleteSkilltree"
+                                >Delete Skilltree</button>
+                                <button
+                                    form="treeform"
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    :disabled="form.errorAny()"
+                                >Update Skilltree</button>
+                            </div>
+                        </div>
+                    </div>
                 </footer>
             </div>
         </div>
@@ -156,30 +232,42 @@ import Form from "./Form";
 export default {
     data() {
         return {
-            isLoading: false,
+            isLoadingCourses: false,
+            isLoadingTopics: false,
+            isConnectingCourse: false,
             courses: [],
+            topics: [],
+            courseId: this.cId,
+            selectedTopics: [],
             form: new Form({
                 title: this.title,
                 description: this.description
             })
         };
     },
-    props: ["id", "title", "description", "members"],
+    props: ["id", "title", "description", "members", "cId"],
     methods: {
         async deleteSkilltree() {
-            this.isLoading = true;
+            let needle = "tree_" + this.id;
             try {
                 await axios
                     .delete("/skilltrees/" + this.id)
                     .then(function(response) {
+                        if (response.status == 200) {
+                            Object.keys(localStorage).forEach(function(key) {
+                                if (key.includes(needle)) {
+                                    localStorage.removeItem(key);
+                                }
+                            });
+                        }
                         location = response.data.message;
                     });
             } catch (error) {
                 this.errors = error;
                 console.log("error" + this.errors);
             }
-            this.isLoading = false;
         },
+        async addSkills() {},
         async submit() {
             this.form
                 .submit("/skilltrees/" + this.id, "patch")
@@ -188,13 +276,62 @@ export default {
         },
         async getCourses() {
             let courses;
-            this.isLoading = true;
-            await axios.get("/courses").then(function(response) {
-                console.log(response);
-                courses = response.data.message;
-            });
+            this.isLoadingCourses = true;
+            await axios
+                .get("/classroom/courses")
+                .then(function(response) {
+                    courses = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
             this.courses = courses;
-            this.isLoading = false;
+            this.isLoadingCourses = false;
+        },
+        async getTopics() {
+            let topics;
+            this.isLoadingTopics = true;
+            await axios
+                .get("/classroom/topics/" + this.courseId)
+                .then(function(response) {
+                    topics = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.topics = topics;
+            this.isLoadingTopics = false;
+        },
+        async connectCourse() {
+            this.isConnectingCourse = true;
+            await axios
+                .post("/skilltrees/" + this.id + "/classroom/course", {
+                    courseId: this.courseId
+                })
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.isConnectingCourse = false;
+        },
+        async addTopics() {
+            let temp = [];
+
+            this.selectedTopics.forEach(topic => {
+                temp.push({ skill_title: topic });
+            });
+            await axios
+                .post("/skilltrees/" + this.id + "/classroom/topics", {
+                    topics: temp
+                })
+                .then(function(response) {
+                    location = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
         }
     },
     computed: {}

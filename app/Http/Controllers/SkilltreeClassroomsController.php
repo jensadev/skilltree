@@ -3,61 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Skilltree;
+use Appstract\Meta\Metable;
+use function GuzzleHttp\json_decode;
 
 class SkilltreeClassroomsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use Metable;
+    //
+    public function connect(Skilltree $skilltree)
     {
-        //
+        if ($crid = request('courseId')) {
+            $skilltree->addOrUpdateMeta('courseId', $crid);
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $crid];
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function topics(Skilltree $skilltree)
     {
-        //
-    }
+        if ($topics = request('topics')) {
+            $skilltree->addSkills($topics);
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if (request()->wantsJson()) {
+            return ['message' => $skilltree->path()];
+        }
     }
 }

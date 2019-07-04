@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SkilltreeClassroomsController;
+
 /**
  * |--------------------------------------------------------------------------
  * | Web Routes
@@ -29,9 +31,12 @@ Route::group(
         Route::delete('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@destroy');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
 
+        Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');
+        Route::post('skilltrees/{skilltree}/classroom/topics', 'SkilltreeClassroomsController@topics');
+
         //classroom test routes
-        Route::get('/courses', 'ClassroomController@getCourses');
-        Route::get('/topics/{courseid}', 'ClassroomController@getTopics');
+        Route::get('/classroom/courses', 'ClassroomController@getCourses');
+        Route::get('/classroom/topics/{courseid}', 'ClassroomController@getTopics');
     }
 );
 

@@ -34,6 +34,7 @@ class ClassroomController extends Controller
         $this->service = new Google_Service_Classroom($this->client);
 
         $coursesResult = $this->service->courses->listCourses($this->optParams);
+
         $dump = [];
         foreach ($coursesResult->getCourses() as $course) {
             array_push($dump, $course);
@@ -46,7 +47,7 @@ class ClassroomController extends Controller
         return $dump;
     }
 
-    public function getTopics()
+    public function getTopics(Request $request)
     {
         $user = Auth::user();
         $this->client = new Google_Client();
@@ -58,14 +59,15 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        $coursesResult = $this->service->courses->listCourses($this->optParams);
-        $topicsResult = $this->service->courses_topics;
+        //dd( $request->courseid)
 
-        $dump = [];
-        foreach ($coursesResult->getCourses() as $course) {
-            $id = $course->getId();
-            array_push($dump, $topicsResult->listCoursesTopics($id));
+        //$coursesResult = $this->service->courses->listCourses($this->optParams);
+        $topicsResult = $this->service->courses_topics->listCoursesTopics($request->courseid);
+
+        //dd($topicsResult->topic);
+        if (request()->wantsJson()) {
+            return ['message' => $topicsResult->topic];
         }
-        return $dump;
+        return $topicsResult->topic;
     }
 }
