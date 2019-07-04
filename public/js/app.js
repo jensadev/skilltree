@@ -2768,6 +2768,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2993,27 +2994,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _addTopics = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var temp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                temp = [];
-                this.selectedTopics.forEach(function (topic) {
-                  temp.push({
-                    skill_title: topic
-                  });
-                });
-                _context7.next = 4;
+                _context7.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/classroom/topics", {
-                  topics: temp
+                  topics: this.selectedTopics
                 }).then(function (response) {
+                  //console.log(response);
                   location = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
                 });
 
-              case 4:
+              case 2:
               case "end":
                 return _context7.stop();
             }
@@ -42501,175 +42496,225 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "modal-body modal-content" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("header", { staticClass: "row align-items-center" }, [
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c("h3", { staticClass: "modal-title" }, [
-                _vm._v("Manage skilltree")
-              ])
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("header", { staticClass: "modal-header" }, [
+            _c("h5", { staticClass: "modal-title" }, [
+              _vm._v("Manage skilltree")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _vm.members
-                ? _c(
-                    "div",
-                    { staticClass: "d-flex justify-content-end" },
-                    _vm._l(_vm.members, function(member, index) {
-                      return _c("img", {
-                        key: index,
-                        staticClass: "rounded-circle mr-1",
-                        staticStyle: { width: "24px" },
-                        attrs: {
-                          src: member.avatar,
-                          alt: member.name,
-                          title: "User is allowed to edit Skilltree"
-                        }
-                      })
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.$modal.hide("manage-skilltree")
+                  }
+                }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c(
-                "form",
-                {
-                  attrs: { id: "treeform" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.submit($event)
-                    },
-                    keydown: function($event) {
-                      return _vm.form.errorClear($event.target.name)
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.title,
-                          expression: "form.title"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: _vm.form.errors.title ? "is-invalid" : "",
-                      attrs: {
-                        id: "title",
-                        name: "title",
-                        type: "text",
-                        placeholder: "e.g Design",
-                        required: ""
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { id: "treeform" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.submit($event)
                       },
-                      domProps: { value: _vm.form.title },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "title", $event.target.value)
-                        }
+                      keydown: function($event) {
+                        return _vm.form.errorClear($event.target.name)
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.form.errors.title
-                      ? _c("div", {
-                          staticClass: "invalid-feedback",
-                          domProps: {
-                            textContent: _vm._s(_vm.form.errors.title[0])
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "title" } }, [
+                        _vm._v("Title")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.title,
+                            expression: "form.title"
                           }
-                        })
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "description" } }, [
-                      _vm._v("Description")
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.form.errors.title ? "is-invalid" : "",
+                        attrs: {
+                          id: "title",
+                          name: "title",
+                          type: "text",
+                          placeholder: "e.g Design",
+                          required: ""
+                        },
+                        domProps: { value: _vm.form.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "title", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.form.errors.title
+                        ? _c("div", {
+                            staticClass: "invalid-feedback",
+                            domProps: {
+                              textContent: _vm._s(_vm.form.errors.title[0])
+                            }
+                          })
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.description,
-                          expression: "form.description"
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "description" } }, [
+                        _vm._v("Description")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.description,
+                            expression: "form.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.form.errors.description ? "is-invalid" : "",
+                        attrs: {
+                          id: "description",
+                          name: "description",
+                          rows: "6",
+                          placeholder:
+                            "Add a short description of your Skilltree",
+                          required: ""
+                        },
+                        domProps: { value: _vm.form.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "description",
+                              $event.target.value
+                            )
+                          }
                         }
-                      ],
-                      staticClass: "form-control",
-                      class: _vm.form.errors.description ? "is-invalid" : "",
-                      attrs: {
-                        id: "description",
-                        name: "description",
-                        rows: "6",
-                        placeholder:
-                          "Add a short description of your Skilltree",
-                        required: ""
+                      }),
+                      _vm._v(" "),
+                      _vm.form.errors.description
+                        ? _c("div", {
+                            staticClass: "invalid-feedback",
+                            domProps: {
+                              textContent: _vm._s(
+                                _vm.form.errors.description[0]
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c("label", [
+                  _vm._v(
+                    "\n                            Google Classroom\n                            "
+                  ),
+                  this.courseId
+                    ? _c("span", [_vm._v("- " + _vm._s(this.courseId))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.connectCourse($event)
                       },
-                      domProps: { value: _vm.form.description },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "description", $event.target.value)
-                        }
+                      keydown: function($event) {
+                        return _vm.form.errorClear($event.target.name)
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.form.errors.description
-                      ? _c("div", {
-                          staticClass: "invalid-feedback",
-                          domProps: {
-                            textContent: _vm._s(_vm.form.errors.description[0])
-                          }
-                        })
-                      : _vm._e()
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.connectCourse($event)
-                    },
-                    keydown: function($event) {
-                      return _vm.form.errorClear($event.target.name)
                     }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "courseId" } }, [
-                      _vm._v("Google Classroom")
-                    ]),
-                    _vm._v(" "),
-                    this.courses.length < 1
-                      ? _c(
-                          "div",
-                          { staticClass: "d-flex align-items-center" },
-                          [
-                            _c("label", { attrs: { for: "load-courses" } }, [
-                              _vm._v("Load Courses from Google Classroom")
-                            ]),
-                            _vm._v(" "),
-                            _c(
+                  },
+                  [
+                    _c("div", { staticClass: "input-group mb-3" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.courseId,
+                              expression: "courseId"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { id: "courseId", name: "courseId" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.courseId = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            { attrs: { disabled: "", selected: "" } },
+                            [_vm._v("Load Courses from Classroom")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.courses, function(course, index) {
+                            return _c("option", {
+                              key: index,
+                              domProps: {
+                                value: course.id,
+                                textContent: _vm._s(course.descriptionHeading)
+                              }
+                            })
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group-append" }, [
+                        this.courses.length < 1
+                          ? _c(
                               "button",
                               _vm._b(
                                 {
@@ -42714,163 +42759,39 @@ var render = function() {
                                   : _vm._e()
                               ]
                             )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    this.courses.length > 0
-                      ? _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.courseId,
-                                expression: "courseId"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { id: "courseId", name: "courseId" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.courseId = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { disabled: "", value: "" } },
-                              [_vm._v("Please select one")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.courses, function(course, index) {
-                              return _c("option", {
-                                key: index,
-                                domProps: {
-                                  value: course.id,
-                                  textContent: _vm._s(course.descriptionHeading)
-                                }
-                              })
-                            })
-                          ],
-                          2
-                        )
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  this.courses.length > 0
-                    ? _c(
-                        "button",
-                        _vm._b(
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: {
-                              type: "submit",
-                              disabled: _vm.isConnectingCourse
-                            }
-                          },
-                          "button",
-                          { isConnectingCourse: _vm.isConnectingCourse },
-                          false
-                        ),
-                        [
-                          _vm._v(
-                            "\n                            Connect Course\n                            "
-                          ),
-                          _vm.isConnectingCourse
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass: "spinner-border",
-                                  staticStyle: {
-                                    width: "24px",
-                                    height: "24px",
-                                    "margin-left": "14px"
-                                  },
-                                  attrs: { role: "status" }
-                                },
-                                [
-                                  _c("span", { staticClass: "sr-only" }, [
-                                    _vm._v("Loading...")
-                                  ])
-                                ]
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.addTopics($event)
-                    },
-                    keydown: function($event) {
-                      return _vm.form.errorClear($event.target.name)
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    this.courseId != 0 && this.topics.length < 1
-                      ? _c(
-                          "div",
-                          { staticClass: "d-flex align-items-center" },
-                          [
-                            _c("label", { attrs: { for: "load-topics" } }, [
-                              _vm._v("Load Topics from Google Classroom")
-                            ]),
-                            _vm._v(" "),
-                            _c(
+                          : _vm._e(),
+                        _vm._v(" "),
+                        this.courses.length > 0
+                          ? _c(
                               "button",
                               _vm._b(
                                 {
                                   staticClass: "btn dashbaricon",
-                                  attrs: { id: "load-topics" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getTopics($event)
-                                    }
+                                  attrs: {
+                                    type: "submit",
+                                    disabled: _vm.isConnectingCourse
                                   }
                                 },
                                 "button",
-                                { isLoadingTopics: _vm.isLoadingTopics },
+                                { isConnectingCourse: _vm.isConnectingCourse },
                                 false
                               ),
                               [
-                                _vm.isLoadingTopics == false
+                                _vm.isConnectingCourse == false
                                   ? _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("cloud_download")
+                                      _vm._v("link")
                                     ])
                                   : _vm._e(),
                                 _vm._v(" "),
-                                _vm.isLoadingTopics
+                                _vm.isConnectingCourse
                                   ? _c(
                                       "div",
                                       {
                                         staticClass: "spinner-border",
                                         staticStyle: {
-                                          width: "30px",
-                                          height: "30px",
-                                          "margin-left": "8px"
+                                          width: "24px",
+                                          height: "24px",
+                                          "margin-left": "14px"
                                         },
                                         attrs: { role: "status" }
                                       },
@@ -42883,124 +42804,212 @@ var render = function() {
                                   : _vm._e()
                               ]
                             )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    this.topics.length > 0
-                      ? _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.selectedTopics,
-                                expression: "selectedTopics"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              id: "topicid",
-                              name: "topicid",
-                              multiple: ""
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.selectedTopics = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
-                            }
-                          },
-                          _vm._l(_vm.topics, function(topic, index) {
-                            return _c("option", {
-                              key: index,
-                              domProps: {
-                                value: topic.name,
-                                textContent: _vm._s(topic.name)
-                              }
-                            })
-                          }),
-                          0
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v("Selected: " + _vm._s(_vm.selectedTopics))
+                          : _vm._e()
+                      ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  this.topics.length > 0
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: {
-                            type: "submit",
-                            disabled: _vm.form.errorAny()
-                          }
-                        },
-                        [_vm._v("Add Topics")]
-                      )
-                    : _vm._e()
-                ]
-              )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addTopics($event)
+                      },
+                      keydown: function($event) {
+                        return _vm.form.errorClear($event.target.name)
+                      }
+                    }
+                  },
+                  [
+                    this.courseId != 0
+                      ? _c("div", { staticClass: "input-group mb-3" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedTopics,
+                                  expression: "selectedTopics"
+                                }
+                              ],
+                              staticClass: "custom-select",
+                              attrs: {
+                                id: "topicid",
+                                name: "topicid",
+                                multiple: ""
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectedTopics = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              this.topics.length < 1
+                                ? _c(
+                                    "option",
+                                    { attrs: { disabled: "", selected: "" } },
+                                    [_vm._v("Load Topics from Course")]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm._l(_vm.topics, function(topic, index) {
+                                return _c("option", {
+                                  key: index,
+                                  domProps: {
+                                    value: [topic.topicId, topic.name],
+                                    textContent: _vm._s(topic.name)
+                                  }
+                                })
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group-append" }, [
+                            this.topics.length < 1
+                              ? _c(
+                                  "button",
+                                  _vm._b(
+                                    {
+                                      staticClass: "btn dashbaricon",
+                                      attrs: { id: "load-topics" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getTopics($event)
+                                        }
+                                      }
+                                    },
+                                    "button",
+                                    { isLoadingTopics: _vm.isLoadingTopics },
+                                    false
+                                  ),
+                                  [
+                                    _vm.isLoadingTopics == false
+                                      ? _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("cloud_download")]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.isLoadingTopics
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "spinner-border",
+                                            staticStyle: {
+                                              width: "30px",
+                                              height: "30px",
+                                              "margin-left": "8px"
+                                            },
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            this.topics.length > 0
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn dashbaricon",
+                                    attrs: {
+                                      type: "submit",
+                                      disabled: _vm.form.errorAny()
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "material-icons" }, [
+                                      _vm._v("add")
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
-          _c("footer", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-12" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "d-flex justify-content-end" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-primary mr-2",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$modal.hide("manage-skilltree")
+          _c(
+            "footer",
+            { staticClass: "modal-footer justify-content-between" },
+            [
+              _vm.members
+                ? _c(
+                    "div",
+                    _vm._l(_vm.members, function(member, index) {
+                      return _c("img", {
+                        key: index,
+                        staticClass: "rounded-circle mr-1",
+                        staticStyle: { width: "24px" },
+                        attrs: {
+                          src: member.avatar,
+                          alt: member.name,
+                          title: "User is allowed to edit Skilltree"
                         }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-danger mr-2",
-                      attrs: { type: "button" },
-                      on: { click: _vm.deleteSkilltree }
-                    },
-                    [_vm._v("Delete Skilltree")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        form: "treeform",
-                        type: "submit",
-                        disabled: _vm.form.errorAny()
-                      }
-                    },
-                    [_vm._v("Update Skilltree")]
+                      })
+                    }),
+                    0
                   )
-                ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-danger mr-2",
+                    attrs: { type: "button" },
+                    on: { click: _vm.deleteSkilltree }
+                  },
+                  [_vm._v("Delete Skilltree")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      form: "treeform",
+                      type: "submit",
+                      disabled: _vm.form.errorAny()
+                    }
+                  },
+                  [_vm._v("Update Skilltree")]
+                )
               ])
-            ])
-          ])
+            ]
+          )
         ])
       ])
     ]

@@ -14,7 +14,7 @@ class SkilltreeClassroomsController extends Controller
     public function connect(Skilltree $skilltree)
     {
         if ($crid = request('courseId')) {
-            $skilltree->addOrUpdateMeta('courseId', $crid);
+            $skilltree->addOrUpdateMeta('courseId', (int) $crid);
         }
 
         if (request()->wantsJson()) {
@@ -24,12 +24,21 @@ class SkilltreeClassroomsController extends Controller
 
     public function topics(Skilltree $skilltree)
     {
-        if ($topics = request('topics')) {
-            $skilltree->addSkills($topics);
+
+        //return request('topics');
+
+        foreach (request('topics') as $value) {
+            $skill = $skilltree->addSkill(['skill_title' => $value[1]]);
+            $skill->addOrUpdateMeta('topicId', (int) $value[0]);
         }
 
+        /*        if ($topics = request('topics')) {
+            $skilltree->addSkills($topics);
+        }
+        */
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
         }
+        return $skilltree->path();
     }
 }
