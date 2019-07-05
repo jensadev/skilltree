@@ -100,27 +100,15 @@
                 </div>
                 <footer class="modal-footer">
                     <button
+                        class="btn btn-outline-warning mr-2"
                         type="button"
-                        class="btn btn-outline-primary mr-2"
-                        @click="$modal.hide('edit-skill')"
-                    >Cancel</button>
+                        @click="clearConnections"
+                    >Clear Connections</button>
                     <button
                         class="btn btn-outline-danger mr-2"
                         type="button"
                         @click="deleteSkill"
-                        v-bind="{isLoading}"
-                        :disabled="isLoading"
-                    >
-                        Delete Skill
-                        <div
-                            class="spinner-border"
-                            role="status"
-                            v-if="isLoading"
-                            style="width:24px; height:24px; margin-left:14px;"
-                        >
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </button>
+                    >Delete Skill</button>
                     <button
                         form="skillform"
                         class="btn btn-primary"
@@ -188,6 +176,23 @@ export default {
         },
         addTask() {
             this.form.skill_tasks.push({ body: "" });
+        },
+        clearConnections() {
+            let temp = JSON.parse(
+                localStorage.getItem(
+                    "tree_" + this.tree + "_skill_" + this.form.skill_id
+                )
+            );
+            console.log(temp.connections);
+            temp.connections = [];
+            localStorage.removeItem(
+                "tree_" + this.tree + "_skill_" + this.form.skill_id
+            );
+            localStorage.setItem(
+                "tree_" + this.tree + "_skill_" + this.form.skill_id,
+                JSON.stringify(temp)
+            );
+            location = self.location;
         },
         async submit() {
             if (!this.form.skill_tasks[0].body) {

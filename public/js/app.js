@@ -2267,18 +2267,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2362,6 +2350,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.skill_tasks.push({
         body: ""
       });
+    },
+    clearConnections: function clearConnections() {
+      var temp = JSON.parse(localStorage.getItem("tree_" + this.tree + "_skill_" + this.form.skill_id));
+      console.log(temp.connections);
+      temp.connections = [];
+      localStorage.removeItem("tree_" + this.tree + "_skill_" + this.form.skill_id);
+      localStorage.setItem("tree_" + this.tree + "_skill_" + this.form.skill_id, JSON.stringify(temp));
+      location = self.location;
     },
     submit: function () {
       var _submit = _asyncToGenerator(
@@ -42285,53 +42281,21 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-outline-primary mr-2",
+                staticClass: "btn btn-outline-warning mr-2",
                 attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.$modal.hide("edit-skill")
-                  }
-                }
+                on: { click: _vm.clearConnections }
               },
-              [_vm._v("Cancel")]
+              [_vm._v("Clear Connections")]
             ),
             _vm._v(" "),
             _c(
               "button",
-              _vm._b(
-                {
-                  staticClass: "btn btn-outline-danger mr-2",
-                  attrs: { type: "button", disabled: _vm.isLoading },
-                  on: { click: _vm.deleteSkill }
-                },
-                "button",
-                { isLoading: _vm.isLoading },
-                false
-              ),
-              [
-                _vm._v(
-                  "\n                    Delete Skill\n                    "
-                ),
-                _vm.isLoading
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "spinner-border",
-                        staticStyle: {
-                          width: "24px",
-                          height: "24px",
-                          "margin-left": "14px"
-                        },
-                        attrs: { role: "status" }
-                      },
-                      [
-                        _c("span", { staticClass: "sr-only" }, [
-                          _vm._v("Loading...")
-                        ])
-                      ]
-                    )
-                  : _vm._e()
-              ]
+              {
+                staticClass: "btn btn-outline-danger mr-2",
+                attrs: { type: "button" },
+                on: { click: _vm.deleteSkill }
+              },
+              [_vm._v("Delete Skill")]
             ),
             _vm._v(" "),
             _c(
