@@ -2267,12 +2267,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      selectedCourseWork: [],
+      courseWork: [],
+      isLoadingCourseWork: false,
       isLoading: false,
       tree: 0,
+      skill_topicid: this.skill_topicid,
+      skill_courseid: 0,
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         skill_id: 0,
         skill_title: "",
@@ -2284,46 +2346,118 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    deleteSkill: function () {
-      var _deleteSkill = _asyncToGenerator(
+    addCourseWork: function () {
+      var _addCourseWork = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var lsKey, skillNeedle, needle;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _context.next = 2;
+                return axios.post("/skilltrees/" + this.tree + "/skills/" + this.form.skill_id + "/coursetasks", {
+                  tasks: this.selectedCourseWork
+                }).then(function (response) {
+                  location = response.data.message;
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function addCourseWork() {
+        return _addCourseWork.apply(this, arguments);
+      }
+
+      return addCourseWork;
+    }(),
+    getCourseWork: function () {
+      var _getCourseWork = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
+
+        var courseWork;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isLoadingCourseWork = true;
+                _context2.next = 3;
+                return axios.get("/classroom/course/" + this.skill_courseid + "/courseworks").then(function (response) {
+                  console.log(response.data.message);
+                  courseWork = response.data.message;
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 3:
+                courseWork.forEach(function (element) {
+                  if (element.topicId == _this.skill_topicid) {
+                    _this.courseWork.push(element);
+                  }
+                });
+                console.log(this.courseWork);
+                this.isLoadingCourseWork = false;
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getCourseWork() {
+        return _getCourseWork.apply(this, arguments);
+      }
+
+      return getCourseWork;
+    }(),
+    deleteSkill: function () {
+      var _deleteSkill = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var lsKey;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
                 this.isLoading = true;
                 lsKey = "tree_" + this.tree + "_skill_" + this.form.skill_id;
-                skillNeedle = "skill_" + this.form.skill_id;
-                needle = "tree_" + this.tree;
-                _context.prev = 4;
-                _context.next = 7;
+                _context3.prev = 2;
+                _context3.next = 5;
                 return axios["delete"]("/skilltrees/" + this.tree + "/skills/" + this.form.skill_id).then(function (response) {
                   localStorage.removeItem(lsKey); // needs to clear connections
 
                   location = response.data.message;
                 });
 
-              case 7:
-                _context.next = 13;
+              case 5:
+                _context3.next = 11;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](4);
-                this.errors = _context.t0;
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](2);
+                this.errors = _context3.t0;
                 console.log("error" + this.errors);
 
-              case 13:
+              case 11:
                 this.isLoading = false;
 
-              case 14:
+              case 12:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this, [[4, 9]]);
+        }, _callee3, this, [[2, 7]]);
       }));
 
       function deleteSkill() {
@@ -2333,6 +2467,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return deleteSkill;
     }(),
     beforeOpen: function beforeOpen(event) {
+      this.skill_courseid = event.params.skill_courseid;
+      this.skill_topicid = event.params.skill_topicid;
       this.tree = event.params.tree;
       this.form.skill_id = event.params.skill_id;
       this.form.skill_title = event.params.skill_title;
@@ -2362,10 +2498,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 if (!this.form.skill_tasks[0].body) {
                   delete this.form.originalData.skill_tasks;
@@ -2379,10 +2515,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee4, this);
       }));
 
       function submit() {
@@ -2834,34 +2970,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return deleteSkilltree;
     }(),
-    addSkills: function () {
-      var _addSkills = _asyncToGenerator(
+    submit: function () {
+      var _submit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
-              case 0:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function addSkills() {
-        return _addSkills.apply(this, arguments);
-      }
-
-      return addSkills;
-    }(),
-    submit: function () {
-      var _submit = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   return location = response.data.message;
@@ -2871,10 +2986,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this);
       }));
 
       function submit() {
@@ -2886,14 +3001,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCourses: function () {
       var _getCourses = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var courses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.isLoadingCourses = true;
-                _context4.next = 3;
+                _context3.next = 3;
                 return axios.get("/classroom/courses").then(function (response) {
                   courses = response.data.message;
                 })["catch"](function (error) {
@@ -2906,10 +3021,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee3, this);
       }));
 
       function getCourses() {
@@ -2921,15 +3036,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getTopics: function () {
       var _getTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var topics;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.isLoadingTopics = true;
-                _context5.next = 3;
-                return axios.get("/classroom/topics/" + this.courseId).then(function (response) {
+                _context4.next = 3;
+                return axios.get("/classroom/course/" + this.courseId + "/topics").then(function (response) {
                   topics = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
@@ -2941,10 +3056,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee4, this);
       }));
 
       function getTopics() {
@@ -2956,13 +3071,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     connectCourse: function () {
       var _connectCourse = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.isConnectingCourse = true;
-                _context6.next = 3;
+                _context5.next = 3;
                 return axios.post("/skilltrees/" + this.id + "/classroom/course", {
                   courseId: this.courseId
                 }).then(function (response) {
@@ -2976,10 +3091,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee5, this);
       }));
 
       function connectCourse() {
@@ -2991,16 +3106,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addTopics: function () {
       var _addTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context7.next = 2;
+                _context6.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/classroom/topics", {
                   topics: this.selectedTopics
                 }).then(function (response) {
-                  //console.log(response);
                   location = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
@@ -3008,10 +3122,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee6, this);
       }));
 
       function addTopics() {
@@ -3020,8 +3134,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return addTopics;
     }()
-  },
-  computed: {}
+  }
 });
 
 /***/ }),
@@ -3419,6 +3532,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   directives: {
@@ -3570,7 +3690,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     }
   },
-  props: ["tree", "id", "skill_title", "skill_description", "skill_tasks"]
+  props: ["tree", "id", "skill_title", "skill_description", "skill_tasks", "skill_topicid", "skill_courseid"]
 });
 
 /***/ }),
@@ -42080,23 +42200,23 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _c(
-              "form",
-              {
-                attrs: { id: "skillform" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.submit($event)
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { id: "skillform" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.submit($event)
+                      },
+                      keydown: function($event) {
+                        return _vm.form.errorClear($event.target.name)
+                      }
+                    }
                   },
-                  keydown: function($event) {
-                    return _vm.form.errorClear($event.target.name)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-6" }, [
+                  [
                     _c("div", { staticClass: "form-group mb-3" }, [
                       _c("label", { attrs: { for: "skill_title" } }, [
                         _vm._v("Title")
@@ -42200,88 +42320,241 @@ var render = function() {
                           })
                         : _vm._e()
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-6" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Tasks")]),
-                        _vm._v(" "),
-                        _vm._l(_vm.form.skill_tasks, function(task, index) {
-                          return _c(
-                            "div",
-                            { key: index, staticClass: "input-group mb-3" },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: task.body,
-                                    expression: "task.body"
-                                  }
-                                ],
-                                staticClass: "form-control mb-2",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Task " + (index + 1),
-                                  value: "task.body"
-                                },
-                                domProps: { value: task.body },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(task, "body", $event.target.value)
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    ),
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Tasks")]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "d-flex align-items-center border-0 bg-transparent",
-                          attrs: { href: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addTask($event)
-                            }
-                          }
-                        },
+                    _vm._l(_vm.form.skill_tasks, function(task, index) {
+                      return _c(
+                        "div",
+                        { key: index, staticClass: "input-group mb-3" },
                         [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("add_circle_outline")
-                          ]),
-                          _vm._v(" "),
-                          _c("small", { staticClass: "text-muted pl-2" }, [
-                            _vm._v("Add a Task")
-                          ])
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: task.body,
+                                expression: "task.body"
+                              }
+                            ],
+                            staticClass: "form-control mb-2",
+                            attrs: {
+                              form: "skillform",
+                              type: "text",
+                              placeholder: "Task " + (index + 1),
+                              value: "task.body"
+                            },
+                            domProps: { value: task.body },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(task, "body", $event.target.value)
+                              }
+                            }
+                          })
                         ]
                       )
-                    ])
-                  ])
-                ])
-              ]
-            )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group mb-3" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "d-flex align-items-center border-0 bg-transparent",
+                      attrs: { href: "" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addTask($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "material-icons" }, [
+                        _vm._v("add_circle_outline")
+                      ]),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted pl-2" }, [
+                        _vm._v("Add a Task")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addCourseWork($event)
+                      },
+                      keydown: function($event) {
+                        return _vm.form.errorClear($event.target.name)
+                      }
+                    }
+                  },
+                  [
+                    this.skill_topicid != 0
+                      ? _c("div", { staticClass: "input-group mb-3" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedCourseWork,
+                                  expression: "selectedCourseWork"
+                                }
+                              ],
+                              staticClass: "custom-select",
+                              attrs: {
+                                id: "courseWorkSelect",
+                                name: "courseWorkSelect",
+                                multiple: ""
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectedCourseWork = $event.target
+                                    .multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              this.courseWork.length < 1
+                                ? _c(
+                                    "option",
+                                    { attrs: { disabled: "", selected: "" } },
+                                    [_vm._v("Load Topics from Course")]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm._l(_vm.courseWork, function(work, index) {
+                                return _c("option", {
+                                  key: index,
+                                  domProps: {
+                                    value: [work.id, work.title],
+                                    textContent: _vm._s(work.title)
+                                  }
+                                })
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group-append" }, [
+                            this.courseWork.length < 1
+                              ? _c(
+                                  "button",
+                                  _vm._b(
+                                    {
+                                      staticClass: "btn dashbaricon",
+                                      attrs: { id: "load-topics" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.getCourseWork($event)
+                                        }
+                                      }
+                                    },
+                                    "button",
+                                    {
+                                      isLoadingCourseWork:
+                                        _vm.isLoadingCourseWork
+                                    },
+                                    false
+                                  ),
+                                  [
+                                    _vm.isLoadingCourseWork == false
+                                      ? _c(
+                                          "i",
+                                          { staticClass: "material-icons" },
+                                          [_vm._v("cloud_download")]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.isLoadingCourseWork
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "spinner-border",
+                                            staticStyle: {
+                                              width: "30px",
+                                              height: "30px",
+                                              "margin-left": "8px"
+                                            },
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            this.courseWork.length > 0
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn dashbaricon",
+                                    attrs: {
+                                      type: "submit",
+                                      disabled: _vm.form.errorAny()
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "material-icons" }, [
+                                      _vm._v("add")
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              ])
+            ])
           ]),
           _vm._v(" "),
           _c("footer", { staticClass: "modal-footer" }, [
             _c(
               "button",
               {
-                staticClass: "btn btn-outline-warning mr-2",
+                staticClass: "btn btn-outline-secondary mr-2",
                 attrs: { type: "button" },
                 on: { click: _vm.clearConnections }
               },
@@ -42856,7 +43129,11 @@ var render = function() {
                                 return _c("option", {
                                   key: index,
                                   domProps: {
-                                    value: [topic.topicId, topic.name],
+                                    value: [
+                                      _vm.courseId,
+                                      topic.topicId,
+                                      topic.name
+                                    ],
                                     textContent: _vm._s(topic.name)
                                   }
                                 })
@@ -43429,7 +43706,9 @@ var render = function() {
                         skill_id: _vm.id,
                         skill_title: _vm.skill_title,
                         skill_description: _vm.skill_description,
-                        skill_tasks: _vm.skill_tasks
+                        skill_tasks: _vm.skill_tasks,
+                        skill_topicid: _vm.skill_topicid,
+                        skill_courseid: _vm.skill_courseid
                       })
                     }
                   }
@@ -43455,9 +43734,10 @@ var render = function() {
       _vm.skill_tasks || _vm.skill_description
         ? _c("div", { staticClass: "card-body" }, [
             _vm.skill_description
-              ? _c("p", { staticClass: "card-text" }, [
-                  _vm._v(_vm._s(_vm.skill_description))
-                ])
+              ? _c("p", {
+                  staticClass: "card-text",
+                  domProps: { textContent: _vm._s(_vm.skill_description) }
+                })
               : _vm._e(),
             _vm._v(" "),
             _vm.skill_tasks
@@ -43466,7 +43746,7 @@ var render = function() {
                   { staticClass: "list-unstyled" },
                   _vm._l(_vm.skill_tasks, function(task, index) {
                     return _c("li", { key: index, staticClass: "list-item" }, [
-                      _c("small", [_vm._v(_vm._s(task.body))])
+                      _c("small", [_vm._v(_vm._s(task.body.substr(0, 25)))])
                     ])
                   }),
                   0

@@ -22,20 +22,15 @@ class SkilltreeClassroomsController extends Controller
         }
     }
 
-    public function topics(Skilltree $skilltree)
+    public function showTopics(Skilltree $skilltree)
     {
 
-        //return request('topics');
-
         foreach (request('topics') as $value) {
-            $skill = $skilltree->addSkill(['skill_title' => $value[1]]);
-            $skill->addOrUpdateMeta('topicId', (int) $value[0]);
+            $skill = $skilltree->addSkill(['skill_title' => $value[2]]);
+            $skill->addOrUpdateMeta('courseId', (int) $value[0]);
+            $skill->addOrUpdateMeta('topicId', (int) $value[1]);
         }
 
-        /*        if ($topics = request('topics')) {
-            $skilltree->addSkills($topics);
-        }
-        */
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
         }

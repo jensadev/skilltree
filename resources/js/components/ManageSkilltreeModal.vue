@@ -158,7 +158,7 @@
                                         <option
                                             v-for="(topic, index) in topics"
                                             :key="index"
-                                            :value="[topic.topicId, topic.name]"
+                                            :value="[courseId, topic.topicId, topic.name]"
                                             v-text="topic.name"
                                         ></option>
                                     </select>
@@ -268,7 +268,6 @@ export default {
                 console.log("error" + this.errors);
             }
         },
-        async addSkills() {},
         async submit() {
             this.form
                 .submit("/skilltrees/" + this.id, "patch")
@@ -293,7 +292,7 @@ export default {
             let topics;
             this.isLoadingTopics = true;
             await axios
-                .get("/classroom/topics/" + this.courseId)
+                .get("/classroom/course/" + this.courseId + "/topics")
                 .then(function(response) {
                     topics = response.data.message;
                 })
@@ -318,25 +317,18 @@ export default {
             this.isConnectingCourse = false;
         },
         async addTopics() {
-            /*            let temp = [];
-
-            this.selectedTopics.forEach(topic => {
-                temp.push({ skill_title: topic });
-            });*/
             await axios
                 .post("/skilltrees/" + this.id + "/classroom/topics", {
                     topics: this.selectedTopics
                 })
                 .then(function(response) {
-                    //console.log(response);
                     location = response.data.message;
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
         }
-    },
-    computed: {}
+    }
 };
 </script>
 

@@ -21,7 +21,7 @@ class ClassroomController extends Controller
         ];
     }
 
-    public function getCourses()
+    public function listCourses()
     {
         $user = Auth::user();
         $this->client = new Google_Client();
@@ -47,7 +47,7 @@ class ClassroomController extends Controller
         return $dump;
     }
 
-    public function getTopics(Request $request)
+    public function listTopics(Request $request)
     {
         $user = Auth::user();
         $this->client = new Google_Client();
@@ -69,5 +69,45 @@ class ClassroomController extends Controller
             return ['message' => $topicsResult->topic];
         }
         return $topicsResult->topic;
+    }
+
+    public function listCourseWorks(Request $request)
+    {
+        $user = Auth::user();
+        $this->client = new Google_Client();
+        $this->client->setApplicationName('Skilltree');
+        $this->client->setAuthConfig('../credentials.json');
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->client->setAccessToken($user->g_token);
+
+        $this->service = new Google_Service_Classroom($this->client);
+
+        $coursesResult = $this->service->courses_courseWork->listCoursesCourseWork($request->courseid);
+
+        if (request()->wantsJson()) {
+            return ['message' => $coursesResult->courseWork];
+        }
+        return $coursesResult->courseWork;
+    }
+
+    public function getCourseWork(Request $request)
+    {
+        $user = Auth::user();
+        $this->client = new Google_Client();
+        $this->client->setApplicationName('Skilltree');
+        $this->client->setAuthConfig('../credentials.json');
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->client->setAccessToken($user->g_token);
+
+        $this->service = new Google_Service_Classroom($this->client);
+
+        $coursesResult = $this->service->courses_courseWork->listCoursesCourseWork($request->courseid);
+
+        if (request()->wantsJson()) {
+            return ['message' => $coursesResult->courseWork];
+        }
+        return $coursesResult->courseWork;
     }
 }

@@ -19,24 +19,31 @@ Route::group(
         Route::get('/', 'SkilltreesController@index');
         Route::resource('skilltrees', 'SkilltreesController');
 
+        // invitations
+        Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
+
+        // skills
+        Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
+        Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
+        Route::delete('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@destroy');
+
+        // skill positions
         Route::get('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@show');
         Route::post('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@store');
 
-        Route::get('/skilltrees/{skilltree}/classroom', 'SkilltreeClassroomsController@show');
-        Route::post('/skilltrees/{skilltree}/classroom', 'SkilltreeClassroomsController@store');
-
-        Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
+        // tasks
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
-        Route::patch('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@update');
-        Route::delete('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@destroy');
-        Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
+        Route::post('/skilltrees/{skilltree}/skills/{skill}/coursetasks', 'SkillTasksController@storeTasks');
 
+        // classroom controller routes
         Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');
-        Route::post('skilltrees/{skilltree}/classroom/topics', 'SkilltreeClassroomsController@topics');
+        Route::post('skilltrees/{skilltree}/classroom/topics', 'SkilltreeClassroomsController@showTopics');
 
-        //classroom test routes
-        Route::get('/classroom/courses', 'ClassroomController@getCourses');
-        Route::get('/classroom/topics/{courseid}', 'ClassroomController@getTopics');
+        // classroom API routes
+        Route::get('/classroom/courses', 'ClassroomController@listCourses');
+        Route::get('/classroom/course/{courseid}/topics', 'ClassroomController@listTopics');
+        Route::get('/classroom/course/{courseid}/courseworks', 'ClassroomController@listCourseWorks');
+        Route::get('/classroom/course/{courseid}/coursework/{courseworkid}', 'ClassroomController@getCourseWork');
     }
 );
 

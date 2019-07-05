@@ -16,6 +16,9 @@
                 :id="{{ $skill->id }}"
                 :skill_title="'{{ str_limit($skill->skill_title, 15) }}'"
                 :skill_description="'{{ $skill->skill_description }}'"
+                :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
+                :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'"
+
                 @if (count($skill->tasks) > 0)
                     :skill_tasks="{{ $skill->tasks }}"
                 @endif
@@ -28,7 +31,7 @@
         :title="'{{ $skilltree->title }}'" 
         :description="'{{ $skilltree->description }}'" 
         :members="{{ $skilltree->members }}" 
-        :c-id="{{ $skilltree->hasMeta('courseId') ? $skilltree->getMeta('courseId')->value : '0' }}">
+        :c-id="{{ $skilltree->hasMeta('courseId') ? $skilltree->getMeta('courseId')->value : 0 }}">
     </manage-skilltree-modal>
     @include('skilltrees.activity.feed')
 @endsection

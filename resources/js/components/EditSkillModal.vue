@@ -25,13 +25,13 @@
                     </button>
                 </header>
                 <div class="modal-body">
-                    <form
-                        @submit.prevent="submit"
-                        @keydown="form.errorClear($event.target.name)"
-                        id="skillform"
-                    >
-                        <div class="row">
-                            <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form
+                                @submit.prevent="submit"
+                                @keydown="form.errorClear($event.target.name)"
+                                id="skillform"
+                            >
                                 <div class="form-group mb-3">
                                     <label for="skill_title">Title</label>
                                     <input
@@ -66,41 +66,98 @@
                                         v-text="form.errors.skill_description[0]"
                                     ></div>
                                 </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Tasks</label>
+                                <div
+                                    class="input-group mb-3"
+                                    :key="index"
+                                    v-for="(task, index) in form.skill_tasks"
+                                >
+                                    <input
+                                        form="skillform"
+                                        class="form-control mb-2"
+                                        type="text"
+                                        v-model="task.body"
+                                        :placeholder="'Task ' + (index + 1)"
+                                        value="task.body"
+                                    />
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Tasks</label>
-                                    <div
-                                        class="input-group mb-3"
-                                        :key="index"
-                                        v-for="(task, index) in form.skill_tasks"
+                            <div class="form-group mb-3">
+                                <a
+                                    class="d-flex align-items-center border-0 bg-transparent"
+                                    @click.prevent="addTask"
+                                    href
+                                >
+                                    <i class="material-icons">add_circle_outline</i>
+                                    <small class="text-muted pl-2">Add a Task</small>
+                                </a>
+                            </div>
+                            <form
+                                @submit.prevent="addCourseWork"
+                                @keydown="form.errorClear($event.target.name)"
+                            >
+                                <div class="input-group mb-3" v-if="this.skill_topicid != 0">
+                                    <select
+                                        class="custom-select"
+                                        id="courseWorkSelect"
+                                        name="courseWorkSelect"
+                                        v-model="selectedCourseWork"
+                                        multiple
                                     >
-                                        <input
-                                            class="form-control mb-2"
-                                            type="text"
-                                            v-model="task.body"
-                                            :placeholder="'Task ' + (index + 1)"
-                                            value="task.body"
-                                        />
+                                        <option
+                                            disabled
+                                            selected
+                                            v-if="this.courseWork.length < 1"
+                                        >Load Topics from Course</option>
+                                        <option
+                                            v-for="(work, index) in courseWork"
+                                            :key="index"
+                                            :value="[work.id, work.title]"
+                                            v-text="work.title"
+                                        ></option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button
+                                            v-if="this.courseWork.length < 1"
+                                            class="btn dashbaricon"
+                                            id="load-topics"
+                                            @click.prevent="getCourseWork"
+                                            v-bind="{isLoadingCourseWork}"
+                                        >
+                                            <i
+                                                class="material-icons"
+                                                v-if="isLoadingCourseWork == false"
+                                            >cloud_download</i>
+                                            <div
+                                                class="spinner-border"
+                                                role="status"
+                                                v-if="isLoadingCourseWork"
+                                                style="width: 30px; height: 30px; margin-left: 8px;"
+                                            >
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </button>
+                                        <button
+                                            v-if="this.courseWork.length > 0"
+                                            class="btn dashbaricon"
+                                            type="submit"
+                                            :disabled="form.errorAny()"
+                                        >
+                                            <i class="material-icons">add</i>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <a
-                                        class="d-flex align-items-center border-0 bg-transparent"
-                                        @click.prevent="addTask"
-                                        href
-                                    >
-                                        <i class="material-icons">add_circle_outline</i>
-                                        <small class="text-muted pl-2">Add a Task</small>
-                                    </a>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <footer class="modal-footer">
                     <button
-                        class="btn btn-outline-warning mr-2"
+                        class="btn btn-outline-secondary mr-2"
                         type="button"
                         @click="clearConnections"
                     >Clear Connections</button>
@@ -127,8 +184,13 @@ import Form from "./Form";
 export default {
     data() {
         return {
+            selectedCourseWork: [],
+            courseWork: [],
+            isLoadingCourseWork: false,
             isLoading: false,
             tree: 0,
+            skill_topicid: this.skill_topicid,
+            skill_courseid: 0,
             form: new Form({
                 skill_id: 0,
                 skill_title: "",
@@ -138,11 +200,52 @@ export default {
         };
     },
     methods: {
+        async addCourseWork() {
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.tree +
+                        "/skills/" +
+                        this.form.skill_id +
+                        "/coursetasks",
+                    {
+                        tasks: this.selectedCourseWork
+                    }
+                )
+                .then(function(response) {
+                    location = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
+        async getCourseWork() {
+            let courseWork;
+            this.isLoadingCourseWork = true;
+            await axios
+                .get(
+                    "/classroom/course/" + this.skill_courseid + "/courseworks"
+                )
+                .then(function(response) {
+                    console.log(response.data.message);
+                    courseWork = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+
+            courseWork.forEach(element => {
+                if (element.topicId == this.skill_topicid) {
+                    this.courseWork.push(element);
+                }
+            });
+
+            console.log(this.courseWork);
+            this.isLoadingCourseWork = false;
+        },
         async deleteSkill() {
             this.isLoading = true;
             let lsKey = "tree_" + this.tree + "_skill_" + this.form.skill_id;
-            let skillNeedle = "skill_" + this.form.skill_id;
-            let needle = "tree_" + this.tree;
             try {
                 await axios
                     .delete(
@@ -163,6 +266,8 @@ export default {
             this.isLoading = false;
         },
         beforeOpen(event) {
+            this.skill_courseid = event.params.skill_courseid;
+            this.skill_topicid = event.params.skill_topicid;
             this.tree = event.params.tree;
             this.form.skill_id = event.params.skill_id;
             this.form.skill_title = event.params.skill_title;

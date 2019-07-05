@@ -41,8 +41,27 @@ class SkillTasksController extends Controller
         request()->validate(['body' => 'required|min:3']);
         $skill->addTask(request('body'));
 
+        if (request()->wantsJson()) {
+            return ['message' => $skill->skilltree->path()];
+        }
         return redirect($skill->skilltree->path());
     }
+
+    public function storeTasks(Skilltree $skilltree, Skill $skill)
+    {
+        $this->authorize('update', $skilltree);
+
+        foreach (request('tasks') as $value) {
+            $skill->addTask($value[1]);
+            $skill->addOrUpdateMeta('taskId', (int) $value[0]);
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $skill->skilltree->path()];
+        }
+        return redirect($skill->skilltree->path());
+    }
+
 
     /**
      * Display the specified resource.

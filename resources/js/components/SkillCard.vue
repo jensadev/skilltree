@@ -8,17 +8,24 @@
                 class="btn btn-less"
                 style="padding: 0;"
                 role="button"
-                @click.prevent="$modal.show('edit-skill', { tree: tree, skill_id: id,  skill_title: skill_title, skill_description: skill_description, skill_tasks: skill_tasks})"
+                @click.prevent="$modal.show('edit-skill', { 
+                    tree: tree, 
+                    skill_id: id,  
+                    skill_title: skill_title, 
+                    skill_description: skill_description, 
+                    skill_tasks: skill_tasks, 
+                    skill_topicid: skill_topicid, 
+                    skill_courseid: skill_courseid})"
                 title="Edit Skill"
             >
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
             </a>
         </div>
         <div class="card-body" v-if="skill_tasks || skill_description">
-            <p v-if="skill_description" class="card-text">{{ skill_description }}</p>
+            <p v-if="skill_description" class="card-text" v-text="skill_description"></p>
             <ul v-if="skill_tasks" class="list-unstyled">
                 <li class="list-item" :key="index" v-for="(task, index) in skill_tasks">
-                    <small>{{ task.body }}</small>
+                    <small>{{ task.body.substr(0, 25) }}</small>
                 </li>
             </ul>
         </div>
@@ -190,7 +197,15 @@ export default {
             });
         }
     },
-    props: ["tree", "id", "skill_title", "skill_description", "skill_tasks"]
+    props: [
+        "tree",
+        "id",
+        "skill_title",
+        "skill_description",
+        "skill_tasks",
+        "skill_topicid",
+        "skill_courseid"
+    ]
 };
 </script>
 <style>
