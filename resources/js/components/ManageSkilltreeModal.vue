@@ -31,7 +31,7 @@
                                 @keydown="form.errorClear($event.target.name)"
                                 id="treeform"
                             >
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label for="title">Title</label>
                                     <input
                                         id="title"
