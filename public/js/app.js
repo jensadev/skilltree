@@ -2903,6 +2903,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3033,6 +3038,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getCourses;
     }(),
+    clearConnections: function clearConnections() {
+      var temp = JSON.parse(localStorage.getItem("tree_" + this.id + "_skill_0"));
+      console.log(temp.connections);
+      temp.connections = [];
+      localStorage.removeItem("tree_" + this.id + "_skill_0");
+      localStorage.setItem("tree_" + this.id + "_skill_0", JSON.stringify(temp));
+      location = self.location;
+    },
     getTopics: function () {
       var _getTopics = _asyncToGenerator(
       /*#__PURE__*/
@@ -43245,6 +43258,16 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-secondary mr-2",
+                    attrs: { type: "button" },
+                    on: { click: _vm.clearConnections }
+                  },
+                  [_vm._v("Clear Connections")]
+                ),
+                _vm._v(" "),
                 _c(
                   "button",
                   {

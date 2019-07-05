@@ -211,6 +211,11 @@
                     </div>
                     <div>
                         <button
+                            class="btn btn-outline-secondary mr-2"
+                            type="button"
+                            @click="clearConnections"
+                        >Clear Connections</button>
+                        <button
                             class="btn btn-outline-danger mr-2"
                             type="button"
                             @click="deleteSkilltree"
@@ -287,6 +292,19 @@ export default {
                 });
             this.courses = courses;
             this.isLoadingCourses = false;
+        },
+        clearConnections() {
+            let temp = JSON.parse(
+                localStorage.getItem("tree_" + this.id + "_skill_0")
+            );
+            console.log(temp.connections);
+            temp.connections = [];
+            localStorage.removeItem("tree_" + this.id + "_skill_0");
+            localStorage.setItem(
+                "tree_" + this.id + "_skill_0",
+                JSON.stringify(temp)
+            );
+            location = self.location;
         },
         async getTopics() {
             let topics;
