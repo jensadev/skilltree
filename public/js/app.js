@@ -2962,6 +2962,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -43301,7 +43302,9 @@ var render = function() {
                                   staticClass: "btn dashbaricon",
                                   attrs: {
                                     id: "disconnectBtn",
-                                    type: "button"
+                                    type: "button",
+                                    title:
+                                      "Disconnect Google Classroom Course from Skilltree"
                                   },
                                   on: { click: _vm.deleteCourseConnection }
                                 },

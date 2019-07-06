@@ -164,6 +164,7 @@
                                                 id="disconnectBtn"
                                                 type="button"
                                                 @click="deleteCourseConnection"
+                                                title="Disconnect Google Classroom Course from Skilltree"
                                             >
                                                 <i class="material-icons">link_off</i>
                                             </button>
