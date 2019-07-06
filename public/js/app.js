@@ -2955,6 +2955,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2975,17 +2982,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["id", "members", "cId"],
   methods: {
-    deleteCourseConnection: function () {
-      var _deleteCourseConnection = _asyncToGenerator(
+    inviteStudents: function () {
+      var _inviteStudents = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var con;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log("invite students");
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function inviteStudents() {
+        return _inviteStudents.apply(this, arguments);
+      }
+
+      return inviteStudents;
+    }(),
+    deleteCourseConnection: function () {
+      var _deleteCourseConnection = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var con;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
                 con = true;
-                _context.next = 3;
+                _context2.next = 3;
                 return axios["delete"]("/skilltrees/" + this.id + "/classroom/course").then(function (response) {
                   console.log(response.data.message);
                   con = false;
@@ -2999,10 +3030,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function deleteCourseConnection() {
@@ -3014,15 +3045,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteSkilltree: function () {
       var _deleteSkilltree = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var needle;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 needle = "tree_" + this.id;
-                _context2.prev = 1;
-                _context2.next = 4;
+                _context3.prev = 1;
+                _context3.next = 4;
                 return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
                   if (response.status == 200) {
                     Object.keys(localStorage).forEach(function (key) {
@@ -3036,21 +3067,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
 
               case 6:
-                _context2.prev = 6;
-                _context2.t0 = _context2["catch"](1);
-                this.errors = _context2.t0;
+                _context3.prev = 6;
+                _context3.t0 = _context3["catch"](1);
+                this.errors = _context3.t0;
                 console.log("error" + this.errors);
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[1, 6]]);
+        }, _callee3, this, [[1, 6]]);
       }));
 
       function deleteSkilltree() {
@@ -3062,10 +3093,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   return location = response.data.message;
@@ -3075,10 +3106,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function submit() {
@@ -3090,14 +3121,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCourses: function () {
       var _getCourses = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var courses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.isLoadingCourses = true;
-                _context4.next = 3;
+                _context5.next = 3;
                 return axios.get("/classroom/courses").then(function (response) {
                   courses = response.data.message;
                 })["catch"](function (error) {
@@ -3110,10 +3141,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function getCourses() {
@@ -3133,14 +3164,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getTopics: function () {
       var _getTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var topics;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 this.isLoadingTopics = true;
-                _context5.next = 3;
+                _context6.next = 3;
                 return axios.get("/classroom/course/" + this.courseId + "/topics").then(function (response) {
                   topics = response.data.message;
                 })["catch"](function (error) {
@@ -3153,10 +3184,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function getTopics() {
@@ -3168,15 +3199,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     connectCourse: function () {
       var _connectCourse = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var con;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 this.isConnectingCourse = true;
                 con = false;
-                _context6.next = 4;
+                _context7.next = 4;
                 return axios.post("/skilltrees/" + this.id + "/classroom/course", {
                   courseId: this.courseId
                 }).then(function (response) {
@@ -3189,13 +3220,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 this.isConnected = con;
                 this.isConnectingCourse = false;
+                this.getTopics();
 
-              case 6:
+              case 7:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function connectCourse() {
@@ -3207,12 +3239,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addTopics: function () {
       var _addTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.next = 2;
+                _context8.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/classroom/topics", {
                   topics: this.selectedTopics
                 }).then(function (response) {
@@ -3223,10 +3255,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
 
       function addTopics() {
@@ -3235,6 +3267,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return addTopics;
     }()
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.getCourses();
+    this.$nextTick(function () {
+      if (_this.courseId != 0) _this.isConnected = true;
+    });
   }
 });
 
@@ -43094,12 +43134,6 @@ var render = function() {
                       }
                     },
                     [
-                      !this.courseId
-                        ? _c("label", { attrs: { for: "courseId" } }, [
-                            _vm._v("Load courses from Google Classroom")
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
                       _c("div", { staticClass: "input-group mb-3" }, [
                         _c(
                           "select",
@@ -43131,9 +43165,11 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", {
-                              attrs: { disabled: "", selected: "" }
-                            }),
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", selected: "" } },
+                              [_vm._v("Please select one")]
+                            ),
                             _vm._v(" "),
                             _vm._l(_vm.courses, function(course, index) {
                               return _c("option", {
@@ -43205,7 +43241,7 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          this.courses.length > 0
+                          !_vm.isConnected
                             ? _c(
                                 "button",
                                 _vm._b(
@@ -43256,36 +43292,70 @@ var render = function() {
                                     : _vm._e()
                                 ]
                               )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.isConnected
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn dashbaricon",
+                                  attrs: {
+                                    id: "disconnectBtn",
+                                    type: "button"
+                                  },
+                                  on: { click: _vm.deleteCourseConnection }
+                                },
+                                [
+                                  _c("i", { staticClass: "material-icons" }, [
+                                    _vm._v("link_off")
+                                  ])
+                                ]
+                              )
                             : _vm._e()
                         ])
                       ])
                     ]
                   ),
                   _vm._v(" "),
-                  _vm.isConnected || this.cId != 0
-                    ? _c("div", [
-                        _c("label", { attrs: { for: "disconnectBtn" } }, [
-                          _vm._v("Disconnect from Classroom")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn dashbaricon",
-                            attrs: { id: "disconnectBtn", type: "button" },
-                            on: { click: _vm.deleteCourseConnection }
-                          },
-                          [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("link_off")
-                            ])
-                          ]
-                        )
-                      ])
+                  _vm.isConnected
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex justify-content-between align-items-center"
+                        },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "mb-0",
+                              attrs: { for: "inviteStudentsBtn" }
+                            },
+                            [_vm._v("Invite Students from Course")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn dashbaricon",
+                              attrs: {
+                                id: "inviteStudentsBtn",
+                                type: "button"
+                              },
+                              on: { click: _vm.inviteStudents }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("group_add")
+                              ])
+                            ]
+                          )
+                        ]
+                      )
                     : _vm._e()
                 ]),
                 _vm._v(" "),
-                _vm.isConnected || this.cId != 0
+                _vm.isConnected
                   ? _c("div", { staticClass: "col-lg-6" }, [
                       _c(
                         "form",
@@ -43302,7 +43372,7 @@ var render = function() {
                         },
                         [
                           _c("label", {
-                            attrs: { for: "topicid" },
+                            attrs: { for: "topicsBtn" },
                             domProps: {
                               textContent: _vm._s(
                                 this.topics.length < 1
@@ -43373,7 +43443,7 @@ var render = function() {
                                       {
                                         staticClass: "btn dashbaricon",
                                         attrs: {
-                                          id: "load-topics",
+                                          id: "topicsBtn",
                                           title:
                                             "Load Topics from Google Classroom"
                                         },
@@ -43429,6 +43499,7 @@ var render = function() {
                                       staticClass: "btn dashbaricon",
                                       attrs: {
                                         type: "submit",
+                                        id: "topicsBtn",
                                         disabled: _vm.form.errorAny(),
                                         title:
                                           "Add Topics as Skills to Skilltree"
@@ -43461,19 +43532,23 @@ var render = function() {
                 ? _c(
                     "div",
                     _vm._l(_vm.members, function(member, index) {
-                      return _c("img", {
-                        key: index,
-                        staticClass: "rounded-circle mr-1",
-                        staticStyle: { width: "24px" },
-                        attrs: {
-                          src: member.avatar,
-                          alt: member.name,
-                          title:
-                            "User member.name is allowed to edit Skilltree",
-                          "data-toggle": "tooltip",
-                          "data-placement": "bottom"
-                        }
-                      })
+                      return member.teacher
+                        ? _c("img", {
+                            key: index,
+                            staticClass: "rounded-circle mr-1",
+                            staticStyle: { width: "24px" },
+                            attrs: {
+                              src: member.avatar,
+                              alt: member.name,
+                              title:
+                                "User " +
+                                member.name +
+                                " is allowed to edit Skilltree",
+                              "data-toggle": "tooltip",
+                              "data-placement": "bottom"
+                            }
+                          })
+                        : _vm._e()
                     }),
                     0
                   )

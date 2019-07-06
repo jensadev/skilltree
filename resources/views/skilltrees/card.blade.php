@@ -6,11 +6,14 @@
     <div class="card-footer d-flex justify-content-between align-items-center">
         <div>
             @foreach ($skilltree->members->take(5) as $member)
-                <img
-                    src="{{ $member->avatar }}"
-                    alt="{{ $member->name }}'s avatar"
-                    class="rounded-circle mr-1"
-                    style="width: 24px;">
+                @if ($member->teacher)
+                    <img
+                        src="{{ $member->avatar }}"
+                        alt="{{ $member->name }}'s avatar"
+                        title="User {{ $member->name }} is allowed to edit Skilltree"
+                        class="rounded-circle mr-1"
+                        style="width: 24px;">
+                @endif
             @endforeach
         </div>
         @can('manage', $skilltree)

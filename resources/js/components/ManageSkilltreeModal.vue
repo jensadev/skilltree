@@ -100,10 +100,6 @@
                                     @submit.prevent="connectCourse"
                                     @keydown="form.errorClear($event.target.name)"
                                 >
-                                    <label
-                                        for="courseId"
-                                        v-if="!this.courseId"
-                                    >Load courses from Google Classroom</label>
                                     <div class="input-group mb-3">
                                         <select
                                             class="custom-select"
@@ -111,7 +107,7 @@
                                             name="courseId"
                                             v-model="courseId"
                                         >
-                                            <option disabled selected></option>
+                                            <option disabled selected>Please select one</option>
                                             <option
                                                 v-for="(course, index) in courses"
                                                 :key="index"
@@ -142,7 +138,7 @@
                                                 </div>
                                             </button>
                                             <button
-                                                v-if="this.courses.length > 0"
+                                                v-if="!isConnected"
                                                 class="btn dashbaricon"
                                                 type="submit"
                                                 :disabled="isConnectingCourse"
@@ -162,28 +158,37 @@
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                             </button>
+                                            <button
+                                                v-if="isConnected"
+                                                class="btn dashbaricon"
+                                                id="disconnectBtn"
+                                                type="button"
+                                                @click="deleteCourseConnection"
+                                            >
+                                                <i class="material-icons">link_off</i>
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
-                                <div v-if="isConnected || this.cId != 0">
-                                    <label for="disconnectBtn">Disconnect from Classroom</label>
+                                <div v-if="isConnected" class="d-flex justify-content-between align-items-center">
+                                    <label for="inviteStudentsBtn" class="mb-0">Invite Students from Course</label>
                                     <button
                                         class="btn dashbaricon"
-                                        id="disconnectBtn"
+                                        id="inviteStudentsBtn"
                                         type="button"
-                                        @click="deleteCourseConnection"
+                                        @click="inviteStudents"
                                     >
-                                        <i class="material-icons">link_off</i>
+                                        <i class="material-icons">group_add</i>
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-lg-6" v-if="isConnected || this.cId != 0">
+                            <div class="col-lg-6" v-if="isConnected">
                                 <form
                                     @submit.prevent="addTopics"
                                     @keydown="form.errorClear($event.target.name)"
                                 >
                                     <label
-                                        for="topicid"
+                                        for="topicsBtn"
                                         v-text="this.topics.length < 1 ? 'Load Topics from selected Course' : 'Create Skills from Topics'"
                                     ></label>
                                     <div class="input-group mb-3">
@@ -207,7 +212,7 @@
                                             <button
                                                 v-if="this.topics.length < 1"
                                                 class="btn dashbaricon"
-                                                id="load-topics"
+                                                id="topicsBtn"
                                                 @click.prevent="getTopics"
                                                 v-bind="{isLoadingTopics}"
                                                 title="Load Topics from Google Classroom"
@@ -229,6 +234,7 @@
                                                 v-if="this.topics.length > 0"
                                                 class="btn dashbaricon"
                                                 type="submit"
+                                                id="topicsBtn"
                                                 :disabled="form.errorAny()"
                                                 title="Add Topics as Skills to Skilltree"
                                             >
@@ -245,10 +251,11 @@
                     <div v-if="members">
                         <img
                             v-for="(member, index) in members"
+                            v-if="member.teacher"
                             :key="index"
                             :src="member.avatar"
                             :alt="member.name"
-                            title="User member.name is allowed to edit Skilltree"
+                            :title="'User ' + member.name + ' is allowed to edit Skilltree'"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             class="rounded-circle mr-1"
@@ -300,6 +307,9 @@ export default {
     },
     props: ["id", "members", "cId"],
     methods: {
+        async inviteStudents() {
+            console.log("invite students");
+        },
         async deleteCourseConnection() {
             let con = true;
             await axios
@@ -397,6 +407,7 @@ export default {
                 });
             this.isConnected = con;
             this.isConnectingCourse = false;
+            this.getTopics();
         },
         async addTopics() {
             await axios
@@ -410,6 +421,12 @@ export default {
                     console.log(error);
                 });
         }
+    },
+    mounted() {
+        this.getCourses();
+        this.$nextTick(() => {
+            if (this.courseId != 0) this.isConnected = true;
+        });
     }
 };
 </script>

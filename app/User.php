@@ -49,7 +49,8 @@ class User extends Authenticatable
     {
         return Skilltree::where('owner_id', $this->id)
             ->orWhereHas('members', function ($query) {
-                $query->where('user_id', $this->id);
+                $query->where('user_id', $this->id)
+                    ->where('teacher', true);
             })
             ->latest('updated_at')
             ->get();
