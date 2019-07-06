@@ -10704,7 +10704,7 @@ a.text-dark:focus {
 
 .dashbaricon .material-icons {
   font-size: 30px;
-  margin-left: 8px;
+  margin: 0px 4px;
 }
 
 .dashbaricon:focus {
@@ -10819,5 +10819,9 @@ a.text-dark:focus {
   position: absolute;
   height: 123px;
   border-right: 10px solid #f0f0f0;
+}
+
+.tooltip {
+  z-index: 10000;
 }
 

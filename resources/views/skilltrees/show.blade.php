@@ -6,7 +6,7 @@
         <skill-card
             :tree="{{ $skilltree->id }}"
             :id="0"
-            :skill_title="'{{ str_limit($skilltree->title, 15) }}'"
+            :skill_title="'{{ $skilltree->title }}'"
             :skill_description="'{{ $skilltree->description }}'"
             class="root"
         ></skill-card>
@@ -14,7 +14,7 @@
             <skill-card
                 :tree="{{ $skilltree->id }}"
                 :id="{{ $skill->id }}"
-                :skill_title="'{{ str_limit($skill->skill_title, 15) }}'"
+                :skill_title="'{{ $skill->skill_title }}'"
                 :skill_description="'{{ $skill->skill_description }}'"
                 :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
                 :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'"
@@ -33,5 +33,10 @@
         :members="{{ $skilltree->members }}" 
         :c-id="{{ $skilltree->hasMeta('courseId') ? $skilltree->getMeta('courseId')->value : 0 }}">
     </manage-skilltree-modal>
-    @include('skilltrees.activity.feed')
+    <footer class="position-absolute feed w-100">
+        <div style="margin-left: 30px;">
+            <p class="text-muted">Hold ALT to zoom/drag Skilltree</p>
+        </div>
+        @include('skilltrees.activity.feed')
+    </footer>
 @endsection

@@ -2324,6 +2324,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2674,6 +2675,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3273,7 +3280,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3502,6 +3508,20 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42488,7 +42508,11 @@ var render = function() {
                                   _vm._b(
                                     {
                                       staticClass: "btn dashbaricon",
-                                      attrs: { id: "load-topics" },
+                                      attrs: {
+                                        id: "load-topics",
+                                        title:
+                                          "Load Coursework from Google Classroom"
+                                      },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -42629,7 +42653,7 @@ var render = function() {
       "button",
       {
         staticClass: "btn dashbaricon",
-        attrs: { title: "Invite another admin user to your Skilltree" },
+        attrs: { title: "Invite another teacher to your Skilltree" },
         on: {
           click: function($event) {
             _vm.isOpen = !_vm.isOpen
@@ -42988,7 +43012,10 @@ var render = function() {
                               _vm._b(
                                 {
                                   staticClass: "btn dashbaricon",
-                                  attrs: { id: "load-courses" },
+                                  attrs: {
+                                    id: "load-courses",
+                                    title: "Load Courses from Google Classroom"
+                                  },
                                   on: {
                                     click: function($event) {
                                       $event.preventDefault()
@@ -43038,7 +43065,9 @@ var render = function() {
                                   staticClass: "btn dashbaricon",
                                   attrs: {
                                     type: "submit",
-                                    disabled: _vm.isConnectingCourse
+                                    disabled: _vm.isConnectingCourse,
+                                    title:
+                                      "Connect Google Classroom Course to Skilltree"
                                   }
                                 },
                                 "button",
@@ -43162,7 +43191,11 @@ var render = function() {
                                   _vm._b(
                                     {
                                       staticClass: "btn dashbaricon",
-                                      attrs: { id: "load-topics" },
+                                      attrs: {
+                                        id: "load-topics",
+                                        title:
+                                          "Load Topics from Google Classroom"
+                                      },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -43215,7 +43248,8 @@ var render = function() {
                                     staticClass: "btn dashbaricon",
                                     attrs: {
                                       type: "submit",
-                                      disabled: _vm.form.errorAny()
+                                      disabled: _vm.form.errorAny(),
+                                      title: "Add Topics as Skills to Skilltree"
                                     }
                                   },
                                   [
@@ -43249,7 +43283,10 @@ var render = function() {
                         attrs: {
                           src: member.avatar,
                           alt: member.name,
-                          title: "User is allowed to edit Skilltree"
+                          title:
+                            "User member.name is allowed to edit Skilltree",
+                          "data-toggle": "tooltip",
+                          "data-placement": "bottom"
                         }
                       })
                     }),
@@ -43330,7 +43367,6 @@ var render = function() {
         adaptive: true,
         reset: true,
         "pivot-y": 0.25,
-        draggable: true,
         width: "60%",
         height: "auto"
       }
@@ -43712,7 +43748,9 @@ var render = function() {
             "card-header d-flex justify-content-between align-items-center"
         },
         [
-          _c("h2", { staticClass: "h5" }, [_vm._v(_vm._s(_vm.skill_title))]),
+          _c("h2", { staticClass: "h5" }, [
+            _vm._v(_vm._s(_vm.skill_title.substr(0, 15)))
+          ]),
           _vm._v(" "),
           _vm.id != 0
             ? _c(
@@ -43754,28 +43792,34 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm.skill_tasks || _vm.skill_description
+      _vm.skill_description
         ? _c("div", { staticClass: "card-body" }, [
             _vm.skill_description
               ? _c("p", {
                   staticClass: "card-text",
                   domProps: { textContent: _vm._s(_vm.skill_description) }
                 })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.skill_tasks
-              ? _c(
-                  "ul",
-                  { staticClass: "list-unstyled" },
-                  _vm._l(_vm.skill_tasks, function(task, index) {
-                    return _c("li", { key: index, staticClass: "list-item" }, [
-                      _c("small", [_vm._v(_vm._s(task.body.substr(0, 25)))])
-                    ])
-                  }),
-                  0
-                )
               : _vm._e()
           ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.skill_tasks
+        ? _c(
+            "ul",
+            { staticClass: "list-group list-group-flush" },
+            _vm._l(_vm.skill_tasks, function(task, index) {
+              return _c(
+                "li",
+                {
+                  key: index,
+                  staticClass: "list-group-item",
+                  staticStyle: { padding: "0.5rem 0.75rem" }
+                },
+                [_c("small", [_vm._v(_vm._s(task.body.substr(0, 20)))])]
+              )
+            }),
+            0
+          )
         : _vm._e(),
       _vm._v(" "),
       _vm.id != 0
@@ -43801,6 +43845,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-less lArr hideArr",
+          attrs: { title: "Click to connect to the next Skill you click on" },
           on: { click: _vm.createConnection }
         },
         [
@@ -43819,6 +43864,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-less rArr hideArr",
+          attrs: { title: "Click to connect to the next Skill you click on" },
           on: { click: _vm.createConnection }
         },
         [_c("i", { staticClass: "material-icons" }, [_vm._v("forward")])]

@@ -127,6 +127,7 @@
                                             id="load-topics"
                                             @click.prevent="getCourseWork"
                                             v-bind="{isLoadingCourseWork}"
+                                            title="Load Coursework from Google Classroom"
                                         >
                                             <i
                                                 class="material-icons"

@@ -20,7 +20,7 @@
                 </invite-skilltree-member>
                 <save-skilltree-positions :tree="'{{ $skilltree->id }}'" :save="'{{ auth()->user()->id == $skilltree->owner_id ? true : false }}'">
                 </save-skilltree-positions>
-                <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Skilltree Settings">
+                <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Manage Skilltree">
                     <i class="material-icons">settings</i>
                 </a>
             @endif

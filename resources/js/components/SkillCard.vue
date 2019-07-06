@@ -1,7 +1,7 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="h5">{{ skill_title }}</h2>
+            <h2 class="h5">{{ skill_title.substr(0, 15) }}</h2>
             <a
                 v-if="id != 0"
                 href
@@ -21,14 +21,20 @@
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
             </a>
         </div>
-        <div class="card-body" v-if="skill_tasks || skill_description">
+        <div class="card-body" v-if="skill_description">
             <p v-if="skill_description" class="card-text" v-text="skill_description"></p>
-            <ul v-if="skill_tasks" class="list-unstyled">
-                <li class="list-item" :key="index" v-for="(task, index) in skill_tasks">
-                    <small>{{ task.body.substr(0, 25) }}</small>
-                </li>
-            </ul>
         </div>
+        <ul v-if="skill_tasks" class="list-group list-group-flush">
+            <li
+                class="list-group-item"
+                :key="index"
+                v-for="(task, index) in skill_tasks"
+                style="padding: 0.5rem 0.75rem;"
+            >
+                <small>{{ task.body.substr(0, 20) }}</small>
+            </li>
+        </ul>
+
         <div v-if="id != 0" class="progress" style="height: 5px;">
             <div
                 class="progress-bar bg-pink"
@@ -40,10 +46,18 @@
             ></div>
         </div>
 
-        <button class="btn btn-less lArr hideArr" @click="createConnection">
+        <button
+            class="btn btn-less lArr hideArr"
+            @click="createConnection"
+            title="Click to connect to the next Skill you click on"
+        >
             <i class="material-icons" style="transform: scaleX(-1);">forward</i>
         </button>
-        <button class="btn btn-less rArr hideArr" @click="createConnection">
+        <button
+            class="btn btn-less rArr hideArr"
+            @click="createConnection"
+            title="Click to connect to the next Skill you click on"
+        >
             <i class="material-icons">forward</i>
         </button>
     </div>

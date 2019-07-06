@@ -101,6 +101,7 @@
                                             id="load-courses"
                                             @click.prevent="getCourses"
                                             v-bind="{isLoadingCourses}"
+                                            title="Load Courses from Google Classroom"
                                         >
                                             <i
                                                 class="material-icons"
@@ -121,6 +122,7 @@
                                             type="submit"
                                             :disabled="isConnectingCourse"
                                             v-bind="{isConnectingCourse}"
+                                            title="Connect Google Classroom Course to Skilltree"
                                         >
                                             <i
                                                 class="material-icons"
@@ -169,6 +171,7 @@
                                             id="load-topics"
                                             @click.prevent="getTopics"
                                             v-bind="{isLoadingTopics}"
+                                            title="Load Topics from Google Classroom"
                                         >
                                             <i
                                                 class="material-icons"
@@ -188,6 +191,7 @@
                                             class="btn dashbaricon"
                                             type="submit"
                                             :disabled="form.errorAny()"
+                                            title="Add Topics as Skills to Skilltree"
                                         >
                                             <i class="material-icons">add</i>
                                         </button>
@@ -204,7 +208,9 @@
                             :key="index"
                             :src="member.avatar"
                             :alt="member.name"
-                            title="User is allowed to edit Skilltree"
+                            title="User member.name is allowed to edit Skilltree"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
                             class="rounded-circle mr-1"
                             style="width: 24px;"
                         />

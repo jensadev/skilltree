@@ -3,7 +3,7 @@
         <button
             class="btn dashbaricon"
             @click="isOpen = !isOpen"
-            title="Invite another admin user to your Skilltree"
+            title="Invite another teacher to your Skilltree"
         >
             <i class="material-icons">share</i>
         </button>
@@ -22,7 +22,7 @@
                                 :class="form.errors.email ? 'is-invalid' : ''"
                                 v-model="form.email"
                                 required
-                            >
+                            />
                             <div class="input-group-append">
                                 <button
                                     class="btn btn-outline-primary"

@@ -6,7 +6,6 @@
         :adaptive="true"
         :reset="true"
         :pivot-y="0.25"
-        :draggable="true"
         width="60%"
         height="auto"
     >
