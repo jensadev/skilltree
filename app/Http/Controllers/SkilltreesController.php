@@ -58,10 +58,6 @@ class SkilltreesController extends Controller
 
         $skilltree->update($this->validateRequest());
 
-        // if ($crid = request('classroomid')) {
-        //     $skilltree->addOrUpdateMeta('classroomid', $crid);
-        // }
-
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
         }
@@ -85,7 +81,7 @@ class SkilltreesController extends Controller
     {
         return request()->validate([
             'title' => 'required|min:3',
-            'description' => 'required|min:3'
+            'description' => 'nullable|min:3'
         ]);
     }
 }

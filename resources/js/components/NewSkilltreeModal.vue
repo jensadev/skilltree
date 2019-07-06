@@ -38,7 +38,7 @@
                                 ></div>
                             </div>
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">Notes</label>
                                 <textarea
                                     id="description"
                                     name="description"
@@ -46,8 +46,7 @@
                                     :class="form.errors.description ? 'is-invalid' : ''"
                                     rows="6"
                                     v-model="form.description"
-                                    placeholder="Add a short description..."
-                                    required
+                                    placeholder="Any notes you might need..."
                                 ></textarea>
                                 <div
                                     class="invalid-feedback"

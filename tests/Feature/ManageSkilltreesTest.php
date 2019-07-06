@@ -137,12 +137,12 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test */
-    function a_skilltree_requires_a_description()
-    {
-        $this->signIn();
-        $attributes = factory('App\Skilltree')->raw(['description' => '']);
-        $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
-    }
+    // function a_skilltree_requires_a_description()
+    // {
+    //     $this->signIn();
+    //     $attributes = factory('App\Skilltree')->raw(['description' => '']);
+    //     $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
+    // }
 
     /** @test **/
     function unauthorized_users_cannot_delete_skilltrees()

@@ -50,16 +50,15 @@
                                     ></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">Notes</label>
                                     <textarea
                                         id="description"
                                         name="description"
                                         class="form-control"
                                         :class="form.errors.description ? 'is-invalid' : ''"
                                         rows="6"
-                                        placeholder="Add a short description of your Skilltree"
+                                        placeholder="Any notes you might need..."
                                         v-model="form.description"
-                                        required
                                     ></textarea>
                                     <div
                                         class="invalid-feedback"
@@ -72,8 +71,10 @@
 
                         <div class="col-lg-6">
                             <label>
-                                Google Classroom
-                                <span v-if="this.courseId">- {{ this.courseId }}</span>
+                                Connect with Google Classroom
+                                <span
+                                    v-if="this.courseId"
+                                >- {{ this.courseId }}</span>
                             </label>
                             <form
                                 @submit.prevent="connectCourse"
@@ -151,6 +152,8 @@
                                         name="topicid"
                                         v-model="selectedTopics"
                                         multiple
+                                        :size="this.topics.length"
+                                        style="overflow-y: auto;"
                                     >
                                         <option
                                             disabled
