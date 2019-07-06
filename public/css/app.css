@@ -10690,20 +10690,28 @@ a.text-dark:focus {
   padding-top: 7rem;
 }
 
+.material-icons {
+  line-height: 1.6;
+}
+
 .dashbar {
   z-index: 1;
   top: 4rem;
+}
+
+.dashbar .material-icons {
+  font-size: 2rem;
 }
 
 .dashbaricon {
   color: #0ccad4;
   background-color: transparent;
   border: 0;
+  margin: 0;
   padding: 0;
 }
 
 .dashbaricon .material-icons {
-  font-size: 30px;
   margin: 0px 4px;
 }
 
@@ -10712,6 +10720,15 @@ a.text-dark:focus {
 }
 
 .btn-less {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: #d7d7d7;
+}
+
+.btn-arr {
   border: 0;
   border-radius: 0;
   background-color: transparent;
@@ -10732,15 +10749,18 @@ a.text-dark:focus {
   padding: 0.75rem;
 }
 
-.card-header {
+.card-header,
+.card-footer {
   padding: 0.5rem 0.75rem;
 }
 
-.card-header .btn-less {
+.card-header .btn-less,
+.card-footer .btn-less {
   height: 24px;
 }
 
-.card-header .h5 {
+.card-header .h5,
+.card-footer .h5 {
   margin-bottom: 0.2rem;
 }
 
@@ -10823,5 +10843,29 @@ a.text-dark:focus {
 
 .tooltip {
   z-index: 10000;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+}
+
+.markdown h1 {
+  font-size: 1.8rem;
+}
+
+.markdown h2 {
+  font-size: 1.6rem;
+}
+
+.markdown h3 {
+  font-size: 1.4rem;
+}
+
+.markdown h4 {
+  font-size: 1.2rem;
 }
 

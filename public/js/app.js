@@ -2915,6 +2915,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2926,26 +2966,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       topics: [],
       courseId: this.cId,
       selectedTopics: [],
+      isConnected: false,
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        title: this.title,
-        description: this.description
+        title: this.$attrs.data.title,
+        description: this.$attrs.data.description
       })
     };
   },
-  props: ["id", "title", "description", "members", "cId"],
+  props: ["id", "members", "cId"],
   methods: {
-    deleteSkilltree: function () {
-      var _deleteSkilltree = _asyncToGenerator(
+    deleteCourseConnection: function () {
+      var _deleteCourseConnection = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var needle;
+        var con;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                con = true;
+                _context.next = 3;
+                return axios["delete"]("/skilltrees/" + this.id + "/classroom/course").then(function (response) {
+                  console.log(response.data.message);
+                  con = false;
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 3:
+                this.isConnected = con;
+                this.courseId = 0;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function deleteCourseConnection() {
+        return _deleteCourseConnection.apply(this, arguments);
+      }
+
+      return deleteCourseConnection;
+    }(),
+    deleteSkilltree: function () {
+      var _deleteSkilltree = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var needle;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
                 needle = "tree_" + this.id;
-                _context.prev = 1;
-                _context.next = 4;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
                   if (response.status == 200) {
                     Object.keys(localStorage).forEach(function (key) {
@@ -2959,21 +3036,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                _context.next = 10;
+                _context2.next = 10;
                 break;
 
               case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](1);
-                this.errors = _context.t0;
+                _context2.prev = 6;
+                _context2.t0 = _context2["catch"](1);
+                this.errors = _context2.t0;
                 console.log("error" + this.errors);
 
               case 10:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[1, 6]]);
+        }, _callee2, this, [[1, 6]]);
       }));
 
       function deleteSkilltree() {
@@ -2985,10 +3062,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   return location = response.data.message;
@@ -2998,10 +3075,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function submit() {
@@ -3013,14 +3090,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCourses: function () {
       var _getCourses = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var courses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.isLoadingCourses = true;
-                _context3.next = 3;
+                _context4.next = 3;
                 return axios.get("/classroom/courses").then(function (response) {
                   courses = response.data.message;
                 })["catch"](function (error) {
@@ -3033,10 +3110,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function getCourses() {
@@ -3056,14 +3133,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getTopics: function () {
       var _getTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var topics;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.isLoadingTopics = true;
-                _context4.next = 3;
+                _context5.next = 3;
                 return axios.get("/classroom/course/" + this.courseId + "/topics").then(function (response) {
                   topics = response.data.message;
                 })["catch"](function (error) {
@@ -3076,10 +3153,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function getTopics() {
@@ -3091,30 +3168,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     connectCourse: function () {
       var _connectCourse = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var con;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 this.isConnectingCourse = true;
-                _context5.next = 3;
+                con = false;
+                _context6.next = 4;
                 return axios.post("/skilltrees/" + this.id + "/classroom/course", {
                   courseId: this.courseId
                 }).then(function (response) {
                   console.log(response.data.message);
+                  con = true;
                 })["catch"](function (error) {
                   console.log(error);
                 });
 
-              case 3:
+              case 4:
+                this.isConnected = con;
                 this.isConnectingCourse = false;
 
-              case 4:
+              case 6:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function connectCourse() {
@@ -3126,12 +3207,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addTopics: function () {
       var _addTopics = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.next = 2;
+                _context7.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/classroom/topics", {
                   topics: this.selectedTopics
                 }).then(function (response) {
@@ -3142,10 +3223,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function addTopics() {
@@ -3177,6 +3258,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -3502,6 +3587,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! draggable-vue-directive */ "./node_modules/draggable-vue-directive/dist/index.js");
 /* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_nl2br__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-nl2br */ "./node_modules/vue-nl2br/dist/vue-nl2br.js");
+/* harmony import */ var vue_nl2br__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_nl2br__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3572,10 +3659,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   directives: {
     Draggable: draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__["Draggable"]
+  },
+  components: {
+    Nl2br: vue_nl2br__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   data: function data() {
     return {
@@ -42816,357 +42911,444 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c(
-                  "form",
-                  {
-                    attrs: { id: "treeform" },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.submit($event)
-                      },
-                      keydown: function($event) {
-                        return _vm.form.errorClear($event.target.name)
-                      }
-                    }
+            _c(
+              "form",
+              {
+                attrs: { id: "treeform" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
                   },
-                  [
-                    _c("div", { staticClass: "form-group mb-3" }, [
-                      _c("label", { attrs: { for: "title" } }, [
-                        _vm._v("Title")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.title,
-                            expression: "form.title"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.form.errors.title ? "is-invalid" : "",
-                        attrs: {
-                          id: "title",
-                          name: "title",
-                          type: "text",
-                          placeholder: "e.g Design",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.title },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "title", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.form.errors.title
-                        ? _c("div", {
-                            staticClass: "invalid-feedback",
-                            domProps: {
-                              textContent: _vm._s(_vm.form.errors.title[0])
-                            }
-                          })
-                        : _vm._e()
-                    ]),
+                  keydown: function($event) {
+                    return _vm.form.errorClear($event.target.name)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _c("div", { staticClass: "form-group mb-3" }, [
+                    _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "description" } }, [
-                        _vm._v("Description")
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.description,
-                            expression: "form.description"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.form.errors.description ? "is-invalid" : "",
-                        attrs: {
-                          id: "description",
-                          name: "description",
-                          rows: "6",
-                          placeholder:
-                            "Add a short description of your Skilltree",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.description },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.form,
-                              "description",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.form.errors.description
-                        ? _c("div", {
-                            staticClass: "invalid-feedback",
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.form.errors.description[0]
-                              )
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c("label", [
-                  _vm._v(
-                    "\n                            Google Classroom\n                            "
-                  ),
-                  this.courseId
-                    ? _c("span", [_vm._v("- " + _vm._s(this.courseId))])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.connectCourse($event)
-                      },
-                      keydown: function($event) {
-                        return _vm.form.errorClear($event.target.name)
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "input-group mb-3" }, [
-                      _c(
-                        "select",
+                    _c("input", {
+                      directives: [
                         {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.title,
+                          expression: "form.title"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: _vm.form.errors.title ? "is-invalid" : "",
+                      attrs: {
+                        id: "title",
+                        name: "title",
+                        type: "text",
+                        placeholder: "e.g Design",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "title", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.form.errors.title
+                      ? _c("div", {
+                          staticClass: "invalid-feedback",
+                          domProps: {
+                            textContent: _vm._s(_vm.form.errors.title[0])
+                          }
+                        })
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "description" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.courseId,
-                              expression: "courseId"
+                              value: _vm.form.description,
+                              expression: "form.description"
                             }
                           ],
-                          staticClass: "custom-select",
-                          attrs: { id: "courseId", name: "courseId" },
+                          staticClass: "form-control",
+                          class: _vm.form.errors.description
+                            ? "is-invalid"
+                            : "",
+                          attrs: {
+                            id: "description",
+                            name: "description",
+                            rows: "6"
+                          },
+                          domProps: { value: _vm.form.description },
                           on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.courseId = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "description",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.form.errors.description
+                          ? _c("div", {
+                              staticClass: "invalid-feedback",
+                              domProps: {
+                                textContent: _vm._s(
+                                  _vm.form.errors.description[0]
+                                )
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "notes" } }, [
+                          _vm._v("Notes")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.notes,
+                              expression: "form.notes"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: _vm.form.errors.notes ? "is-invalid" : "",
+                          attrs: {
+                            id: "notes",
+                            name: "notes",
+                            rows: "6",
+                            placeholder: "Only visible to Teachers"
+                          },
+                          domProps: { value: _vm.form.notes },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "notes", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.form.errors.notes
+                          ? _c("div", {
+                              staticClass: "invalid-feedback",
+                              domProps: {
+                                textContent: _vm._s(_vm.form.errors.notes[0])
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 mb-3" }, [
+              _c("h5", { staticClass: "modal-title" }, [
+                _vm._v("Google Classroom")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.connectCourse($event)
+                        },
+                        keydown: function($event) {
+                          return _vm.form.errorClear($event.target.name)
+                        }
+                      }
+                    },
+                    [
+                      !this.courseId
+                        ? _c("label", { attrs: { for: "courseId" } }, [
+                            _vm._v("Load courses from Google Classroom")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group mb-3" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.courseId,
+                                expression: "courseId"
+                              }
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { id: "courseId", name: "courseId" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.courseId = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", {
+                              attrs: { disabled: "", selected: "" }
+                            }),
+                            _vm._v(" "),
+                            _vm._l(_vm.courses, function(course, index) {
+                              return _c("option", {
+                                key: index,
+                                domProps: {
+                                  value: course.id,
+                                  textContent: _vm._s(course.descriptionHeading)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group-append" }, [
+                          this.courses.length < 1
+                            ? _c(
+                                "button",
+                                _vm._b(
+                                  {
+                                    staticClass: "btn dashbaricon",
+                                    attrs: {
+                                      id: "load-courses",
+                                      title:
+                                        "Load Courses from Google Classroom"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.getCourses($event)
+                                      }
+                                    }
+                                  },
+                                  "button",
+                                  { isLoadingCourses: _vm.isLoadingCourses },
+                                  false
+                                ),
+                                [
+                                  _vm.isLoadingCourses == false
+                                    ? _c(
+                                        "i",
+                                        { staticClass: "material-icons" },
+                                        [_vm._v("cloud_download")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isLoadingCourses
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "spinner-border",
+                                          staticStyle: {
+                                            width: "30px",
+                                            height: "30px",
+                                            "margin-left": "8px"
+                                          },
+                                          attrs: { role: "status" }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "sr-only" },
+                                            [_vm._v("Loading...")]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          this.courses.length > 0
+                            ? _c(
+                                "button",
+                                _vm._b(
+                                  {
+                                    staticClass: "btn dashbaricon",
+                                    attrs: {
+                                      type: "submit",
+                                      disabled: _vm.isConnectingCourse,
+                                      title:
+                                        "Connect Google Classroom Course to Skilltree"
+                                    }
+                                  },
+                                  "button",
+                                  {
+                                    isConnectingCourse: _vm.isConnectingCourse
+                                  },
+                                  false
+                                ),
+                                [
+                                  _vm.isConnectingCourse == false
+                                    ? _c(
+                                        "i",
+                                        { staticClass: "material-icons" },
+                                        [_vm._v("link")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isConnectingCourse
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "spinner-border",
+                                          staticStyle: {
+                                            width: "24px",
+                                            height: "24px",
+                                            "margin-left": "14px"
+                                          },
+                                          attrs: { role: "status" }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "sr-only" },
+                                            [_vm._v("Loading...")]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ]
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.isConnected || this.cId != 0
+                    ? _c("div", [
+                        _c("label", { attrs: { for: "disconnectBtn" } }, [
+                          _vm._v("Disconnect from Classroom")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn dashbaricon",
+                            attrs: { id: "disconnectBtn", type: "button" },
+                            on: { click: _vm.deleteCourseConnection }
+                          },
+                          [
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("link_off")
+                            ])
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _vm.isConnected || this.cId != 0
+                  ? _c("div", { staticClass: "col-lg-6" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.addTopics($event)
+                            },
+                            keydown: function($event) {
+                              return _vm.form.errorClear($event.target.name)
                             }
                           }
                         },
                         [
-                          _c(
-                            "option",
-                            { attrs: { disabled: "", selected: "" } },
-                            [_vm._v("Load Courses from Classroom")]
-                          ),
+                          _c("label", {
+                            attrs: { for: "topicid" },
+                            domProps: {
+                              textContent: _vm._s(
+                                this.topics.length < 1
+                                  ? "Load Topics from selected Course"
+                                  : "Create Skills from Topics"
+                              )
+                            }
+                          }),
                           _vm._v(" "),
-                          _vm._l(_vm.courses, function(course, index) {
-                            return _c("option", {
-                              key: index,
-                              domProps: {
-                                value: course.id,
-                                textContent: _vm._s(course.descriptionHeading)
-                              }
-                            })
-                          })
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group-append" }, [
-                        this.courses.length < 1
-                          ? _c(
-                              "button",
-                              _vm._b(
-                                {
-                                  staticClass: "btn dashbaricon",
-                                  attrs: {
-                                    id: "load-courses",
-                                    title: "Load Courses from Google Classroom"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getCourses($event)
-                                    }
+                          _c("div", { staticClass: "input-group mb-3" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedTopics,
+                                    expression: "selectedTopics"
                                   }
+                                ],
+                                staticClass: "custom-select",
+                                staticStyle: { "overflow-y": "auto" },
+                                attrs: {
+                                  id: "topicid",
+                                  name: "topicid",
+                                  multiple: "",
+                                  size: this.topics.length
                                 },
-                                "button",
-                                { isLoadingCourses: _vm.isLoadingCourses },
-                                false
-                              ),
-                              [
-                                _vm.isLoadingCourses == false
-                                  ? _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("cloud_download")
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.isLoadingCourses
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "spinner-border",
-                                        staticStyle: {
-                                          width: "30px",
-                                          height: "30px",
-                                          "margin-left": "8px"
-                                        },
-                                        attrs: { role: "status" }
-                                      },
-                                      [
-                                        _c("span", { staticClass: "sr-only" }, [
-                                          _vm._v("Loading...")
-                                        ])
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        this.courses.length > 0
-                          ? _c(
-                              "button",
-                              _vm._b(
-                                {
-                                  staticClass: "btn dashbaricon",
-                                  attrs: {
-                                    type: "submit",
-                                    disabled: _vm.isConnectingCourse,
-                                    title:
-                                      "Connect Google Classroom Course to Skilltree"
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.selectedTopics = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
                                   }
-                                },
-                                "button",
-                                { isConnectingCourse: _vm.isConnectingCourse },
-                                false
-                              ),
-                              [
-                                _vm.isConnectingCourse == false
-                                  ? _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("link")
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.isConnectingCourse
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "spinner-border",
-                                        staticStyle: {
-                                          width: "24px",
-                                          height: "24px",
-                                          "margin-left": "14px"
-                                        },
-                                        attrs: { role: "status" }
-                                      },
-                                      [
-                                        _c("span", { staticClass: "sr-only" }, [
-                                          _vm._v("Loading...")
-                                        ])
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ]
-                            )
-                          : _vm._e()
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.addTopics($event)
-                      },
-                      keydown: function($event) {
-                        return _vm.form.errorClear($event.target.name)
-                      }
-                    }
-                  },
-                  [
-                    this.courseId != 0
-                      ? _c("div", { staticClass: "input-group mb-3" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectedTopics,
-                                  expression: "selectedTopics"
                                 }
-                              ],
-                              staticClass: "custom-select",
-                              attrs: {
-                                id: "topicid",
-                                name: "topicid",
-                                multiple: ""
                               },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.selectedTopics = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              this.topics.length < 1
-                                ? _c(
-                                    "option",
-                                    { attrs: { disabled: "", selected: "" } },
-                                    [_vm._v("Load Topics from Course")]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
                               _vm._l(_vm.topics, function(topic, index) {
                                 return _c("option", {
                                   key: index,
@@ -43179,91 +43361,94 @@ var render = function() {
                                     textContent: _vm._s(topic.name)
                                   }
                                 })
-                              })
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group-append" }, [
-                            this.topics.length < 1
-                              ? _c(
-                                  "button",
-                                  _vm._b(
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group-append" }, [
+                              this.topics.length < 1
+                                ? _c(
+                                    "button",
+                                    _vm._b(
+                                      {
+                                        staticClass: "btn dashbaricon",
+                                        attrs: {
+                                          id: "load-topics",
+                                          title:
+                                            "Load Topics from Google Classroom"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.getTopics($event)
+                                          }
+                                        }
+                                      },
+                                      "button",
+                                      { isLoadingTopics: _vm.isLoadingTopics },
+                                      false
+                                    ),
+                                    [
+                                      _vm.isLoadingTopics == false
+                                        ? _c(
+                                            "i",
+                                            { staticClass: "material-icons" },
+                                            [_vm._v("cloud_download")]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.isLoadingTopics
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass: "spinner-border",
+                                              staticStyle: {
+                                                width: "30px",
+                                                height: "30px",
+                                                "margin-left": "8px"
+                                              },
+                                              attrs: { role: "status" }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "sr-only" },
+                                                [_vm._v("Loading...")]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              this.topics.length > 0
+                                ? _c(
+                                    "button",
                                     {
                                       staticClass: "btn dashbaricon",
                                       attrs: {
-                                        id: "load-topics",
+                                        type: "submit",
+                                        disabled: _vm.form.errorAny(),
                                         title:
-                                          "Load Topics from Google Classroom"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.getTopics($event)
-                                        }
+                                          "Add Topics as Skills to Skilltree"
                                       }
                                     },
-                                    "button",
-                                    { isLoadingTopics: _vm.isLoadingTopics },
-                                    false
-                                  ),
-                                  [
-                                    _vm.isLoadingTopics == false
-                                      ? _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("cloud_download")]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm.isLoadingTopics
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass: "spinner-border",
-                                            staticStyle: {
-                                              width: "30px",
-                                              height: "30px",
-                                              "margin-left": "8px"
-                                            },
-                                            attrs: { role: "status" }
-                                          },
-                                          [
-                                            _c(
-                                              "span",
-                                              { staticClass: "sr-only" },
-                                              [_vm._v("Loading...")]
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            this.topics.length > 0
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn dashbaricon",
-                                    attrs: {
-                                      type: "submit",
-                                      disabled: _vm.form.errorAny(),
-                                      title: "Add Topics as Skills to Skilltree"
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "material-icons" }, [
-                                      _vm._v("add")
-                                    ])
-                                  ]
-                                )
-                              : _vm._e()
+                                    [
+                                      _c(
+                                        "i",
+                                        { staticClass: "material-icons" },
+                                        [_vm._v("add")]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
                           ])
-                        ])
-                      : _vm._e()
-                  ]
-                )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ])
             ])
           ]),
@@ -43372,226 +43557,231 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "modal-body modal-content" }, [
-        _c("div", { staticClass: "container" }, [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("header", { staticClass: "modal-header" }, [
+            _c("h5", { staticClass: "modal-title" }, [
+              _vm._v("Create a new skilltree")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
                 },
-                keydown: function($event) {
-                  return _vm.form.errorClear($event.target.name)
+                on: {
+                  click: function($event) {
+                    return _vm.$modal.hide("new-skilltree")
+                  }
                 }
-              }
-            },
-            [
-              _c("header", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-12 text-center" }, [
-                  _c("h3", { staticClass: "modal-title" }, [
-                    _vm._v("Create a new skilltree")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.title,
-                          expression: "form.title"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: _vm.form.errors.title ? "is-invalid" : "",
-                      attrs: {
-                        id: "title",
-                        name: "title",
-                        type: "text",
-                        placeholder: "e.g Design",
-                        required: ""
-                      },
-                      domProps: { value: _vm.form.title },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c(
+              "form",
+              {
+                attrs: { id: "skilltreeform" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
+                  },
+                  keydown: function($event) {
+                    return _vm.form.errorClear($event.target.name)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "title" } }, [
+                        _vm._v("Title")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.title,
+                            expression: "form.title"
                           }
-                          _vm.$set(_vm.form, "title", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.form.errors.title
-                      ? _c("div", {
-                          staticClass: "invalid-feedback",
-                          domProps: {
-                            textContent: _vm._s(_vm.form.errors.title[0])
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.form.errors.title ? "is-invalid" : "",
+                        attrs: {
+                          id: "title",
+                          name: "title",
+                          type: "text",
+                          placeholder: "e.g Design",
+                          required: ""
+                        },
+                        domProps: { value: _vm.form.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "title", $event.target.value)
                           }
-                        })
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "description" } }, [
-                      _vm._v("Description")
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.form.errors.title
+                        ? _c("div", {
+                            staticClass: "invalid-feedback",
+                            domProps: {
+                              textContent: _vm._s(_vm.form.errors.title[0])
+                            }
+                          })
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.description,
-                          expression: "form.description"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: _vm.form.errors.description ? "is-invalid" : "",
-                      attrs: {
-                        id: "description",
-                        name: "description",
-                        rows: "6",
-                        placeholder: "Add a short description...",
-                        required: ""
-                      },
-                      domProps: { value: _vm.form.description },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "description", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.form.errors.description
-                      ? _c("div", {
-                          staticClass: "invalid-feedback",
-                          domProps: {
-                            textContent: _vm._s(_vm.form.errors.description[0])
-                          }
-                        })
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c("label", [_vm._v("Add Skills")]),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "description" } }, [
+                        _vm._v("Description")
+                      ]),
                       _vm._v(" "),
-                      _vm._l(_vm.form.skills, function(skill, index) {
-                        return _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: skill.skill_title,
-                              expression: "skill.skill_title"
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.description,
+                            expression: "form.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.form.errors.description ? "is-invalid" : "",
+                        attrs: {
+                          id: "description",
+                          name: "description",
+                          rows: "6",
+                          placeholder: "Description of Skilltree..."
+                        },
+                        domProps: { value: _vm.form.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          ],
-                          key: index,
-                          staticClass: "form-control mb-2",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Skill " + (index + 1)
-                          },
-                          domProps: { value: skill.skill_title },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                skill,
-                                "skill_title",
-                                $event.target.value
+                            _vm.$set(
+                              _vm.form,
+                              "description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.form.errors.description
+                        ? _c("div", {
+                            staticClass: "invalid-feedback",
+                            domProps: {
+                              textContent: _vm._s(
+                                _vm.form.errors.description[0]
                               )
                             }
-                          }
-                        })
-                      })
-                    ],
-                    2
-                  ),
+                          })
+                        : _vm._e()
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
                     _c(
-                      "a",
-                      {
-                        staticClass:
-                          "d-flex align-items-center border-0 bg-transparent",
-                        attrs: { href: "" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.addSkill($event)
-                          }
-                        }
-                      },
+                      "div",
+                      { staticClass: "form-group" },
                       [
-                        _c("i", { staticClass: "material-icons" }, [
-                          _vm._v("add_circle_outline")
-                        ]),
+                        _c("label", [_vm._v("Add Skills")]),
                         _vm._v(" "),
-                        _c("small", { staticClass: "text-muted pl-2" }, [
-                          _vm._v("Add a new skill field")
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("footer", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-12" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group d-flex justify-content-end" },
-                    [
+                        _vm._l(_vm.form.skills, function(skill, index) {
+                          return _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: skill.skill_title,
+                                expression: "skill.skill_title"
+                              }
+                            ],
+                            key: index,
+                            staticClass: "form-control mb-2",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Skill " + (index + 1)
+                            },
+                            domProps: { value: skill.skill_title },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  skill,
+                                  "skill_title",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
                       _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "btn btn-outline-primary mr-2",
-                          attrs: { type: "button" },
+                          staticClass:
+                            "d-flex align-items-center border-0 bg-transparent",
+                          attrs: { href: "" },
                           on: {
                             click: function($event) {
-                              return _vm.$modal.hide("new-skilltree")
+                              $event.preventDefault()
+                              return _vm.addSkill($event)
                             }
                           }
                         },
-                        [_vm._v("Cancel")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: {
-                            type: "submit",
-                            disabled: _vm.form.errorAny()
-                          }
-                        },
-                        [_vm._v("Create Skilltree")]
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("add_circle_outline")
+                          ]),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "text-muted pl-2" }, [
+                            _vm._v("Add a new skill field")
+                          ])
+                        ]
                       )
-                    ]
-                  )
+                    ])
+                  ])
                 ])
-              ])
-            ]
-          )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("footer", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  form: "skilltreeform",
+                  type: "submit",
+                  disabled: _vm.form.errorAny()
+                }
+              },
+              [_vm._v("Create Skilltree")]
+            )
+          ])
         ])
       ])
     ]
@@ -43748,7 +43938,7 @@ var render = function() {
             "card-header d-flex justify-content-between align-items-center"
         },
         [
-          _c("h2", { staticClass: "h5" }, [
+          _c("h2", { staticClass: "h5 mb-0" }, [
             _vm._v(_vm._s(_vm.skill_title.substr(0, 15)))
           ]),
           _vm._v(" "),
@@ -43766,7 +43956,7 @@ var render = function() {
                         tree: _vm.tree,
                         skill_id: _vm.id,
                         skill_title: _vm.skill_title,
-                        skill_description: _vm.skill_description,
+                        skill_description: _vm.$attrs.data.skill_description,
                         skill_tasks: _vm.skill_tasks,
                         skill_topicid: _vm.skill_topicid,
                         skill_courseid: _vm.skill_courseid
@@ -43792,15 +43982,23 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm.skill_description
-        ? _c("div", { staticClass: "card-body" }, [
-            _vm.skill_description
-              ? _c("p", {
-                  staticClass: "card-text",
-                  domProps: { textContent: _vm._s(_vm.skill_description) }
-                })
-              : _vm._e()
-          ])
+      _vm.$attrs.data.skill_description || _vm.$attrs.data.description
+        ? _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("nl2br", {
+                attrs: {
+                  tag: "p",
+                  text: _vm.$attrs.data.skill_description
+                    ? _vm.$attrs.data.skill_description
+                    : _vm.$attrs.data.description,
+                  "class-name": "card-text"
+                }
+              })
+            ],
+            1
+          )
         : _vm._e(),
       _vm._v(" "),
       _vm.skill_tasks
@@ -43844,7 +44042,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-less lArr hideArr",
+          staticClass: "btn btn-arr lArr hideArr",
           attrs: { title: "Click to connect to the next Skill you click on" },
           on: { click: _vm.createConnection }
         },
@@ -43863,7 +44061,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-less rArr hideArr",
+          staticClass: "btn btn-arr rArr hideArr",
           attrs: { title: "Click to connect to the next Skill you click on" },
           on: { click: _vm.createConnection }
         },
@@ -43983,6 +44181,143 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-nl2br/dist/vue-nl2br.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue-nl2br/dist/vue-nl2br.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else {}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  functional: true,
+  props: {
+    tag: {
+      type: String,
+      required: true
+    },
+    text: {
+      type: String,
+      required: true
+    }
+  },
+  render: function render(createElement, context) {
+    return createElement(context.props.tag, context.props.text.split('\n').reduce(function (accumulator, string) {
+      if (!Array.isArray(accumulator)) {
+        return [accumulator, createElement('br'), string];
+      }
+      return accumulator.concat([createElement('br'), string]);
+    }));
+  }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Nl2br = __webpack_require__(0);
+
+var _Nl2br2 = _interopRequireDefault(_Nl2br);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _Nl2br2.default;
+
+/***/ })
+/******/ ]);
+});
 
 /***/ }),
 

@@ -48,17 +48,24 @@ $cards-per-line: (
     padding-top: 7rem;
 }
 
+.material-icons {
+    line-height: 1.6;
+}
+
 .dashbar {
     z-index: 1;
     top: 4rem;
+    .material-icons {
+        font-size: 2rem;
+    }
 }
 .dashbaricon {
     color: $blue;
     background-color: transparent;
     border: 0;
+    margin: 0;
     padding: 0;
     .material-icons {
-        font-size:30px;
         margin: 0px 4px;
     }
 }
@@ -67,6 +74,16 @@ $cards-per-line: (
 }
 
 .btn-less {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    color: $gray;
+}
+
+
+.btn-arr {
     border: 0;
     border-radius: 0;
     background-color: transparent;
@@ -87,8 +104,8 @@ $cards-per-line: (
     padding: 0.75rem;
 }
 
-.card-header {
-    padding: 0.5rem 0.75rem;
+.card-header, .card-footer {
+    padding: 0.5rem 0.75rem; 
     .btn-less {
         height: 24px;
     }
@@ -108,11 +125,9 @@ $cards-per-line: (
 .h1 {
     @include font-xbold;
 }
-
 .h4 {
     @include font-medium;
 }
-
 .h3 {
     @include font-regular;
 }
@@ -170,4 +185,23 @@ $cards-per-line: (
 
 .tooltip {
     z-index: 10000;
+}
+
+.markdown {
+    h1, h2, h3, h4 {
+        @include font-regular;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    h3 {
+        font-size: 1.4rem;
+    }
+    h4 {
+        font-size: 1.2rem;
+    }
+
 }

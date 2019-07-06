@@ -1,7 +1,7 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="h5">{{ skill_title.substr(0, 15) }}</h2>
+            <h2 class="h5 mb-0">{{ skill_title.substr(0, 15) }}</h2>
             <a
                 v-if="id != 0"
                 href
@@ -12,7 +12,7 @@
                     tree: tree, 
                     skill_id: id,  
                     skill_title: skill_title, 
-                    skill_description: skill_description, 
+                    skill_description: $attrs.data.skill_description, 
                     skill_tasks: skill_tasks, 
                     skill_topicid: skill_topicid, 
                     skill_courseid: skill_courseid})"
@@ -21,8 +21,12 @@
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
             </a>
         </div>
-        <div class="card-body" v-if="skill_description">
-            <p v-if="skill_description" class="card-text" v-text="skill_description"></p>
+        <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description ">
+            <nl2br
+                tag="p"
+                :text="$attrs.data.skill_description ? $attrs.data.skill_description : $attrs.data.description "
+                class-name="card-text"
+            />
         </div>
         <ul v-if="skill_tasks" class="list-group list-group-flush">
             <li
@@ -47,14 +51,14 @@
         </div>
 
         <button
-            class="btn btn-less lArr hideArr"
+            class="btn btn-arr lArr hideArr"
             @click="createConnection"
             title="Click to connect to the next Skill you click on"
         >
             <i class="material-icons" style="transform: scaleX(-1);">forward</i>
         </button>
         <button
-            class="btn btn-less rArr hideArr"
+            class="btn btn-arr rArr hideArr"
             @click="createConnection"
             title="Click to connect to the next Skill you click on"
         >
@@ -64,10 +68,14 @@
 </template>
 <script>
 import { Draggable } from "draggable-vue-directive";
+import Nl2br from "vue-nl2br";
 
 export default {
     directives: {
         Draggable
+    },
+    components: {
+        Nl2br
     },
     data() {
         return {

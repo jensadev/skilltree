@@ -3,7 +3,7 @@
     <div class="card-body">
         <p class="card-text text-muted">{{ str_limit($skilltree->description, 150) }}</p>
     </div>
-    <div class="card-footer d-flex justify-content-between">
+    <div class="card-footer d-flex justify-content-between align-items-center">
         <div>
             @foreach ($skilltree->members->take(5) as $member)
                 <img
@@ -17,7 +17,7 @@
             <form action="{{ $skilltree->path() }}" method="post">
                 @csrf
                 @method('DELETE')
-                <button class="close" type="submit"><i class="material-icons float-right">delete</i></button>
+                <button class="btn btn-less" type="submit"><i class="material-icons" style="margin:0;">delete</i></button>
             </form>
         @endcan
     </div>

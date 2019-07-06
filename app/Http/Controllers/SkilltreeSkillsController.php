@@ -28,11 +28,6 @@ class SkilltreeSkillsController extends Controller
     {
         $this->authorize('update', $skill->skilltree);
 
-        if ($tasks = request('skill_tasks')) {
-
-            $skill->addTasks($tasks);
-        }
-
         $skill->update($this->validateRequest());
 
         if (request()->wantsJson()) {

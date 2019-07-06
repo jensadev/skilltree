@@ -4,18 +4,18 @@
     @include('skilltrees.header')
     <section class="skillzone">
         <skill-card
+            :data="{{ $skilltree }}"
             :tree="{{ $skilltree->id }}"
             :id="0"
             :skill_title="'{{ $skilltree->title }}'"
-            :skill_description="'{{ $skilltree->description }}'"
             class="root"
         ></skill-card>
         @foreach ($skilltree->skills as $skill)
             <skill-card
+                :data="{{ $skill }}"
                 :tree="{{ $skilltree->id }}"
                 :id="{{ $skill->id }}"
                 :skill_title="'{{ $skill->skill_title }}'"
-                :skill_description="'{{ $skill->skill_description }}'"
                 :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
                 :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'"
 
@@ -27,9 +27,8 @@
     </section>
     <edit-skill-modal></edit-skill-modal>
     <manage-skilltree-modal 
+        :data="{{ $skilltree }}"
         :id="'{{ $skilltree->id }}'" 
-        :title="'{{ $skilltree->title }}'" 
-        :description="'{{ $skilltree->description }}'" 
         :members="{{ $skilltree->members }}" 
         :c-id="{{ $skilltree->hasMeta('courseId') ? $skilltree->getMeta('courseId')->value : 0 }}">
     </manage-skilltree-modal>

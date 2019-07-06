@@ -17,7 +17,8 @@ class CreateSkilltreesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('owner_id');
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->text('description');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

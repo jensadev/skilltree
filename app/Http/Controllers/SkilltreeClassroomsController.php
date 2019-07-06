@@ -22,6 +22,15 @@ class SkilltreeClassroomsController extends Controller
         }
     }
 
+    public function disconnect(Skilltree $skilltree)
+    {
+        $skilltree->deleteMeta('courseId');
+
+        if (request()->wantsJson()) {
+            return ['message' => "removed"];
+        }
+    }
+
     public function showTopics(Skilltree $skilltree)
     {
 

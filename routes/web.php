@@ -37,6 +37,7 @@ Route::group(
 
         // classroom controller routes
         Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');
+        Route::delete('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@disconnect');
         Route::post('skilltrees/{skilltree}/classroom/topics', 'SkilltreeClassroomsController@showTopics');
 
         // classroom API routes

@@ -18,6 +18,7 @@ class CreateSkillsTable extends Migration
             $table->unsignedBigInteger('skilltree_id');
             $table->string('skill_title');
             $table->text('skill_description')->nullable();
+            $table->text('skill_notes')->nullable();
             $table->timestamps();
 
             //$table->index(['skilltree_id']); //, 'category_id']);
