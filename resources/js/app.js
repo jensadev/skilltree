@@ -24,6 +24,7 @@ Vue.use(VModal);
 
 
 Vue.component('add-skill', require('./components/AddSkill.vue').default);
+Vue.component('loader', require('./components/Loader.vue').default);
 Vue.component('invite-skilltree-member', require('./components/InviteSkilltreeMember.vue').default);
 Vue.component('save-skilltree-positions', require('./components/SaveSkilltreePositions.vue').default);
 Vue.component('skill-card', require('./components/SkillCard.vue').default);
@@ -38,6 +39,8 @@ Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeMod
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+window.Event = new Vue();
+
 const app = new Vue({
     el: '#app',
 });
@@ -47,3 +50,4 @@ const app = new Vue({
 //   var matches = arr.filter( function(e) { return regex.test(e); } );
 //   return matches.map(function(e) { return arr.indexOf(e); } );
 // };
+

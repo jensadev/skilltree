@@ -356,6 +356,7 @@ export default {
         async getCourses() {
             let courses;
             this.isLoadingCourses = true;
+            Event.$emit("onCenterLoading");
             await axios
                 .get("/classroom/courses")
                 .then(function(response) {
@@ -366,6 +367,7 @@ export default {
                 });
             this.courses = courses;
             this.isLoadingCourses = false;
+            Event.$emit("onCenterLoading");
         },
         clearConnections() {
             let temp = JSON.parse(

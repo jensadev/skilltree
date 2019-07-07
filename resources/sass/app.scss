@@ -111,7 +111,11 @@ $cards-per-line: (
     padding: 0.25rem 0.5rem;
 }
 
-.card-header, .card-footer {
+.card-footer {
+    padding: 0.25rem 0.5rem;
+}
+
+.card-header {
     padding: 0.25rem 0.5rem;
 
     .btn-less {
@@ -158,6 +162,12 @@ $cards-per-line: (
     right: 15px;
 }
 
+
+/**
+ *
+ * LOGINHEADER
+ *
+ **/
 .loginheader-padding {
     padding-left: 5.3rem;
 }
@@ -191,25 +201,12 @@ $cards-per-line: (
     border-right: 10px solid $light;
 }
 
-.tooltip {
-    z-index: 10000;
-}
-
-.markdown {
-    h1, h2, h3, h4 {
-        @include font-regular;
-    }
-    h1 {
-        font-size: 1.8rem;
-    }
-    h2 {
-        font-size: 1.6rem;
-    }
-    h3 {
-        font-size: 1.4rem;
-    }
-    h4 {
-        font-size: 1.2rem;
-    }
-
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform: -webkit-translate(-50%, -50%);
+    transform: -moz-translate(-50%, -50%);
+    transform: -ms-translate(-50%, -50%);
 }

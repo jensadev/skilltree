@@ -1,6 +1,6 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between">
             <h2
                 class="h5 mb-0"
                 v-text="$attrs.data.skill_title ? $attrs.data.skill_title.substr(0, 20) : $attrs.data.title.substr(0, 20)"

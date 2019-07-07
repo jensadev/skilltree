@@ -10757,18 +10757,19 @@ a.text-dark:focus {
   padding: 0.25rem 0.5rem;
 }
 
-.card-header,
 .card-footer {
   padding: 0.25rem 0.5rem;
 }
 
-.card-header .btn-less,
-.card-footer .btn-less {
+.card-header {
+  padding: 0.25rem 0.5rem;
+}
+
+.card-header .btn-less {
   height: 24px;
 }
 
-.card-header .h5,
-.card-footer .h5 {
+.card-header .h5 {
   margin-bottom: 0.2rem;
 }
 
@@ -10816,6 +10817,12 @@ a.text-dark:focus {
   right: 15px;
 }
 
+/**
+ *
+ * LOGINHEADER
+ *
+ **/
+
 .loginheader-padding {
   padding-left: 5.3rem;
 }
@@ -10849,31 +10856,13 @@ a.text-dark:focus {
   border-right: 10px solid #f0f0f0;
 }
 
-.tooltip {
-  z-index: 10000;
-}
-
-.markdown h1,
-.markdown h2,
-.markdown h3,
-.markdown h4 {
-  font-family: "Titillium Web", sans-serif;
-  font-weight: 400;
-}
-
-.markdown h1 {
-  font-size: 1.8rem;
-}
-
-.markdown h2 {
-  font-size: 1.6rem;
-}
-
-.markdown h3 {
-  font-size: 1.4rem;
-}
-
-.markdown h4 {
-  font-size: 1.2rem;
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
 }
 

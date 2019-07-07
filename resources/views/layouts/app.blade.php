@@ -88,6 +88,9 @@
         </nav>
         <main>
             @yield('content')
+
+            <loader @onCenterLoading="status()"></loader>
+
         </main>
     </div>
     @if (Request::is('skilltrees/*'))
