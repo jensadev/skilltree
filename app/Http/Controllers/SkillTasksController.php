@@ -11,25 +11,6 @@ use Appstract\Meta\Metable;
 class SkillTasksController extends Controller
 {
     use Metable;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -55,30 +36,6 @@ class SkillTasksController extends Controller
         return redirect($skill->skilltree->path());
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -97,9 +54,9 @@ class SkillTasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Skill $skill, Task $task)
+    public function destroy(Skilltree $skilltree, Skill $skill, Task $task)
     {
-        $this->authorize('update', $skill->skilltree);
+        $this->authorize('update', $skilltree);
 
         $task->deleteAllMeta();
 

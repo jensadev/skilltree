@@ -206,6 +206,7 @@ export default {
         async updateTask(task) {},
         async deleteTask(task) {
             console.log(this.form.skill_tasks[task - 1].id);
+            console.log(this.form.skill_id);
             await axios
                 .delete(
                     "/skilltrees/" +

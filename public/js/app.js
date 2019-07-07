@@ -2388,14 +2388,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 console.log(this.form.skill_tasks[task - 1].id);
-                _context3.next = 3;
+                console.log(this.form.skill_id);
+                _context3.next = 4;
                 return axios["delete"]("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/" + this.form.skill_tasks[task - 1].id).then(function (response) {
                   console.log(response.data.message);
                 })["catch"](function (error) {
                   console.log(error);
                 });
 
-              case 3:
+              case 4:
               case "end":
                 return _context3.stop();
             }
