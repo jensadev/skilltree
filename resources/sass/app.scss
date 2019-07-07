@@ -53,7 +53,7 @@ $cards-per-line: (
 }
 
 .dashbar {
-    z-index: 1;
+    z-index: 80;
     top: 4rem;
     .material-icons {
         font-size: 2rem;
@@ -66,7 +66,7 @@ $cards-per-line: (
     margin: 0;
     padding: 0;
     .material-icons {
-        margin: 0px 4px;
+        margin-left: 8px;
     }
 }
 .dashbaricon:focus {
@@ -90,6 +90,10 @@ $cards-per-line: (
     color: $gray;
 }
 
+.btn-arr:focus {
+    box-shadow: none;
+}
+
 .btn-less:focus {
     box-shadow: none;
 }
@@ -98,14 +102,18 @@ $cards-per-line: (
     position: absolute;
     width: 180px;
     z-index: 5;
+    .list-group-item {
+        padding: 0.25rem 0.5rem;
+    }
 }
 
 .card-body {
-    padding: 0.75rem;
+    padding: 0.25rem 0.5rem;
 }
 
 .card-header, .card-footer {
-    padding: 0.5rem 0.75rem; 
+    padding: 0.25rem 0.5rem;
+
     .btn-less {
         height: 24px;
     }

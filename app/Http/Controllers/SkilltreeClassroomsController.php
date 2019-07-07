@@ -10,7 +10,7 @@ use function GuzzleHttp\json_decode;
 class SkilltreeClassroomsController extends Controller
 {
     use Metable;
-    //
+
     public function connect(Skilltree $skilltree)
     {
         if ($crid = request('courseId')) {

@@ -6,9 +6,11 @@ use App\Task;
 use App\Skill;
 use App\Skilltree;
 use Illuminate\Http\Request;
+use Appstract\Meta\Metable;
 
 class SkillTasksController extends Controller
 {
+    use Metable;
     /**
      * Display a listing of the resource.
      *
@@ -39,28 +41,20 @@ class SkillTasksController extends Controller
     {
         $this->authorize('update', $skilltree);
         request()->validate(['body' => 'required|min:3']);
-        $skill->addTask(request('body'));
+
+        $task = $skill->addTask(request('body'));
+
+        if (request('courseWorkId')) {
+            $task->addOrUpdateMeta('courseWorkId', (int) request('courseWorkId'));
+            $task->addOrUpdateMeta('courseId', (int) request('courseId'));
+        }
 
         if (request()->wantsJson()) {
-            return ['message' => $skill->skilltree->path()];
+            return ['message' => "created"];
         }
         return redirect($skill->skilltree->path());
     }
 
-    public function storeTasks(Skilltree $skilltree, Skill $skill)
-    {
-        $this->authorize('update', $skilltree);
-
-        foreach (request('tasks') as $value) {
-            $skill->addTask($value[1]);
-            $skill->addOrUpdateMeta('taskId', (int) $value[0]);
-        }
-
-        if (request()->wantsJson()) {
-            return ['message' => $skill->skilltree->path()];
-        }
-        return redirect($skill->skilltree->path());
-    }
 
 
     /**
@@ -103,8 +97,18 @@ class SkillTasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Skill $skill, Task $task)
     {
-        //
+        $this->authorize('update', $skill->skilltree);
+
+        $task->deleteAllMeta();
+
+        $task->delete();
+
+        if (request()->wantsJson()) {
+            return ['message' => "deleted"];
+        }
+
+        //return redirect($skilltree->path());
     }
 }

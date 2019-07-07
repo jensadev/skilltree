@@ -10695,7 +10695,7 @@ a.text-dark:focus {
 }
 
 .dashbar {
-  z-index: 1;
+  z-index: 80;
   top: 4rem;
 }
 
@@ -10712,7 +10712,7 @@ a.text-dark:focus {
 }
 
 .dashbaricon .material-icons {
-  margin: 0px 4px;
+  margin-left: 8px;
 }
 
 .dashbaricon:focus {
@@ -10735,6 +10735,10 @@ a.text-dark:focus {
   color: #d7d7d7;
 }
 
+.btn-arr:focus {
+  box-shadow: none;
+}
+
 .btn-less:focus {
   box-shadow: none;
 }
@@ -10745,13 +10749,17 @@ a.text-dark:focus {
   z-index: 5;
 }
 
+.skill-card .list-group-item {
+  padding: 0.25rem 0.5rem;
+}
+
 .card-body {
-  padding: 0.75rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .card-header,
 .card-footer {
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .card-header .btn-less,

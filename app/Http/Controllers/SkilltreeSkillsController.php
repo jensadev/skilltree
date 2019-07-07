@@ -28,6 +28,14 @@ class SkilltreeSkillsController extends Controller
     {
         $this->authorize('update', $skill->skilltree);
 
+        /*
+        if ($tasks = request('skill_tasks')) {
+
+            foreach ($tasks as $task) {
+                $skill->addTask($task);
+            }
+        }
+*/
         $skill->update($this->validateRequest());
 
         if (request()->wantsJson()) {
@@ -39,7 +47,7 @@ class SkilltreeSkillsController extends Controller
 
     public function destroy(Skilltree $skilltree, Skill $skill)
     {
-        $this->authorize('manage', $skill->skilltree);
+        $this->authorize('update', $skill->skilltree);
 
         $skill->deleteAllMeta();
 
@@ -56,7 +64,7 @@ class SkilltreeSkillsController extends Controller
     {
         return request()->validate([
             'skill_title' => 'required|min:3',
-            'skill_description' => 'sometimes|min:3'
+            'skill_description' => 'nullable|min:3'
         ]);
     }
 }

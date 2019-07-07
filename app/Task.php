@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Appstract\Meta\Metable;
 
 class Task extends Model
 {
+    use Metable;
     /**
      * The guarded attributes for form submission
      *

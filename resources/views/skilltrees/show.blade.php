@@ -7,7 +7,6 @@
             :data="{{ $skilltree }}"
             :tree="{{ $skilltree->id }}"
             :id="0"
-            :skill_title="'{{ $skilltree->title }}'"
             class="root"
         ></skill-card>
         @foreach ($skilltree->skills as $skill)
@@ -15,7 +14,6 @@
                 :data="{{ $skill }}"
                 :tree="{{ $skilltree->id }}"
                 :id="{{ $skill->id }}"
-                :skill_title="'{{ $skill->skill_title }}'"
                 :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
                 :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'"
 

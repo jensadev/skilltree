@@ -21,6 +21,7 @@ Route::group(
 
         // invitations
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
+        Route::post('skilltrees/{skilltree}/classroom/invitations', 'SkilltreeInvitationsController@classroomStore');
 
         // skills
         Route::post('/skilltrees/{skilltree}/skills', 'SkilltreeSkillsController@store');
@@ -33,7 +34,8 @@ Route::group(
 
         // tasks
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
-        Route::post('/skilltrees/{skilltree}/skills/{skill}/coursetasks', 'SkillTasksController@storeTasks');
+        Route::delete('/skilltrees/{skilltree}/skills/{skill}/tasks/{task}', 'SkillTasksController@destroy');
+        //        Route::post('/skilltrees/{skilltree}/skills/{skill}/coursetasks', 'SkillTasksController@storeTasks');
 
         // classroom controller routes
         Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');
@@ -42,6 +44,7 @@ Route::group(
 
         // classroom API routes
         Route::get('/classroom/courses', 'ClassroomController@listCourses');
+        Route::get('/classroom/course/{courseid}/students', 'ClassroomController@listCourseStudents');
         Route::get('/classroom/course/{courseid}/topics', 'ClassroomController@listTopics');
         Route::get('/classroom/course/{courseid}/courseworks', 'ClassroomController@listCourseWorks');
         Route::get('/classroom/course/{courseid}/coursework/{courseworkid}', 'ClassroomController@getCourseWork');

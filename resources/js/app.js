@@ -42,10 +42,8 @@ const app = new Vue({
     el: '#app',
 });
 
-/*
-Array.prototype.find = function(regex) {
-  var arr = this;
-  var matches = arr.filter( function(e) { return regex.test(e); } );
-  return matches.map(function(e) { return arr.indexOf(e); } );
-};
-*/
+// Array.prototype.find = function(regex) {
+//   var arr = this;
+//   var matches = arr.filter( function(e) { return regex.test(e); } );
+//   return matches.map(function(e) { return arr.indexOf(e); } );
+// };

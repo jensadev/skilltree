@@ -55,14 +55,15 @@ class Skill extends Model
      */
     public function addTask($body)
     {
-        return $this->tasks()->create(compact('body'));
+        return $this->tasks()->updateOrCreate(compact('body'));
     }
 
+    /*
     public function addTasks($tasks)
     {
-        return $this->tasks()->createMany($tasks);
+        return $this->tasks()->updateOrCreate($tasks);
     }
-
+*/
     /**
      * Handle for skill path
      *

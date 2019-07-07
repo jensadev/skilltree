@@ -171,7 +171,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div v-if="isConnected" class="d-flex justify-content-between align-items-center">
+<!--                                <div v-if="isConnected" class="d-flex justify-content-between align-items-center">
                                     <label for="inviteStudentsBtn" class="mb-0">Invite Students from Course</label>
                                     <button
                                         class="btn dashbaricon"
@@ -182,6 +182,7 @@
                                         <i class="material-icons">group_add</i>
                                     </button>
                                 </div>
+-->
                             </div>
                             <div class="col-lg-6" v-if="isConnected">
                                 <form
@@ -308,9 +309,9 @@ export default {
     },
     props: ["id", "members", "cId"],
     methods: {
-        async inviteStudents() {
-            console.log("invite students");
-        },
+        // async inviteStudents() {
+        //     console.log("invite students");
+        // },
         async deleteCourseConnection() {
             let con = true;
             await axios

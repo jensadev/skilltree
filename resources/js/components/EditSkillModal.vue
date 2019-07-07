@@ -69,88 +69,71 @@
                             </form>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Tasks</label>
-                                <div
-                                    class="input-group mb-3"
-                                    :key="index"
-                                    v-for="(task, index) in form.skill_tasks"
-                                >
-                                    <input
-                                        form="skillform"
-                                        class="form-control mb-2"
-                                        type="text"
-                                        v-model="task.body"
-                                        :placeholder="'Task ' + (index + 1)"
-                                        value="task.body"
-                                    />
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <a
-                                    class="d-flex align-items-center border-0 bg-transparent"
-                                    @click.prevent="addTask"
-                                    href
-                                >
-                                    <i class="material-icons">add_circle_outline</i>
-                                    <small class="text-muted pl-2">Add a Task</small>
-                                </a>
-                            </div>
                             <form
-                                @submit.prevent="addCourseWork"
+                                @submit.prevent="submit"
                                 @keydown="form.errorClear($event.target.name)"
+                                id="tasksform"
                             >
-                                <div class="input-group mb-3" v-if="this.skill_topicid != 0">
-                                    <select
-                                        class="custom-select"
-                                        id="courseWorkSelect"
-                                        name="courseWorkSelect"
-                                        v-model="selectedCourseWork"
-                                        multiple
+                                <div class="form-group">
+                                    <label>Tasks</label>
+                                    <div
+                                        class="spinner-border text-muted"
+                                        role="status"
+                                        v-if="isLoadingCourseWork"
+                                        style="width: 24px; height: 24px; margin-left:16px;"
                                     >
-                                        <option
-                                            disabled
-                                            selected
-                                            v-if="this.courseWork.length < 1"
-                                        >Load Topics from Course</option>
-                                        <option
-                                            v-for="(work, index) in courseWork"
-                                            :key="index"
-                                            :value="[work.id, work.title]"
-                                            v-text="work.title"
-                                        ></option>
-                                    </select>
-                                    <div class="input-group-append">
-                                        <button
-                                            v-if="this.courseWork.length < 1"
-                                            class="btn dashbaricon"
-                                            id="load-topics"
-                                            @click.prevent="getCourseWork"
-                                            v-bind="{isLoadingCourseWork}"
-                                            title="Load Coursework from Google Classroom"
-                                        >
-                                            <i
-                                                class="material-icons"
-                                                v-if="isLoadingCourseWork == false"
-                                            >cloud_download</i>
-                                            <div
-                                                class="spinner-border"
-                                                role="status"
-                                                v-if="isLoadingCourseWork"
-                                                style="width: 30px; height: 30px; margin-left: 8px;"
-                                            >
-                                                <span class="sr-only">Loading...</span>
-                                            </div>
-                                        </button>
-                                        <button
-                                            v-if="this.courseWork.length > 0"
-                                            class="btn dashbaricon"
-                                            type="submit"
-                                            :disabled="form.errorAny()"
-                                        >
-                                            <i class="material-icons">add</i>
-                                        </button>
+                                        <span class="sr-only">Loading...</span>
                                     </div>
+                                    <div
+                                        class="input-group mb-3"
+                                        :key="index"
+                                        v-for="(task, index) in form.skill_tasks"
+                                    >
+                                        <input
+                                            form="skillform"
+                                            class="form-control"
+                                            type="text"
+                                            v-model="task.body"
+                                            :placeholder="'Task ' + (index + 1)"
+                                            value="task.body"
+                                        />
+                                        <div class="input-group-append">
+                                            <button
+                                                class="btn dashbaricon"
+                                                type="button"
+                                                v-if="task.id"
+                                                @click="updateTask(index + 1)"
+                                            >
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button
+                                                class="btn dashbaricon"
+                                                type="button"
+                                                v-if="!task.id"
+                                                @click="storeTask(index + 1)"
+                                            >
+                                                <i class="material-icons">add</i>
+                                            </button>
+                                            <button
+                                                class="btn dashbaricon"
+                                                type="button"
+                                                v-if="task.id"
+                                                @click="deleteTask(index + 1)"
+                                            >
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <a
+                                        class="d-flex align-items-center border-0 bg-transparent"
+                                        @click.prevent="addTask"
+                                        href
+                                    >
+                                        <i class="material-icons">add_circle_outline</i>
+                                        <small class="text-muted pl-2">Add a Task</small>
+                                    </a>
                                 </div>
                             </form>
                         </div>
@@ -185,8 +168,6 @@ import Form from "./Form";
 export default {
     data() {
         return {
-            selectedCourseWork: [],
-            courseWork: [],
             isLoadingCourseWork: false,
             isLoading: false,
             tree: 0,
@@ -196,11 +177,51 @@ export default {
                 skill_id: 0,
                 skill_title: "",
                 skill_description: "",
-                skill_tasks: [{ body: "" }]
+                skill_tasks: []
             })
         };
     },
     methods: {
+        async storeTask(task) {
+            console.log(task);
+            console.log(this.form.skill_tasks[task - 1]);
+            // Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
+
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks",
+                    this.form.skill_tasks[task - 1]
+                )
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
+        async updateTask(task) {},
+        async deleteTask(task) {
+            console.log(this.form.skill_tasks[task - 1].id);
+            await axios
+                .delete(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks/" +
+                        this.form.skill_tasks[task - 1].id
+                )
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
         async addCourseWork() {
             await axios
                 .post(
@@ -228,20 +249,30 @@ export default {
                     "/classroom/course/" + this.skill_courseid + "/courseworks"
                 )
                 .then(function(response) {
-                    console.log(response.data.message);
                     courseWork = response.data.message;
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
 
+            let found = [];
+            console.log(courseWork);
             courseWork.forEach(element => {
                 if (element.topicId == this.skill_topicid) {
-                    this.courseWork.push(element);
+                    found.push({
+                        body: element.title,
+                        courseId: element.courseId,
+                        courseWorkId: element.id
+                    });
+                    //                    this.form.skill_tasks.push({body: element.title, courseWorkId: element.id});
                 }
             });
 
-            console.log(this.courseWork);
+            let temp = [];
+
+            temp = _.unionBy(this.form.skill_tasks, found, "body");
+            console.log(temp);
+            this.form.skill_tasks = temp;
             this.isLoadingCourseWork = false;
         },
         async deleteSkill() {
@@ -267,6 +298,7 @@ export default {
             this.isLoading = false;
         },
         beforeOpen(event) {
+            this.form.skill_tasks = [];
             this.skill_courseid = event.params.skill_courseid;
             this.skill_topicid = event.params.skill_topicid;
             this.tree = event.params.tree;
@@ -276,6 +308,10 @@ export default {
 
             if (event.params.skill_tasks) {
                 this.form.skill_tasks = event.params.skill_tasks;
+            }
+
+            if (this.skill_courseid != 0) {
+                this.getCourseWork();
             } else {
                 this.form.skill_tasks = [{ body: "" }];
             }

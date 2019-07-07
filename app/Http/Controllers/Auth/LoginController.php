@@ -49,7 +49,7 @@ class LoginController extends Controller
     public function redirectToProvider($driver)
     {
         return Socialite::driver('google')
-            ->scopes(['openid', 'profile', 'email', Google_Service_Classroom::CLASSROOM_COURSES, Google_Service_Classroom::CLASSROOM_TOPICS, Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS])
+            ->scopes(['openid', 'profile', 'email', Google_Service_Classroom::CLASSROOM_COURSES,   Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS, Google_Service_Classroom::CLASSROOM_ROSTERS, Google_Service_Classroom::CLASSROOM_TOPICS, Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS])
             ->redirect();
     }
 

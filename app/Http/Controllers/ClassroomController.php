@@ -110,4 +110,25 @@ class ClassroomController extends Controller
         }
         return $coursesResult->courseWork;
     }
+
+
+    public function listCourseStudents(Request $request)
+    {
+        $user = Auth::user();
+        $this->client = new Google_Client();
+        $this->client->setApplicationName('Skilltree');
+        $this->client->setAuthConfig('../credentials.json');
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->client->setAccessToken($user->g_token);
+
+        $this->service = new Google_Service_Classroom($this->client);
+
+        $coursesResult = $this->service->courses_students->listCoursesStudents($request->courseid);
+
+        if (request()->wantsJson()) {
+            return ['message' => $coursesResult->students];
+        }
+        return $coursesResult->students;
+    }
 }

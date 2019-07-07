@@ -1,7 +1,7 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="h5 mb-0">{{ skill_title.substr(0, 15) }}</h2>
+            <h2 class="h5 mb-0" v-text="$attrs.data.skill_title ? $attrs.data.skill_title.substr(0, 20) : $attrs.data.title.substr(0, 20)"></h2>
             <a
                 v-if="id != 0"
                 href
@@ -11,20 +11,21 @@
                 @click.prevent="$modal.show('edit-skill', { 
                     tree: tree, 
                     skill_id: id,  
-                    skill_title: skill_title, 
+                    skill_title: $attrs.data.skill_title, 
                     skill_description: $attrs.data.skill_description, 
                     skill_tasks: skill_tasks, 
                     skill_topicid: skill_topicid, 
-                    skill_courseid: skill_courseid})"
+                    skill_courseid: skill_courseid
+                })"
                 title="Edit Skill"
             >
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
             </a>
         </div>
-        <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description ">
+        <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description">
             <nl2br
                 tag="p"
-                :text="$attrs.data.skill_description ? $attrs.data.skill_description : $attrs.data.description "
+                :text="$attrs.data.skill_description ? $attrs.data.skill_description.substr(0, 50) : $attrs.data.description.substr(0, 50)"
                 class-name="card-text"
             />
         </div>
@@ -33,9 +34,8 @@
                 class="list-group-item"
                 :key="index"
                 v-for="(task, index) in skill_tasks"
-                style="padding: 0.5rem 0.75rem;"
             >
-                <small>{{ task.body.substr(0, 20) }}</small>
+                <small>{{ task.body.substr(0, 25) }}</small>
             </li>
         </ul>
 
@@ -222,8 +222,6 @@ export default {
     props: [
         "tree",
         "id",
-        "skill_title",
-        "skill_description",
         "skill_tasks",
         "skill_topicid",
         "skill_courseid"
