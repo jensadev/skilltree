@@ -31,7 +31,7 @@ class SkillTasksController extends Controller
         }
 
         if (request()->wantsJson()) {
-            return ['message' => "created"];
+            return ['message' => $task];
         }
         return redirect($skill->skilltree->path());
     }

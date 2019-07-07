@@ -8,6 +8,7 @@
         :pivot-y="0.25"
         width="60%"
         height="auto"
+        @before-close="beforeClose"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -171,7 +172,7 @@
                                         </div>
                                     </div>
                                 </form>
-<!--                                <div v-if="isConnected" class="d-flex justify-content-between align-items-center">
+                                <!--                                <div v-if="isConnected" class="d-flex justify-content-between align-items-center">
                                     <label for="inviteStudentsBtn" class="mb-0">Invite Students from Course</label>
                                     <button
                                         class="btn dashbaricon"
@@ -182,7 +183,7 @@
                                         <i class="material-icons">group_add</i>
                                     </button>
                                 </div>
--->
+                                -->
                             </div>
                             <div class="col-lg-6" v-if="isConnected">
                                 <form
@@ -417,11 +418,16 @@ export default {
                     topics: this.selectedTopics
                 })
                 .then(function(response) {
-                    location = response.data.message;
+                    console.log(response.data.message);
+                    //location = response.data.message;
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
+        },
+        beforeClose(event) {
+            console.log(event);
+            location = "/skilltrees/" + this.id;
         }
     },
     mounted() {

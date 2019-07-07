@@ -22,14 +22,14 @@
             class="btn dashbaricon"
             @click.prevent="savePositions"
             title="Save Skilltree positions"
-            v-bind="{isLoading}"
-            :disabled="isLoading"
+            v-bind="{isSaving}"
+            :disabled="isSaving"
         >
-            <i class="material-icons" v-if="isLoading == false">save</i>
+            <i class="material-icons" v-if="isSaving == false">save</i>
             <div
                 class="spinner-border"
                 role="status"
-                v-if="isLoading"
+                v-if="isSaving"
                 style="width:24px; height:24px; margin-left:14px;"
             >
                 <span class="sr-only">Loading...</span>
@@ -43,13 +43,14 @@ export default {
     data() {
         return {
             isLoading: false,
+            isSaving: false,
             positions: {}
         };
     },
     props: ["tree", "save"],
     methods: {
         async savePositions() {
-            this.isLoading = true;
+            this.isSaving = true;
             if (this.hasItems()) {
                 this.positions = this.getStorage();
             }
@@ -65,7 +66,7 @@ export default {
                 this.errors = error;
                 console.log("error" + this.errors);
             }
-            this.isLoading = false;
+            this.isSaving = false;
         },
         hasItems() {
             let test = false;

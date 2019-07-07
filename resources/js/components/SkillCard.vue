@@ -1,7 +1,10 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="h5 mb-0" v-text="$attrs.data.skill_title ? $attrs.data.skill_title.substr(0, 20) : $attrs.data.title.substr(0, 20)"></h2>
+            <h2
+                class="h5 mb-0"
+                v-text="$attrs.data.skill_title ? $attrs.data.skill_title.substr(0, 20) : $attrs.data.title.substr(0, 20)"
+            ></h2>
             <a
                 v-if="id != 0"
                 href
@@ -29,12 +32,8 @@
                 class-name="card-text"
             />
         </div>
-        <ul v-if="skill_tasks" class="list-group list-group-flush">
-            <li
-                class="list-group-item"
-                :key="index"
-                v-for="(task, index) in skill_tasks"
-            >
+        <ul v-if="tasks" class="list-group list-group-flush">
+            <li class="list-group-item" :key="index" v-for="(task, index) in tasks">
                 <small>{{ task.body.substr(0, 25) }}</small>
             </li>
         </ul>
@@ -82,6 +81,7 @@ export default {
             init: this.loadInit(),
             color: "#0de1ec",
             thickness: 1,
+            tasks: [],
             draggableValue: {
                 onPositionChange: this.onPosChanged,
                 onDragEnd: this.onDragEnd,
@@ -218,14 +218,10 @@ export default {
                 }
             });
         }
+
+        this.tasks = _.sortBy(this.skill_tasks, ["body"]);
     },
-    props: [
-        "tree",
-        "id",
-        "skill_tasks",
-        "skill_topicid",
-        "skill_courseid"
-    ]
+    props: ["tree", "id", "skill_tasks", "skill_topicid", "skill_courseid"]
 };
 </script>
 <style>

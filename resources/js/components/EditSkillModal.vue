@@ -9,6 +9,7 @@
         width="60%"
         height="auto"
         @before-open="beforeOpen"
+        @before-close="beforeClose"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -164,6 +165,7 @@
 
 <script>
 import Form from "./Form";
+import { constants } from "crypto";
 
 export default {
     data() {
@@ -183,10 +185,7 @@ export default {
     },
     methods: {
         async storeTask(task) {
-            console.log(task);
-            console.log(this.form.skill_tasks[task - 1]);
-            // Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
-
+            let update;
             await axios
                 .post(
                     "/skilltrees/" +
@@ -197,16 +196,43 @@ export default {
                     this.form.skill_tasks[task - 1]
                 )
                 .then(function(response) {
-                    console.log(response.data.message);
+                    update = response.data.message;
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
+            this.form.skill_tasks.splice(task - 1, 1);
+            this.form.skill_tasks.push(update);
+            this.form.skill_tasks = _.sortBy(this.form.skill_tasks, [
+                "id",
+                "body"
+            ]);
         },
-        async updateTask(task) {},
+        async updateTask(task) {
+            let update;
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks",
+                    this.form.skill_tasks[task - 1]
+                )
+                .then(function(response) {
+                    update = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.form.skill_tasks.splice(task - 1, 1);
+            this.form.skill_tasks.push(update);
+            this.form.skill_tasks = _.sortBy(this.form.skill_tasks, [
+                "id",
+                "body"
+            ]);
+        },
         async deleteTask(task) {
-            console.log(this.form.skill_tasks[task - 1].id);
-            console.log(this.form.skill_id);
             await axios
                 .delete(
                     "/skilltrees/" +
@@ -222,6 +248,10 @@ export default {
                 .catch(function(error) {
                     console.log(error);
                 });
+            await this.$nextTick(function() {
+                this.form.skill_tasks.splice(task - 1, 1);
+                this.getCourseWork();
+            });
         },
         async addCourseWork() {
             await axios
@@ -257,7 +287,6 @@ export default {
                 });
 
             let found = [];
-            console.log(courseWork);
             courseWork.forEach(element => {
                 if (element.topicId == this.skill_topicid) {
                     found.push({
@@ -265,14 +294,12 @@ export default {
                         courseId: element.courseId,
                         courseWorkId: element.id
                     });
-                    //                    this.form.skill_tasks.push({body: element.title, courseWorkId: element.id});
                 }
             });
 
             let temp = [];
-
             temp = _.unionBy(this.form.skill_tasks, found, "body");
-            console.log(temp);
+            //            this.form.skill_tasks = _.sortBy(temp, ["body", "id"]);
             this.form.skill_tasks = temp;
             this.isLoadingCourseWork = false;
         },
@@ -349,6 +376,10 @@ export default {
                 )
                 .then(response => (location = response.data.message))
                 .catch(error => console.log(error));
+        },
+        beforeClose(event) {
+            console.log(event);
+            location = "/skilltrees/" + this.tree;
         }
     }
 };
