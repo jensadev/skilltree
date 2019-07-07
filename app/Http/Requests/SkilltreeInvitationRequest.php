@@ -26,14 +26,14 @@ class SkilltreeInvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users,email']
+            'email' => ['required', 'exists:users,email', 'not_regex:/(@elev)/']
         ];
     }
 
     public function messages()
     {
         return [
-            'email.exists' => 'The user you are inviting must have a Skilltree account.'
+            ' email . exists ' => ' The user you are inviting must have a Skilltree Teacher account.'
         ];
     }
 }

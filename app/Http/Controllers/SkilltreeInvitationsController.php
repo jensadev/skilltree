@@ -13,6 +13,12 @@ class SkilltreeInvitationsController extends Controller
     {
         $user = User::whereEmail(request('email'))->first();
 
+        // if (!$user->teacher) {
+        //     if (request()->wantsJson()) {
+        //         return ['message' => "User needs to be a teacher"];
+        //     }
+        // }
+
         $skilltree->invite($user);
 
         if (request()->wantsJson()) {

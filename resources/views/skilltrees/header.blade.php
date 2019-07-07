@@ -1,7 +1,7 @@
 <nav class="navbar fixed-top bg-transparent dashbar">
     <div class="container">
         <div class="crumb">
-            <h1 class="h3 text-uppercase mb-1"><a  href="/skilltrees">Skilltrees</a>
+            <h1 class="h3 text-capitalize mb-1"><a  href="/skilltrees">Skilltrees</a>
                 @if(isset($skilltree))
                     / {{ $skilltree->title }}
                 @endif

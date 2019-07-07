@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->teacher) {
+            $skilltrees = auth()->user()->accessibleSkilltrees();
+            return view('skilltrees.index', compact('skilltrees'));
+        }
+
         return view('home');
     }
 }
