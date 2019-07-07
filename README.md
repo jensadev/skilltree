@@ -3,9 +3,14 @@ Stuff
 
 ## Todo
 * Student interface
+    * A student that logs in sees dashboard
+    * Dashboard shows active skilltrees - load based on classroom
+* Teacher interface
 * Clean up localstorage
 * Write tests
 * Add some tooltips
+* Caching both classroom and laravel
+* Move google requests from laravel to axios?
 
 ## Finished
 * sign in with oAuth
@@ -17,4 +22,4 @@ Stuff
 * Skills can be connected
 * Skills can have tasks
     * Tasks can be loaded from classroom
-    * Tasks can be added and deleted - forgot update
+    * Tasks can be managed

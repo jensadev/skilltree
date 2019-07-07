@@ -33,6 +33,8 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
+        $this->optParams['fields'] = 'courses(id,descriptionHeading)';
+
         $coursesResult = $this->service->courses->listCourses($this->optParams);
 
         $dump = [];
@@ -62,7 +64,7 @@ class ClassroomController extends Controller
         //dd( $request->courseid)
 
         //$coursesResult = $this->service->courses->listCourses($this->optParams);
-        $topicsResult = $this->service->courses_topics->listCoursesTopics($request->courseid);
+        $topicsResult = $this->service->courses_topics->listCoursesTopics($request->courseid, ['fields' => 'topic(courseId,name,topicId)']);
 
         //dd($topicsResult->topic);
         if (request()->wantsJson()) {
@@ -83,7 +85,7 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        $coursesResult = $this->service->courses_courseWork->listCoursesCourseWork($request->courseid);
+        $coursesResult = $this->service->courses_courseWork->listCoursesCourseWork($request->courseid, ['fields' => 'courseWork(id,courseId,title,topicId)']);
 
         if (request()->wantsJson()) {
             return ['message' => $coursesResult->courseWork];
@@ -124,7 +126,7 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        $coursesResult = $this->service->courses_students->listCoursesStudents($request->courseid);
+        $coursesResult = $this->service->courses_students->listCoursesStudents($request->courseid, ['fields' => 'students(profile/emailAddress)']);
 
         if (request()->wantsJson()) {
             return ['message' => $coursesResult->students];
