@@ -192,7 +192,7 @@ export default {
                         this.tree +
                         /skills/ +
                         this.form.skill_id +
-                        "/tasks",
+                        "/tasks/",
                     this.form.skill_tasks[task - 1]
                 )
                 .then(function(response) {
@@ -211,12 +211,13 @@ export default {
         async updateTask(task) {
             let update;
             await axios
-                .post(
+                .patch(
                     "/skilltrees/" +
                         this.tree +
                         /skills/ +
                         this.form.skill_id +
-                        "/tasks",
+                        "/tasks/" +
+                        this.form.skill_tasks[task - 1].id,
                     this.form.skill_tasks[task - 1]
                 )
                 .then(function(response) {

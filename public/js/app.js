@@ -4199,7 +4199,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks", this.form.skill_tasks[task - 1]).then(function (response) {
+                return axios.post("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/", this.form.skill_tasks[task - 1]).then(function (response) {
                   update = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
@@ -4234,7 +4234,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.post("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks", this.form.skill_tasks[task - 1]).then(function (response) {
+                return axios.patch("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/" + this.form.skill_tasks[task - 1].id, this.form.skill_tasks[task - 1]).then(function (response) {
                   update = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);

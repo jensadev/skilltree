@@ -43,9 +43,15 @@ class SkillTasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Skilltree $skilltree, Skill $skill, Task $task)
     {
-        //
+        $this->authorize('update', $skilltree);
+
+        $task->update($this->validateRequest());
+
+        if (request()->wantsJson()) {
+            return ['message' => $task];
+        }
     }
 
     /**
@@ -67,5 +73,12 @@ class SkillTasksController extends Controller
         }
 
         //return redirect($skilltree->path());
+    }
+
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'body' => 'required|min:3'
+        ]);
     }
 }

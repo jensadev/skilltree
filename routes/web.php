@@ -34,8 +34,9 @@ Route::group(
 
         // tasks
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');
+        Route::patch('/skilltrees/{skilltree}/skills/{skill}/tasks/{task}', 'SkillTasksController@update');
         Route::delete('/skilltrees/{skilltree}/skills/{skill}/tasks/{task}', 'SkillTasksController@destroy');
-        //        Route::post('/skilltrees/{skilltree}/skills/{skill}/coursetasks', 'SkillTasksController@storeTasks');
+
 
         // classroom controller routes
         Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');

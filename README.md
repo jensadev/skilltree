@@ -3,8 +3,6 @@ Stuff
 
 ## Todo
 * Student interface
-* Bugfixes to skillcards
-    * edit
 * Clean up localstorage
 * Write tests
 * Add some tooltips
@@ -19,3 +17,4 @@ Stuff
 * Skills can be connected
 * Skills can have tasks
     * Tasks can be loaded from classroom
+    * Tasks can be added and deleted - forgot update
