@@ -45,10 +45,10 @@ Route::group(
 
         // classroom API routes
         Route::get('/classroom/courses', 'ClassroomController@listCourses');
-        Route::get('/classroom/course/{courseid}/students', 'ClassroomController@listCourseStudents');
-        Route::get('/classroom/course/{courseid}/topics', 'ClassroomController@listTopics');
-        Route::get('/classroom/course/{courseid}/courseworks', 'ClassroomController@listCourseWorks');
-        Route::get('/classroom/course/{courseid}/coursework/{courseworkid}', 'ClassroomController@getCourseWork');
+        Route::get('/classroom/courses/{courseid}/students', 'ClassroomController@listCourseStudents');
+        Route::get('/classroom/courses/{courseid}/topics', 'ClassroomController@listTopics');
+        Route::get('/classroom/courses/{courseid}/courseworks', 'ClassroomController@listCourseWorks');
+        Route::get('/classroom/courses/{courseid}/coursework/{courseworkid}', 'ClassroomController@getCourseWork');
     }
 );
 

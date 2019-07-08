@@ -4339,7 +4339,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 this.isLoadingCourseWork = true;
                 _context5.next = 3;
-                return axios.get("/classroom/course/" + this.skill_courseid + "/courseworks").then(function (response) {
+                return axios.get("/classroom/courses/" + this.skill_courseid + "/courseworks").then(function (response) {
                   courseWork = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
@@ -5158,7 +5158,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 this.isLoadingTopics = true;
                 _context5.next = 3;
-                return axios.get("/classroom/course/" + this.courseId + "/topics").then(function (response) {
+                return axios.get("/classroom/courses/" + this.courseId + "/topics").then(function (response) {
                   topics = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);

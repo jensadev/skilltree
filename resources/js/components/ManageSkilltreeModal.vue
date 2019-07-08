@@ -386,7 +386,7 @@ export default {
             let topics;
             this.isLoadingTopics = true;
             await axios
-                .get("/classroom/course/" + this.courseId + "/topics")
+                .get("/classroom/courses/" + this.courseId + "/topics")
                 .then(function(response) {
                     topics = response.data.message;
                 })

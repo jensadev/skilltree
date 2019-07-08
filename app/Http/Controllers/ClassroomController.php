@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Google_Client;
 use Google_Service_Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ClassroomController extends Controller
 {
@@ -35,7 +36,10 @@ class ClassroomController extends Controller
 
         $this->optParams['fields'] = 'courses(id,descriptionHeading)';
 
-        $coursesResult = $this->service->courses->listCourses($this->optParams);
+        $coursesResult = Cache::remember('_listCourses_user' . auth()->user()->id, 3600, function () {
+            return $this->service->courses->listCourses($this->optParams);
+        });
+
 
         $dump = [];
         foreach ($coursesResult->getCourses() as $course) {
@@ -61,10 +65,9 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        //dd( $request->courseid)
-
-        //$coursesResult = $this->service->courses->listCourses($this->optParams);
-        $topicsResult = $this->service->courses_topics->listCoursesTopics($request->courseid, ['fields' => 'topic(courseId,name,topicId)']);
+        $topicsResult = Cache::remember('_listCoursesTopics' . $request->courseid . '_user' . auth()->user()->id, 3600, function () use ($request) {
+            return $this->service->courses_topics->listCoursesTopics($request->courseid, ['fields' => 'topic(courseId,name,topicId)']);
+        });
 
         //dd($topicsResult->topic);
         if (request()->wantsJson()) {
@@ -85,7 +88,9 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        $coursesResult = $this->service->courses_courseWork->listCoursesCourseWork($request->courseid, ['fields' => 'courseWork(id,courseId,title,topicId)']);
+        $coursesResult = Cache::remember('_listCoursesCourseWork' . $request->courseid . '_user ' . auth()->user()->id, 3600, function () use ($request) {
+            return $this->service->courses_courseWork->listCoursesCourseWork($request->courseid, ['fields' => 'courseWork(id,courseId,title,topicId)']);
+        });
 
         if (request()->wantsJson()) {
             return ['message' => $coursesResult->courseWork];
@@ -126,7 +131,9 @@ class ClassroomController extends Controller
 
         $this->service = new Google_Service_Classroom($this->client);
 
-        $coursesResult = $this->service->courses_students->listCoursesStudents($request->courseid, ['fields' => 'students(profile/emailAddress)']);
+        $coursesResult = Cache::remember('_listCoursesStudents' . $request->courseid . '_user ' . auth()->user()->id, 86400, function () use ($request) {
+            return $this->service->courses_students->listCoursesStudents($request->courseid, ['fields' => 'students(profile/emailAddress)']);
+        });
 
         if (request()->wantsJson()) {
             return ['message' => $coursesResult->students];

@@ -278,7 +278,7 @@ export default {
             this.isLoadingCourseWork = true;
             await axios
                 .get(
-                    "/classroom/course/" + this.skill_courseid + "/courseworks"
+                    "/classroom/courses/" + this.skill_courseid + "/courseworks"
                 )
                 .then(function(response) {
                     courseWork = response.data.message;
