@@ -4,10 +4,17 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class SkilltreeInvitationRequest extends FormRequest
 {
+    /**
+     * The key to be used for the view error bag.
+     *
+     * @var string
+     */
     protected $errorBag = 'invitations';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,14 +33,15 @@ class SkilltreeInvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users,email', 'not_regex:/(@elev)/']
+            'email' => ['required', 'exists:users,email', 'not_regex:/(@elev)/'] // 'not_regex:/(@elev)/']
         ];
     }
 
     public function messages()
     {
         return [
-            ' email . exists ' => ' The user you are inviting must have a Skilltree Teacher account.'
+            'email.exists' => 'The user you are inviting must have a Skilltree Teacher account.',
+            'email.not_regex' => 'The email must be a valid Teacher account.'
         ];
     }
 }

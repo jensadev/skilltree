@@ -33,11 +33,11 @@ class InvitationsTest extends TestCase
     }
 
     /** @test **/
-    public function a_skilltree_owner_can_invite_a_user()
+    public function a_skilltree_owner_can_invite_a_teacher()
     {
         $skilltree = SkilltreeFactory::create();
 
-        $userToInvite = factory(User::class)->create();
+        $userToInvite = factory(User::class)->create(['email' => 'userToInvite@ga.ntig.se']);
 
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/invitations', [
@@ -46,6 +46,24 @@ class InvitationsTest extends TestCase
             ->assertRedirect($skilltree->path());
 
         $this->assertTrue($skilltree->members->contains($userToInvite));
+    }
+
+    /** @test **/
+    public function the_email_address_must_not_be_a_student_account()
+    {
+        $skilltree = SkilltreeFactory::create();
+
+        $userToInvite = factory(User::class)->create(['email' => 'userToInvite@elev.ga.ntig.se']);
+
+        $this->actingAs($skilltree->owner)
+            ->post($skilltree->path() . '/invitations', [
+                'email' => $userToInvite->email
+            ])
+            ->assertSessionHasErrors([
+                'email' => 'The email must be a valid Teacher account.'
+            ], null, 'invitations');
+
+        $this->assertFalse($skilltree->members->contains($userToInvite));
     }
 
     /** @test **/
@@ -59,7 +77,7 @@ class InvitationsTest extends TestCase
                 'email' => 'notauser@example.com'
             ])
             ->assertSessionHasErrors([
-                'email' => 'The user you are inviting must have a Skilltree account.'
+                'email' => 'The user you are inviting must have a Skilltree Teacher account.'
             ], null, 'invitations');
     }
 

@@ -1,0 +1,1 @@
+{{ explode(" ",$activity->user->name)[0] }} updated {{ $activity->subject->skill_title }}

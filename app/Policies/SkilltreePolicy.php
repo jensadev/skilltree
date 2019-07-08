@@ -10,6 +10,11 @@ class SkilltreePolicy
 {
     use HandlesAuthorization;
 
+    public function read(User $user, Skilltree $skilltree)
+    {
+        return $skilltree->students->contains($user);
+    }
+
     public function update(User $user, Skilltree $skilltree)
     {
         return $user->is($skilltree->owner) || $skilltree->members->contains($user);

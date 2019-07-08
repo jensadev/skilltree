@@ -8,7 +8,7 @@ use Appstract\Meta\Metable;
 
 class Skill extends Model
 {
-    //use RecordsActivity;
+    use RecordsActivity;
     use Metable;
 
 
@@ -31,7 +31,7 @@ class Skill extends Model
      *
      * @var array
      */
-    protected static $recordableEvents = ['created', 'deleted'];
+    protected static $recordableEvents = ['created', 'deleted', 'updated'];
 
     /**
      * Define relation with skilltree

@@ -15,14 +15,10 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_user_can_create_a_skilltree()
     {
-        // parent::setUp();
-
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $this->signIn();
         $this->get('/skilltrees/create')->assertStatus(200);
         $attributes = factory(Skilltree::class)->raw();
-
-        //dd($attributes);
 
         $this->followingRedirects()
             ->post('/skilltrees', $attributes);
@@ -59,9 +55,8 @@ class ManageSkilltreesTest extends TestCase
     /** @test **/
     function a_user_can_delete_a_skilltree()
     {
-        //  
-        $this->signIn();
 
+        $this->signIn();
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)
@@ -74,7 +69,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test **/
     function a_user_can_update_a_skilltree()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $this->signIn();
         $skilltree = SkilltreeFactory::create();
 
@@ -120,7 +115,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function unauthorized_users_cannot_manage_skilltrees()
     {
-        $skilltree = factory('App\Skilltree')->create();
+        $skilltree = SkilltreeFactory::create();
         $this->get($skilltree->path())->assertRedirect('/login');
         $this->get('/skilltrees')->assertRedirect('/login');
         $this->get('/skilltrees/create')->assertRedirect('/login');
@@ -137,12 +132,12 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test */
-    // function a_skilltree_requires_a_description()
-    // {
-    //     $this->signIn();
-    //     $attributes = factory('App\Skilltree')->raw(['description' => '']);
-    //     $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
-    // }
+    function a_skilltree_requires_a_description()
+    {
+        $this->signIn();
+        $attributes = factory('App\Skilltree')->raw(['description' => '']);
+        $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
+    }
 
     /** @test **/
     function unauthorized_users_cannot_delete_skilltrees()
@@ -170,9 +165,15 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_user_can_retrieve_a_skilltrees_positions()
     {
-        $user = $this->signIn();
         $this->withoutExceptionHandling();
-        $skilltree = SkilltreeFactory::create();
-        $message = $this->get($skilltree->path() . '/pos');
+
+        $this->signIn();
+        $skilltree = SkilltreeFactory::create(); //->raw();
+
+        $attributes['positions'] = "position: 0";
+
+        $this->actingAs($skilltree->owner)->post($skilltree->path() . '/pos', $attributes);
+
+        $this->get($skilltree->path() . '/pos')->assertSee("position: 0");
     }
 }

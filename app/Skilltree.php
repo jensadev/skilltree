@@ -10,7 +10,7 @@ use Appstract\Meta\Metable;
 
 class Skilltree extends Model
 {
-    //use RecordsActivity;
+    use RecordsActivity;
     use Metable;
 
     protected $guarded = [];
@@ -64,6 +64,11 @@ class Skilltree extends Model
     {
         return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps();
     }
+
+    // public function students()
+    // {
+    //     return $this->belongsToMany(User::class, 'skilltree_students')->withTimestamps();
+    // }
 
     public function showPositions()
     {

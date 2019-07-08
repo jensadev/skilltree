@@ -21,18 +21,20 @@ class UserTest extends TestCase
     }
 
     /** @test **/
-    function a_user_has_accessible_skilltrees()
+    function a_teacher_has_accessible_skilltrees()
     {
         $this->withoutExceptionHandling();
 
-        $john = $this->signIn();
+        $john = $this->signInTeacher();
+
+        $this->assertEquals($john['email'], 'teacher@ga.ntig.se');
 
         SkilltreeFactory::ownedBy($john)->create();
 
         $this->assertCount(1, $john->accessibleSkilltrees());
 
-        $sally = factory(User::class)->create();
-        $nick = factory(User::class)->create();
+        $sally = factory(User::class)->create(['email' => 'sally@ga.ntig.se', 'teacher' => true]);
+        $nick = factory(User::class)->create(['email' => 'nick@ga.ntig.se', 'teacher' => true]);
 
         $skilltree = tap(SkilltreeFactory::ownedBy($sally)->create())->invite($nick);
 

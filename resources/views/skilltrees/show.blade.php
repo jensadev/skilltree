@@ -30,10 +30,5 @@
         :members="{{ $skilltree->members }}" 
         :c-id="{{ $skilltree->hasMeta('courseId') ? $skilltree->getMeta('courseId')->value : 0 }}">
     </manage-skilltree-modal>
-    <footer class="position-absolute feed w-100">
-        <div style="margin-left: 30px;">
-            <p class="text-muted">Hold ALT to zoom/drag Skilltree</p>
-        </div>
-        @include('skilltrees.activity.feed')
-    </footer>
+    @include('skilltrees.activity.feed')
 @endsection
