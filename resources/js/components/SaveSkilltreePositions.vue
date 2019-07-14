@@ -98,7 +98,7 @@ export default {
                     localStorage.removeItem(key);
                 }
             });
-            location.reload();
+            //location.reload();
         }
     }
 };

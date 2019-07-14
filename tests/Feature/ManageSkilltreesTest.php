@@ -22,9 +22,8 @@ class ManageSkilltreesTest extends TestCase
 
         $this->followingRedirects()
             ->post('/skilltrees', $attributes);
-
-        // ->assertSee($attributes['title'])
-        // ->assertSee(str_limit($attributes['description'], 150));
+        // ->assertSee(str_limit($attributes['title'], 20)) Does not work since string limitation is done clientside with JS
+        // ->assertSee(str_limit($attributes['description'], 50));
     }
 
     /** @test */
@@ -157,7 +156,8 @@ class ManageSkilltreesTest extends TestCase
     /** @test **/
     function a_user_can_see_all_skilltrees_they_have_been_invited_to_on_their_dashboard()
     {
-        $skilltree = tap(SkilltreeFactory::create())->invite($this->signIn()); // tap ensures we get a return value
+        //$this->withoutExceptionHandling();
+        $skilltree = tap(SkilltreeFactory::create())->invite($this->signInTeacher()); // tap ensures we get a return value
 
         $this->get('/skilltrees')->assertSee($skilltree->title);
     }

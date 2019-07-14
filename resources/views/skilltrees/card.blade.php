@@ -1,5 +1,7 @@
 <div class="card shadow-sm bg-white my-2" style="width: 18rem;">
-    <h5 class="card-header"><a href="{{ $skilltree->path() }}">{{ $skilltree->title }}</a></h5>
+    <div class="card-header">
+        <h5 class="card-title mt-2"><a href="{{ $skilltree->path() }}">{{ str_limit($skilltree->title, 30) }}</a></h5>
+    </div>
     <div class="card-body">
         <p class="card-text text-muted">{{ str_limit($skilltree->description, 150) }}</p>
     </div>

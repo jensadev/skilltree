@@ -3,7 +3,7 @@
         <button class="btn dashbaricon" @click.prevent="isOpen = !isOpen" title="Add a new Skill">
             <i class="material-icons">add_box</i>
         </button>
-        <div v-show="isOpen" class="smallform-content position-absolute w-50">
+        <div v-show="isOpen" class="smallform-content position-absolute w-25">
             <div class="card shadow-sm bg-white">
                 <div class="card-body">
                     <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
@@ -76,7 +76,9 @@ export default {
         async submit() {
             this.form
                 .submit(this.url)
-                .then(response => (location = response.data.message))
+                .then(function(response) {
+                    location = response.data.message;
+                })
                 .catch(error => console.log(error));
         }
     }

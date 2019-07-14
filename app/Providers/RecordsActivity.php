@@ -37,7 +37,6 @@ trait RecordsActivity
 
     public function recordActivity($description)
     {
-        //dd(auth()->id()); i vissa fall men test failar
         $this->activity()->create([
             'user_id' => auth()->id() ? auth()->id() : ($this->skilltree ?? $this)->owner->id, // löser tester och aktivitets funktion
             'description' => $description,

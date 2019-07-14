@@ -350,7 +350,9 @@ export default {
         async submit() {
             this.form
                 .submit("/skilltrees/" + this.id, "patch")
-                .then(response => (location = response.data.message))
+                .then(function(response) {
+                    location = response.data.message;
+                })
                 .catch(error => console.log(error));
         },
         async getCourses() {
@@ -363,7 +365,15 @@ export default {
                     courses = response.data.message;
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    console.log(error.response);
+                    if (
+                        error.response.data.exception ==
+                        "Google_Service_Exception"
+                    ) {
+                        axios.post("/logout").then(function() {
+                            location = "/login";
+                        });
+                    }
                 });
             this.courses = courses;
             this.isLoadingCourses = false;
@@ -380,7 +390,8 @@ export default {
                 "tree_" + this.id + "_skill_0",
                 JSON.stringify(temp)
             );
-            location = self.location;
+            //location = self.location;
+            jqSimpleConnect.repaintAll();
         },
         async getTopics() {
             let topics;
@@ -429,7 +440,7 @@ export default {
         },
         beforeClose(event) {
             console.log(event);
-            location = "/skilltrees/" + this.id;
+            //location = "/skilltrees/" + this.id;
         }
     },
     mounted() {

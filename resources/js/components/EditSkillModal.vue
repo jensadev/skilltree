@@ -267,7 +267,7 @@ export default {
                     }
                 )
                 .then(function(response) {
-                    location = response.data.message;
+                    //location = response.data.message;
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -380,7 +380,7 @@ export default {
         },
         beforeClose(event) {
             console.log(event);
-            location = "/skilltrees/" + this.tree;
+            //location = "/skilltrees/" + this.tree;
         }
     }
 };

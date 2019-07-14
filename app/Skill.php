@@ -8,9 +8,10 @@ use Appstract\Meta\Metable;
 
 class Skill extends Model
 {
-    use RecordsActivity;
+    //use RecordsActivity;
     use Metable;
 
+    //    protected $with = ['tasks'];
 
     /**
      * The guarded attributes for form submission

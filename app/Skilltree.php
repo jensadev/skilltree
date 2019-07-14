@@ -10,10 +10,14 @@ use Appstract\Meta\Metable;
 
 class Skilltree extends Model
 {
-    use RecordsActivity;
+    //    use RecordsActivity;
     use Metable;
 
     protected $guarded = [];
+
+    protected $with = ['owner'];
+
+    //protected static $recordableEvents = ['invite', 'deleted', 'updated'];
 
     public function path()
     {

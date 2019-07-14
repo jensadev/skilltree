@@ -3,7 +3,7 @@
         <div class="card-header d-flex justify-content-between">
             <h2
                 class="h5 mb-0"
-                v-text="$attrs.data.skill_title ? $attrs.data.skill_title.substr(0, 20) : $attrs.data.title.substr(0, 20)"
+                v-text="$attrs.data.skill_title ? str_limit($attrs.data.skill_title, 17, true) : str_limit($attrs.data.title, 17, true)"
             ></h2>
             <a
                 v-if="id != 0"
@@ -28,7 +28,7 @@
         <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description">
             <nl2br
                 tag="p"
-                :text="$attrs.data.skill_description ? $attrs.data.skill_description.substr(0, 50) : $attrs.data.description.substr(0, 50)"
+                :text="$attrs.data.skill_description ? str_limit($attrs.data.skill_description, 40, true) : str_limit($attrs.data.description, 40, true)"
                 class-name="card-text"
             />
         </div>
@@ -94,6 +94,11 @@ export default {
         };
     },
     methods: {
+        str_limit(text, count, end) {
+            return (
+                text.slice(0, count) + (text.length > count && end ? "..." : "")
+            );
+        },
         async loadInit() {
             if (!this.hasItems() && this.id == 0) {
                 let needle = "tree_" + this.tree;
@@ -110,7 +115,7 @@ export default {
                         }
                     })
                     .then(function() {
-                        location.reload();
+                        //location.reload();
                     })
                     .catch(function(error) {
                         console.log(error);
