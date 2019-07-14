@@ -14,12 +14,12 @@
                 :data="{{ $skill }}"
                 :tree="{{ $skilltree->id }}"
                 :id="{{ $skill->id }}"
-                :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
-                :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'"
+                {{-- :skill_topicid = "'{{ $skill->hasMeta('topicId') ? $skill->getMeta('topicId')->value : 0 }}'"
+                :skill_courseid = "'{{ $skill->hasMeta('courseId') ? $skill->getMeta('courseId')->value : 0 }}'" --}}
 
-                {{-- @if (count($skill->tasks) > 0)
+                @if (count($skill->tasks) > 0)
                     :skill_tasks="{{ $skill->tasks }}"
-                @endif --}}
+                @endif
             ></skill-card>           
         @endforeach
     </section>
