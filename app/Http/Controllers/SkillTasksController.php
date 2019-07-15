@@ -26,8 +26,9 @@ class SkillTasksController extends Controller
         $task = $skill->addTask(request('body'));
 
         if (request('courseWorkId')) {
-            $task->addOrUpdateMeta('courseWorkId', (int) request('courseWorkId'));
-            $task->addOrUpdateMeta('courseId', (int) request('courseId'));
+            $task->update(['course_id' => request('course_id'), 'course_work_id' => request('course_work_id')]);
+            // $task->addOrUpdateMeta('courseWorkId', (int) request('courseWorkId'));
+            // $task->addOrUpdateMeta('courseId', (int) request('courseId'));
         }
 
         if (request()->wantsJson()) {

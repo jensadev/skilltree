@@ -4338,7 +4338,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 this.isLoadingCourseWork = true;
                 _context5.next = 3;
-                return axios.get("/classroom/courses/" + this.skill_courseid + "/courseworks").then(function (response) {
+                return axios.get("/classroom/courses/" + this.skill_course_id + "/courseworks").then(function (response) {
                   courseWork = response.data.message;
                 })["catch"](function (error) {
                   console.log(error);
@@ -4347,11 +4347,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 found = [];
                 courseWork.forEach(function (element) {
-                  if (element.topicId == _this.skill_topicid) {
+                  if (element.topic_id == _this.skill_topic_id) {
                     found.push({
                       body: element.title,
-                      courseId: element.courseId,
-                      courseWorkId: element.id
+                      course_id: element.course_id,
+                      course_work_id: element.id
                     });
                   }
                 });
@@ -4974,16 +4974,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isConnectingCourse: false,
       courses: [],
       topics: [],
-      courseId: this.cId,
+      courseId: this.course_id,
       selectedTopics: [],
       isConnected: false,
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        title: this.$attrs.data.title,
-        description: this.$attrs.data.description
+        title: this.title,
+        description: this.description
       })
     };
   },
-  props: ["id", "members", "cId"],
+  props: ["id", "members", "title", "description", "course_id"],
   methods: {
     // async inviteStudents() {
     //     console.log("invite students");
@@ -5200,7 +5200,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 con = false;
                 _context6.next = 4;
                 return axios.post("/skilltrees/" + this.id + "/classroom/course", {
-                  courseId: this.courseId
+                  course_id: this.courseId
                 }).then(function (response) {
                   console.log(response.data.message);
                   con = true;
@@ -5711,6 +5711,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       color: "#0de1ec",
       thickness: 1,
       tasks: [],
+      path: "tree_" + this.tree + "_skill_" + this.id,
       draggableValue: {
         onPositionChange: this.onPosChanged,
         onDragEnd: this.onDragEnd,
@@ -5730,39 +5731,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _loadInit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var needle;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(!this.hasItems() && this.id == 0)) {
-                  _context.next = 4;
-                  break;
-                }
+                console.log("init"); // if (!this.hasItems() && this.id == 0) {
+                //     let needle = "tree_" + this.tree;
+                //     await axios
+                //         .get("/skilltrees/" + this.tree + "/pos")
+                //         .then(function(response) {
+                //             console.log(response.status);
+                //             if (response.status == 200) {
+                //                 response.data.message.value.forEach(element => {
+                //                     Object.keys(element).forEach(function(key) {
+                //                         localStorage.setItem(key, element[key]);
+                //                     });
+                //                 });
+                //             }
+                //         })
+                //         .then(function() {
+                //             //location.reload();
+                //         })
+                //         .catch(function(error) {
+                //             console.log(error);
+                //         });
+                // }
 
-                needle = "tree_" + this.tree;
-                _context.next = 4;
-                return axios.get("/skilltrees/" + this.tree + "/pos").then(function (response) {
-                  console.log(response.status);
-
-                  if (response.status == 200) {
-                    response.data.message.value.forEach(function (element) {
-                      Object.keys(element).forEach(function (key) {
-                        localStorage.setItem(key, element[key]);
-                      });
-                    });
-                  }
-                }).then(function () {//location.reload();
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
       function loadInit() {
@@ -5782,7 +5782,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           this.storage.connections.push(e.target.offsetParent.id);
         }
 
-        localStorage.setItem(["tree_" + this.tree + "_skill_" + this.id], JSON.stringify(this.storage));
+        localStorage.setItem([this.path], JSON.stringify(this.storage));
       } // remove handler
 
 
@@ -5795,8 +5795,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var test = false;
 
       try {
-        test = localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]);
+        console.log("hasitems: " + this.id);
+        test = localStorage.getItem([this.path]);
       } catch (_unused) {
+        console.log("noitems: " + this.id);
         test = false;
       }
 
@@ -5804,7 +5806,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCon: function getCon() {
       if (this.hasItems()) {
-        this.storage = JSON.parse(localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]));
+        this.storage = JSON.parse(localStorage.getItem([this.path]));
       } else {
         this.storage.connections = [];
       }
@@ -5813,7 +5815,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getPos: function getPos() {
       if (this.hasItems()) {
-        this.storage = JSON.parse(localStorage.getItem(["tree_" + this.tree + "_skill_" + this.id]));
+        this.storage = JSON.parse(localStorage.getItem([this.path]));
       } else {
         this.storage = {
           position: {
@@ -5828,7 +5830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     onPosChanged: function onPosChanged(positionDiff, absolutePosition, event) {
       if (absolutePosition) {
         this.storage.position = absolutePosition;
-        localStorage.setItem(["tree_" + this.tree + "_skill_" + this.id], JSON.stringify(this.storage));
+        localStorage.setItem([this.path], JSON.stringify(this.storage));
       }
 
       jqSimpleConnect.repaintAll();
@@ -5856,7 +5858,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     this.tasks = _.sortBy(this.skill_tasks, ["body"]);
   },
-  props: ["tree", "id", "skill_tasks", "skill_topicid", "skill_courseid"]
+  props: ["tree", "id", "skill_tasks"]
 });
 
 /***/ }),
@@ -66225,7 +66227,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "custom-select",
-                            attrs: { id: "courseId", name: "courseId" },
+                            attrs: { id: "course_id", name: "course_id" },
                             on: {
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -66440,8 +66442,8 @@ var render = function() {
                                 staticClass: "custom-select",
                                 staticStyle: { "overflow-y": "auto" },
                                 attrs: {
-                                  id: "topicid",
-                                  name: "topicid",
+                                  id: "topic_id",
+                                  name: "topic_id",
                                   multiple: "",
                                   size: this.topics.length
                                 },
@@ -66467,8 +66469,8 @@ var render = function() {
                                   key: index,
                                   domProps: {
                                     value: [
-                                      _vm.courseId,
-                                      topic.topicId,
+                                      _vm.couresId,
+                                      topic.topic_id,
                                       topic.name
                                     ],
                                     textContent: _vm._s(topic.name)
@@ -67059,45 +67061,7 @@ var render = function() {
                 : _vm.str_limit(_vm.$attrs.data.title, 17, true)
             )
           }
-        }),
-        _vm._v(" "),
-        _vm.id != 0
-          ? _c(
-              "a",
-              {
-                staticClass: "btn btn-less",
-                staticStyle: { padding: "0" },
-                attrs: { href: "", role: "button", title: "Edit Skill" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.$modal.show("edit-skill", {
-                      tree: _vm.tree,
-                      skill_id: _vm.id,
-                      skill_title: _vm.$attrs.data.skill_title,
-                      skill_description: _vm.$attrs.data.skill_description,
-                      skill_tasks: _vm.skill_tasks,
-                      skill_topicid: _vm.skill_topicid,
-                      skill_courseid: _vm.skill_courseid
-                    })
-                  }
-                }
-              },
-              [
-                _c(
-                  "i",
-                  {
-                    staticClass: "material-icons",
-                    staticStyle: {
-                      "font-size": "1.25rem",
-                      "line-height": "1.2"
-                    }
-                  },
-                  [_vm._v("edit")]
-                )
-              ]
-            )
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _vm.$attrs.data.skill_description || _vm.$attrs.data.description

@@ -56,7 +56,9 @@ class SkilltreeSkillsController extends Controller
     {
         return request()->validate([
             'skill_title' => 'required|min:3',
-            'skill_description' => 'nullable|min:3'
+            'skill_description' => 'nullable|min:3',
+            'course_id' => 'nullable',
+            'topic_id' => 'nullable'
         ]);
     }
 }

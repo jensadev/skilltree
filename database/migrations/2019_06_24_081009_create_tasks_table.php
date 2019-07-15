@@ -18,6 +18,8 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('skill_id');
             $table->string('body');
             $table->boolean('completed')->default(false);
+            $table->string('course_id', 20)->nullable();
+            $table->string('course_work_id', 20)->nullable();
             $table->timestamps();
 
             $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');

@@ -278,7 +278,9 @@ export default {
             this.isLoadingCourseWork = true;
             await axios
                 .get(
-                    "/classroom/courses/" + this.skill_courseid + "/courseworks"
+                    "/classroom/courses/" +
+                        this.skill_course_id +
+                        "/courseworks"
                 )
                 .then(function(response) {
                     courseWork = response.data.message;
@@ -289,11 +291,11 @@ export default {
 
             let found = [];
             courseWork.forEach(element => {
-                if (element.topicId == this.skill_topicid) {
+                if (element.topic_id == this.skill_topic_id) {
                     found.push({
                         body: element.title,
-                        courseId: element.courseId,
-                        courseWorkId: element.id
+                        course_id: element.course_id,
+                        course_work_id: element.id
                     });
                 }
             });

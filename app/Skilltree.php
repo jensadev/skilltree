@@ -15,7 +15,7 @@ class Skilltree extends Model
 
     protected $guarded = [];
 
-    protected $with = ['owner'];
+    //    protected $with = ['owner'];
 
     //protected static $recordableEvents = ['invite', 'deleted', 'updated'];
 
@@ -87,8 +87,8 @@ class Skilltree extends Model
         return $this->addOrUpdateMeta('positions', $positions);
     }
 
-    public function storeClassroomid($classroomid)
-    {
-        return $this->addOrUpdateMeta('classroomid', $classroomid);
-    }
+    // public function storeClassroomid($classroomid)
+    // {
+    //     return $this->addOrUpdateMeta('classroomid', $classroomid);
+    // }
 }

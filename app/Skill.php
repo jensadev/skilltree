@@ -11,7 +11,7 @@ class Skill extends Model
     //use RecordsActivity;
     use Metable;
 
-    //    protected $with = ['tasks'];
+    protected $with = ['tasks'];
 
     /**
      * The guarded attributes for form submission

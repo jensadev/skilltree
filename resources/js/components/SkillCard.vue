@@ -5,7 +5,7 @@
                 class="h5 mb-0"
                 v-text="$attrs.data.skill_title ? str_limit($attrs.data.skill_title, 17, true) : str_limit($attrs.data.title, 17, true)"
             ></h2>
-            <a
+            <!-- <a
                 v-if="id != 0"
                 href
                 class="btn btn-less"
@@ -23,7 +23,7 @@
                 title="Edit Skill"
             >
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
-            </a>
+            </a>-->
         </div>
         <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description">
             <nl2br
@@ -82,6 +82,7 @@ export default {
             color: "#0de1ec",
             thickness: 1,
             tasks: [],
+            path: "tree_" + this.tree + "_skill_" + this.id,
             draggableValue: {
                 onPositionChange: this.onPosChanged,
                 onDragEnd: this.onDragEnd,
@@ -100,27 +101,28 @@ export default {
             );
         },
         async loadInit() {
-            if (!this.hasItems() && this.id == 0) {
-                let needle = "tree_" + this.tree;
-                await axios
-                    .get("/skilltrees/" + this.tree + "/pos")
-                    .then(function(response) {
-                        console.log(response.status);
-                        if (response.status == 200) {
-                            response.data.message.value.forEach(element => {
-                                Object.keys(element).forEach(function(key) {
-                                    localStorage.setItem(key, element[key]);
-                                });
-                            });
-                        }
-                    })
-                    .then(function() {
-                        //location.reload();
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
-            }
+            console.log("init");
+            // if (!this.hasItems() && this.id == 0) {
+            //     let needle = "tree_" + this.tree;
+            //     await axios
+            //         .get("/skilltrees/" + this.tree + "/pos")
+            //         .then(function(response) {
+            //             console.log(response.status);
+            //             if (response.status == 200) {
+            //                 response.data.message.value.forEach(element => {
+            //                     Object.keys(element).forEach(function(key) {
+            //                         localStorage.setItem(key, element[key]);
+            //                     });
+            //                 });
+            //             }
+            //         })
+            //         .then(function() {
+            //             //location.reload();
+            //         })
+            //         .catch(function(error) {
+            //             console.log(error);
+            //         });
+            // }
         },
         handler: function(e) {
             if (e.target.offsetParent.id.includes("skill")) {
@@ -138,10 +140,7 @@ export default {
                     this.storage.connections.push(e.target.offsetParent.id);
                 }
 
-                localStorage.setItem(
-                    ["tree_" + this.tree + "_skill_" + this.id],
-                    JSON.stringify(this.storage)
-                );
+                localStorage.setItem([this.path], JSON.stringify(this.storage));
             }
             // remove handler
             document.removeEventListener("click", this.handler, true);
@@ -152,21 +151,17 @@ export default {
         hasItems() {
             let test = false;
             try {
-                test = localStorage.getItem([
-                    "tree_" + this.tree + "_skill_" + this.id
-                ]);
+                console.log("hasitems: " + this.id);
+                test = localStorage.getItem([this.path]);
             } catch {
+                console.log("noitems: " + this.id);
                 test = false;
             }
             return test != null ? true : false;
         },
         getCon() {
             if (this.hasItems()) {
-                this.storage = JSON.parse(
-                    localStorage.getItem([
-                        "tree_" + this.tree + "_skill_" + this.id
-                    ])
-                );
+                this.storage = JSON.parse(localStorage.getItem([this.path]));
             } else {
                 this.storage.connections = [];
             }
@@ -174,11 +169,7 @@ export default {
         },
         getPos() {
             if (this.hasItems()) {
-                this.storage = JSON.parse(
-                    localStorage.getItem([
-                        "tree_" + this.tree + "_skill_" + this.id
-                    ])
-                );
+                this.storage = JSON.parse(localStorage.getItem([this.path]));
             } else {
                 this.storage = {
                     position: {
@@ -193,10 +184,7 @@ export default {
             if (absolutePosition) {
                 this.storage.position = absolutePosition;
 
-                localStorage.setItem(
-                    ["tree_" + this.tree + "_skill_" + this.id],
-                    JSON.stringify(this.storage)
-                );
+                localStorage.setItem([this.path], JSON.stringify(this.storage));
             }
             jqSimpleConnect.repaintAll();
         },
@@ -226,7 +214,7 @@ export default {
 
         this.tasks = _.sortBy(this.skill_tasks, ["body"]);
     },
-    props: ["tree", "id", "skill_tasks", "skill_topicid", "skill_courseid"]
+    props: ["tree", "id", "skill_tasks"]
 };
 </script>
 <style>

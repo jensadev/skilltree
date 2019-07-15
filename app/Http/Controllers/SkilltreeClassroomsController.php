@@ -13,18 +13,19 @@ class SkilltreeClassroomsController extends Controller
 
     public function connect(Skilltree $skilltree)
     {
-        if ($crid = request('courseId')) {
-            $skilltree->addOrUpdateMeta('courseId', (int) $crid);
+        if ($courseId = request('course_id')) {
+            //$skilltree->addOrUpdateMeta('courseId', (int) $crid);
+            $skilltree->update(['course_id', $courseId]);
         }
 
         if (request()->wantsJson()) {
-            return ['message' => $crid];
+            return ['message' => $courseId];
         }
     }
 
     public function disconnect(Skilltree $skilltree)
     {
-        $skilltree->deleteMeta('courseId');
+        $skilltree->update(['course_id', null]);
 
         if (request()->wantsJson()) {
             return ['message' => "removed"];
@@ -35,9 +36,9 @@ class SkilltreeClassroomsController extends Controller
     {
 
         foreach (request('topics') as $value) {
-            $skill = $skilltree->addSkill(['skill_title' => $value[2]]);
-            $skill->addOrUpdateMeta('courseId', (int) $value[0]);
-            $skill->addOrUpdateMeta('topicId', (int) $value[1]);
+            $skilltree->addSkill(['skill_title' => $value[2], 'course_id' => $value[0], 'topic_id' => $value[1]]);
+            // $skill->addOrUpdateMeta('courseId', (int) $value[0]);
+            // $skill->addOrUpdateMeta('topicId', (int) $value[1]);
         }
 
         if (request()->wantsJson()) {

@@ -82,6 +82,7 @@ class SkilltreesController extends Controller
         return request()->validate([
             'title' => 'required|min:3',
             'description' => 'required',
+            'course_id' => 'nullable',
             'notes' => 'nullable'
         ]);
     }

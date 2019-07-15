@@ -104,8 +104,8 @@
                                     <div class="input-group mb-3">
                                         <select
                                             class="custom-select"
-                                            id="courseId"
-                                            name="courseId"
+                                            id="course_id"
+                                            name="course_id"
                                             v-model="courseId"
                                         >
                                             <option disabled selected>Please select one</option>
@@ -197,8 +197,8 @@
                                     <div class="input-group mb-3">
                                         <select
                                             class="custom-select"
-                                            id="topicid"
-                                            name="topicid"
+                                            id="topic_id"
+                                            name="topic_id"
                                             v-model="selectedTopics"
                                             multiple
                                             :size="this.topics.length"
@@ -207,7 +207,7 @@
                                             <option
                                                 v-for="(topic, index) in topics"
                                                 :key="index"
-                                                :value="[courseId, topic.topicId, topic.name]"
+                                                :value="[couresId, topic.topic_id, topic.name]"
                                                 v-text="topic.name"
                                             ></option>
                                         </select>
@@ -299,16 +299,16 @@ export default {
             isConnectingCourse: false,
             courses: [],
             topics: [],
-            courseId: this.cId,
+            courseId: this.course_id,
             selectedTopics: [],
             isConnected: false,
             form: new Form({
-                title: this.$attrs.data.title,
-                description: this.$attrs.data.description
+                title: this.title,
+                description: this.description
             })
         };
     },
-    props: ["id", "members", "cId"],
+    props: ["id", "members", "title", "description", "course_id"],
     methods: {
         // async inviteStudents() {
         //     console.log("invite students");
@@ -412,7 +412,7 @@ export default {
             let con = false;
             await axios
                 .post("/skilltrees/" + this.id + "/classroom/course", {
-                    courseId: this.courseId
+                    course_id: this.courseId
                 })
                 .then(function(response) {
                     console.log(response.data.message);
