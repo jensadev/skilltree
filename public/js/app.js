@@ -5277,18 +5277,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }
 }, _defineProperty(_data$props$methods$m, "methods", {
-  setSkillStorage: _.debounce(function (data) {
+  //setSkillStorage: _.debounce(function(data) {
+  setSkillStorage: function setSkillStorage(data) {
     var posdata = JSON.parse(data);
     this.skilltree = posdata.skilltree;
     this.storage[posdata.skill] = {
       position: posdata.position,
       connections: posdata.connections
-    };
-  }, 500),
-  saveSkillStorage: _.debounce(function () {
-    console.log(this.storage);
+    }; //}, 500),
+  },
+  //saveSkillStorage: _.debounce(function() {
+  saveSkillStorage: function saveSkillStorage() {
     localStorage.setItem([this.skilltree], JSON.stringify(this.storage));
-  }, 500)
+  } //}, 500)
+
 }), _defineProperty(_data$props$methods$m, "created", function created() {
   var _this = this;
 
@@ -5380,7 +5382,10 @@ __webpack_require__.r(__webpack_exports__);
       draggableValue: {
         onPositionChange: this.onPosChanged,
         onDragEnd: this.onDragEnd,
-        initialPosition: this.getPos()
+        initialPosition: {
+          left: 0,
+          top: 0
+        }
       },
       title: "",
       description: "",
@@ -5396,7 +5401,7 @@ __webpack_require__.r(__webpack_exports__);
       path: ""
     };
   },
-  beforeMount: function beforeMount() {
+  created: function created() {
     if (typeof this.skilltree !== "undefined") {
       this.title = this.skilltree.title;
       this.description = this.skilltree.description;
@@ -5408,6 +5413,28 @@ __webpack_require__.r(__webpack_exports__);
       this.id = this.skill.id;
       this.tree = this.skill.skilltree_id;
       if (this.skill.tasks) this.tasks = this.skill.tasks;
+    }
+
+    this.draggableValue.initialPosition = this.getPos();
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    if (localStorage.hasOwnProperty(this.tree)) {
+      var data = JSON.parse(localStorage.getItem(this.tree));
+      console.log(data[this.id]);
+
+      if (data[this.id] !== null && data[this.id].connections.length > 0) {
+        this.connections = data[this.id].connections;
+        this.connections.forEach(function (connection) {
+          if (connection && document.getElementById(connection)) {
+            jqSimpleConnect.connect(_this.$el, document.getElementById(connection), {
+              radius: _this.line.thickness,
+              color: _this.line.color
+            });
+          }
+        });
+      }
     }
   },
   methods: {
@@ -5453,14 +5480,18 @@ __webpack_require__.r(__webpack_exports__);
       return text.slice(0, count) + (text.length > count && end ? "..." : "");
     },
     getPos: function getPos() {
-      if (JSON.parse(localStorage.getItem(this.tree))[this.id] == null || typeof JSON.parse(localStorage.getItem(this.tree))[this.id] !== "undefined") {
-        var data = JSON.parse(localStorage.getItem(this.tree))[this.id];
-        console.log(data);
+      if (localStorage.hasOwnProperty(this.tree)) {
+        var data = JSON.parse(localStorage.getItem(this.tree));
 
-        if (data.position) {
+        if (data[this.id]) {
           this.position = {
-            left: data.position.left,
-            top: data.position.top
+            left: data[this.id].position.left,
+            top: data[this.id].position.top
+          };
+        } else {
+          this.position = {
+            left: this.random(200, window.innerWidth - 200),
+            top: this.random(200, window.innerWidth - 200)
           };
         }
       } else {
@@ -17936,7 +17967,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\r\n    position: absolute;\r\n    border: 0.5px #00000010 dashed;\r\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\r\n    visibility: visible;\n}\n.hideArr {\r\n    visibility: hidden;\n}\n.rArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    right: -36px;\r\n    transform: translate(0, -50%);\n}\n.lArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: -36px;\r\n    transform: translate(0, -50%);\n}\r\n", ""]);
+exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -23332,10 +23363,10 @@ utils.intFromLE = intFromLE;
 /*!********************************************!*\
   !*** ./node_modules/elliptic/package.json ***!
   \********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: _args, _from, _hasShrinkwrap, _id, _inCache, _installable, _location, _nodeVersion, _npmOperationalInternal, _npmUser, _npmVersion, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _shrinkwrap, _spec, _where, author, bugs, dependencies, description, devDependencies, directories, dist, gitHead, homepage, keywords, license, main, maintainers, name, optionalDependencies, readme, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"elliptic@^6.0.0\",\"_id\":\"elliptic@6.5.0\",\"_inBundle\":false,\"_integrity\":\"sha512-eFOJTMyCYb7xtE/caJ6JJu+bhi67WCYNbkGSknu20pmM8Ke/bqOfdnZWxyoGN26JgfxTbXrsCkEw4KheCT/KGg==\",\"_location\":\"/elliptic\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"elliptic@^6.0.0\",\"name\":\"elliptic\",\"escapedName\":\"elliptic\",\"rawSpec\":\"^6.0.0\",\"saveSpec\":null,\"fetchSpec\":\"^6.0.0\"},\"_requiredBy\":[\"/browserify-sign\",\"/create-ecdh\"],\"_resolved\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.0.tgz\",\"_shasum\":\"2b8ed4c891b7de3200e14412a5b8248c7af505ca\",\"_spec\":\"elliptic@^6.0.0\",\"_where\":\"/mnt/e/code/skilltree/node_modules/browserify-sign\",\"author\":{\"name\":\"Fedor Indutny\",\"email\":\"fedor@indutny.com\"},\"bugs\":{\"url\":\"https://github.com/indutny/elliptic/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"bn.js\":\"^4.4.0\",\"brorand\":\"^1.0.1\",\"hash.js\":\"^1.0.0\",\"hmac-drbg\":\"^1.0.0\",\"inherits\":\"^2.0.1\",\"minimalistic-assert\":\"^1.0.0\",\"minimalistic-crypto-utils\":\"^1.0.0\"},\"deprecated\":false,\"description\":\"EC cryptography\",\"devDependencies\":{\"brfs\":\"^1.4.3\",\"coveralls\":\"^2.11.3\",\"grunt\":\"^0.4.5\",\"grunt-browserify\":\"^5.0.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-connect\":\"^1.0.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-uglify\":\"^1.0.1\",\"grunt-mocha-istanbul\":\"^3.0.1\",\"grunt-saucelabs\":\"^8.6.2\",\"istanbul\":\"^0.4.2\",\"jscs\":\"^2.9.0\",\"jshint\":\"^2.6.0\",\"mocha\":\"^2.1.0\"},\"files\":[\"lib\"],\"homepage\":\"https://github.com/indutny/elliptic\",\"keywords\":[\"EC\",\"Elliptic\",\"curve\",\"Cryptography\"],\"license\":\"MIT\",\"main\":\"lib/elliptic.js\",\"name\":\"elliptic\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/indutny/elliptic.git\"},\"scripts\":{\"jscs\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"jshint\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"lint\":\"npm run jscs && npm run jshint\",\"test\":\"npm run lint && npm run unit\",\"unit\":\"istanbul test _mocha --reporter=spec test/index.js\",\"version\":\"grunt dist && git add dist/\"},\"version\":\"6.5.0\"}");
+module.exports = JSON.parse("{\"_args\":[[\"elliptic@^6.0.0\",\"/home/jens/code/skilltree/node_modules/browserify-sign\"]],\"_from\":\"elliptic@>=6.0.0 <7.0.0\",\"_hasShrinkwrap\":false,\"_id\":\"elliptic@6.5.0\",\"_inCache\":true,\"_installable\":true,\"_location\":\"/elliptic\",\"_nodeVersion\":\"12.2.0\",\"_npmOperationalInternal\":{\"host\":\"s3://npm-registry-packages\",\"tmp\":\"tmp/elliptic_6.5.0_1561521826385_0.20848274510512943\"},\"_npmUser\":{\"email\":\"fedor@indutny.com\",\"name\":\"indutny\"},\"_npmVersion\":\"6.9.0\",\"_phantomChildren\":{},\"_requested\":{\"name\":\"elliptic\",\"raw\":\"elliptic@^6.0.0\",\"rawSpec\":\"^6.0.0\",\"scope\":null,\"spec\":\">=6.0.0 <7.0.0\",\"type\":\"range\"},\"_requiredBy\":[\"/browserify-sign\",\"/create-ecdh\"],\"_resolved\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.0.tgz\",\"_shasum\":\"2b8ed4c891b7de3200e14412a5b8248c7af505ca\",\"_shrinkwrap\":null,\"_spec\":\"elliptic@^6.0.0\",\"_where\":\"/home/jens/code/skilltree/node_modules/browserify-sign\",\"author\":{\"email\":\"fedor@indutny.com\",\"name\":\"Fedor Indutny\"},\"bugs\":{\"url\":\"https://github.com/indutny/elliptic/issues\"},\"dependencies\":{\"bn.js\":\"^4.4.0\",\"brorand\":\"^1.0.1\",\"hash.js\":\"^1.0.0\",\"hmac-drbg\":\"^1.0.0\",\"inherits\":\"^2.0.1\",\"minimalistic-assert\":\"^1.0.0\",\"minimalistic-crypto-utils\":\"^1.0.0\"},\"description\":\"EC cryptography\",\"devDependencies\":{\"brfs\":\"^1.4.3\",\"coveralls\":\"^2.11.3\",\"grunt\":\"^0.4.5\",\"grunt-browserify\":\"^5.0.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-connect\":\"^1.0.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-uglify\":\"^1.0.1\",\"grunt-mocha-istanbul\":\"^3.0.1\",\"grunt-saucelabs\":\"^8.6.2\",\"istanbul\":\"^0.4.2\",\"jscs\":\"^2.9.0\",\"jshint\":\"^2.6.0\",\"mocha\":\"^2.1.0\"},\"directories\":{},\"dist\":{\"fileCount\":17,\"integrity\":\"sha512-eFOJTMyCYb7xtE/caJ6JJu+bhi67WCYNbkGSknu20pmM8Ke/bqOfdnZWxyoGN26JgfxTbXrsCkEw4KheCT/KGg==\",\"npm-signature\":\"-----BEGIN PGP SIGNATURE-----\\r\\nVersion: OpenPGP.js v3.0.4\\r\\nComment: https://openpgpjs.org\\r\\n\\r\\nwsFcBAEBCAAQBQJdEu6jCRA9TVsSAnZWagAAJh4QAJXJ18MReidNMHrxFJGv\\ngSONMB2uz0lWJ7eEUyggaCA/Tr6w4RBA6Ilne0Wou3jTAGou+GClpAde6Hkb\\nEq1iq1brx+5gHeY3rGs8GB+T3c1JsVz+2t6934esXGM6IJNmG91TaCMSbuwQ\\nTWHD62RxFylLYjffBIWt6KLximZnXcvAES0Qu7VUql1SlfvmGtaHlQAhvtLj\\nG+ayBnSnWMcEvDPJdfnKi67PlGMa334spEmWzcqobFySr+y/ufiZRCp+wiSl\\ndCwbFNMaH4fue+dhq1m7jGO/euFQvJw2Jf32zT/ToaM768nH8yHrrZ8lMRjs\\ngCUymge8kbI5W1WA8wla7+J52Exbo6LbcBqSupVhVw6gXkOdjQCOkywBXa1c\\nPiFxwOUSfdFATpkUi3/8serYCgv9NgGzvQ0rjej0//1+he6q7UUyKn9wyrdH\\nMntmi18UgyQ8c1NrshKAOCb1oeniCEv7B1adfH2axH9uvMiVP8N5BMfAUNE1\\nnkCD3lDXRz/7C+90DiI+h2MS3+az8ciqMTbpKlw3HrmUyCex+KvLq9+wNLGf\\nyaJGd/r6NT0pu36v0M2+ul266/RbbY6D1ED/cl8gDZRFTT/SfTCkU+QAn2Mg\\nfAlnn9BXogYR1XM1GNrnGUVkY7ngORiAGez5DU7P93jMpdSS9OtwAHHi1Oto\\nbZ+X\\r\\n=LuMF\\r\\n-----END PGP SIGNATURE-----\\r\\n\",\"shasum\":\"2b8ed4c891b7de3200e14412a5b8248c7af505ca\",\"tarball\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.0.tgz\",\"unpackedSize\":118006},\"gitHead\":\"475f066aebd14681591f0f0f18a2abc0ded8c390\",\"homepage\":\"https://github.com/indutny/elliptic\",\"keywords\":[\"Cryptography\",\"EC\",\"Elliptic\",\"curve\"],\"license\":\"MIT\",\"main\":\"lib/elliptic.js\",\"maintainers\":[{\"name\":\"indutny\",\"email\":\"fedor@indutny.com\"}],\"name\":\"elliptic\",\"optionalDependencies\":{},\"readme\":\"ERROR: No README data found!\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/indutny/elliptic.git\"},\"scripts\":{\"jscs\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"jshint\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"lint\":\"npm run jscs && npm run jshint\",\"test\":\"npm run lint && npm run unit\",\"unit\":\"istanbul test _mocha --reporter=spec test/index.js\",\"version\":\"grunt dist && git add dist/\"},\"version\":\"6.5.0\"}");
 
 /***/ }),
 
@@ -25543,24 +25574,28 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
   };
 } else {
   // old school shim for old browsers
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
   }
 }
 
@@ -79515,8 +79550,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/e/code/skilltree/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /mnt/e/code/skilltree/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/jens/code/skilltree/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/jens/code/skilltree/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),

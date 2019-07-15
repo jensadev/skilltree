@@ -8,7 +8,7 @@
                 class="btn btn-less"
                 style="padding: 0;"
                 role="button"
-                @click.prevent="$modal.show('edit-skill', { 
+                @click.prevent="$modal.show('edit-skill', {
                     skill: skill,
                     tasks: tasks
                 })"
@@ -67,7 +67,7 @@ export default {
             draggableValue: {
                 onPositionChange: this.onPosChanged,
                 onDragEnd: this.onDragEnd,
-                initialPosition: this.getPos()
+                initialPosition: { left: 0, top: 0 }
             },
             title: "",
             description: "",
@@ -83,7 +83,7 @@ export default {
             path: ""
         };
     },
-    beforeMount() {
+    created() {
         if (typeof this.skilltree !== "undefined") {
             this.title = this.skilltree.title;
             this.description = this.skilltree.description;
@@ -98,6 +98,32 @@ export default {
             this.tree = this.skill.skilltree_id;
 
             if (this.skill.tasks) this.tasks = this.skill.tasks;
+        }
+        this.draggableValue.initialPosition = this.getPos();
+    },
+    mounted() {
+        if (localStorage.hasOwnProperty(this.tree)) {
+            let data = JSON.parse(localStorage.getItem(this.tree));
+            console.log(data[this.id]);
+            if (
+                data[this.id] !== null &&
+                data[this.id].connections.length > 0
+            ) {
+                this.connections = data[this.id].connections;
+
+                this.connections.forEach(connection => {
+                    if (connection && document.getElementById(connection)) {
+                        jqSimpleConnect.connect(
+                            this.$el,
+                            document.getElementById(connection),
+                            {
+                                radius: this.line.thickness,
+                                color: this.line.color
+                            }
+                        );
+                    }
+                });
+            }
         }
     },
     methods: {
@@ -148,17 +174,17 @@ export default {
             );
         },
         getPos: function() {
-            if (
-                JSON.parse(localStorage.getItem(this.tree))[this.id] == null ||
-                typeof JSON.parse(localStorage.getItem(this.tree))[this.id] !==
-                    "undefined"
-            ) {
-                let data = JSON.parse(localStorage.getItem(this.tree))[this.id];
-                console.log(data);
-                if (data.position) {
+            if (localStorage.hasOwnProperty(this.tree)) {
+                let data = JSON.parse(localStorage.getItem(this.tree));
+                if (data[this.id]) {
                     this.position = {
-                        left: data.position.left,
-                        top: data.position.top
+                        left: data[this.id].position.left,
+                        top: data[this.id].position.top
+                    };
+                } else {
+                    this.position = {
+                        left: this.random(200, window.innerWidth - 200),
+                        top: this.random(200, window.innerWidth - 200)
                     };
                 }
             } else {

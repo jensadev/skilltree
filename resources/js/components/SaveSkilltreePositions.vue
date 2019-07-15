@@ -103,22 +103,24 @@ export default {
         }
     },
     methods: {
-        setSkillStorage: _.debounce(function(data) {
+        //setSkillStorage: _.debounce(function(data) {
+        setSkillStorage: function(data) {
             let posdata = JSON.parse(data);
             this.skilltree = posdata.skilltree;
             this.storage[posdata.skill] = {
                 position: posdata.position,
                 connections: posdata.connections
             };
-        }, 500),
-        saveSkillStorage: _.debounce(function() {
-            console.log(this.storage);
-
+            //}, 500),
+        },
+        //saveSkillStorage: _.debounce(function() {
+        saveSkillStorage: function() {
             localStorage.setItem(
                 [this.skilltree],
                 JSON.stringify(this.storage)
             );
-        }, 500)
+        }
+        //}, 500)
     },
     created: function() {
         Event.$on("setPosCon", data => {
