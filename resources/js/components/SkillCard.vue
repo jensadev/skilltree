@@ -1,42 +1,30 @@
 <template>
     <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
         <div class="card-header d-flex justify-content-between">
-            <h2
-                class="h5 mb-0"
-                v-text="$attrs.data.skill_title ? str_limit($attrs.data.skill_title, 17, true) : str_limit($attrs.data.title, 17, true)"
-            ></h2>
-            <!-- <a
+            <h2 class="h5 mb-0">{{ str_limit(title, 17, true) }}</h2>
+            <a
                 v-if="id != 0"
-                href
+                href="#"
                 class="btn btn-less"
                 style="padding: 0;"
                 role="button"
                 @click.prevent="$modal.show('edit-skill', { 
-                    tree: tree, 
-                    skill_id: id,  
-                    skill_title: $attrs.data.skill_title, 
-                    skill_description: $attrs.data.skill_description, 
-                    skill_tasks: skill_tasks, 
-                    skill_topicid: skill_topicid, 
-                    skill_courseid: skill_courseid
+                    skill: skill,
+                    tasks: tasks
                 })"
                 title="Edit Skill"
             >
                 <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
-            </a>-->
+            </a>
         </div>
-        <div class="card-body" v-if="$attrs.data.skill_description || $attrs.data.description">
-            <nl2br
-                tag="p"
-                :text="$attrs.data.skill_description ? str_limit($attrs.data.skill_description, 40, true) : str_limit($attrs.data.description, 40, true)"
-                class-name="card-text"
-            />
+        <div class="card-body">
+            <p class="card-text mb-0" v-if="description">{{ str_limit(description, 40, true) }}</p>
+            <ul v-if="tasks.length > 0" class="list-unstyled mb-0 border-top">
+                <li class="list-item" :key="index" v-for="(task, index) in tasks">
+                    <small>{{ str_limit(task.body, 20, true) }}</small>
+                </li>
+            </ul>
         </div>
-        <ul v-if="tasks" class="list-group list-group-flush">
-            <li class="list-group-item" :key="index" v-for="(task, index) in tasks">
-                <small>{{ task.body.substr(0, 25) }}</small>
-            </li>
-        </ul>
 
         <div v-if="id != 0" class="progress" style="height: 5px;">
             <div
@@ -65,158 +53,109 @@
         </button>
     </div>
 </template>
+
 <script>
 import { Draggable } from "draggable-vue-directive";
-import Nl2br from "vue-nl2br";
 
 export default {
     directives: {
         Draggable
     },
-    components: {
-        Nl2br
-    },
+    props: ["skilltree", "skill"],
     data() {
         return {
-            init: this.loadInit(),
-            color: "#0de1ec",
-            thickness: 1,
-            tasks: [],
-            path: "tree_" + this.tree + "_skill_" + this.id,
             draggableValue: {
                 onPositionChange: this.onPosChanged,
                 onDragEnd: this.onDragEnd,
                 initialPosition: this.getPos()
             },
-            storage: {
-                position: {},
-                connections: this.getCon()
-            }
+            title: "",
+            description: "",
+            id: "",
+            tree: "",
+            line: {
+                color: "#0de1ec",
+                thickness: 1
+            },
+            position: {},
+            tasks: [],
+            connections: [],
+            path: ""
         };
     },
+    mounted() {
+        if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
+
+        if (typeof this.skilltree !== "undefined") {
+            this.title = this.skilltree.title;
+            this.description = this.skilltree.description;
+            this.id = 0;
+            this.tree = this.skilltree.id;
+        } else {
+            this.title = this.skill.name;
+            this.description = this.skill.description
+                ? this.skill.description
+                : "";
+            this.id = this.skill.id;
+            this.tree = this.skill.skilltree_id;
+        }
+    },
     methods: {
-        str_limit(text, count, end) {
-            return (
-                text.slice(0, count) + (text.length > count && end ? "..." : "")
-            );
-        },
-        async loadInit() {
-            console.log("init");
-            // if (!this.hasItems() && this.id == 0) {
-            //     let needle = "tree_" + this.tree;
-            //     await axios
-            //         .get("/skilltrees/" + this.tree + "/pos")
-            //         .then(function(response) {
-            //             console.log(response.status);
-            //             if (response.status == 200) {
-            //                 response.data.message.value.forEach(element => {
-            //                     Object.keys(element).forEach(function(key) {
-            //                         localStorage.setItem(key, element[key]);
-            //                     });
-            //                 });
-            //             }
-            //         })
-            //         .then(function() {
-            //             //location.reload();
-            //         })
-            //         .catch(function(error) {
-            //             console.log(error);
-            //         });
-            // }
-        },
         handler: function(e) {
             if (e.target.offsetParent.id.includes("skill")) {
                 jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
-                    radius: this.thickness,
-                    color: this.color
+                    radius: this.line.thickness,
+                    color: this.line.color
                 });
 
                 if (
-                    !this.storage.connections.includes(
-                        e.target.offsetParent.id
-                    ) &&
+                    !this.connections.includes(e.target.offsetParent.id) &&
                     "skill_" + this.id !== e.target.offsetParent.id
                 ) {
-                    this.storage.connections.push(e.target.offsetParent.id);
+                    this.connections.push(e.target.offsetParent.id);
                 }
-
-                localStorage.setItem([this.path], JSON.stringify(this.storage));
             }
-            // remove handler
             document.removeEventListener("click", this.handler, true);
         },
         createConnection: function() {
             document.addEventListener("click", this.handler, true);
         },
-        hasItems() {
-            let test = false;
-            try {
-                console.log("hasitems: " + this.id);
-                test = localStorage.getItem([this.path]);
-            } catch {
-                console.log("noitems: " + this.id);
-                test = false;
-            }
-            return test != null ? true : false;
-        },
-        getCon() {
-            if (this.hasItems()) {
-                this.storage = JSON.parse(localStorage.getItem([this.path]));
-            } else {
-                this.storage.connections = [];
-            }
-            return this.storage.connections;
-        },
-        getPos() {
-            if (this.hasItems()) {
-                this.storage = JSON.parse(localStorage.getItem([this.path]));
-            } else {
-                this.storage = {
-                    position: {
-                        left: this.random(200, window.innerWidth - 200),
-                        top: this.random(200, window.innerWidth - 200)
-                    }
-                };
-            }
-            return this.storage.position;
-        },
         onPosChanged: function(positionDiff, absolutePosition, event) {
             if (absolutePosition) {
-                this.storage.position = absolutePosition;
-
-                localStorage.setItem([this.path], JSON.stringify(this.storage));
+                //                console.log(absolutePosition);
+                this.position = absolutePosition;
+                Event.$emit("position", {
+                    skilltree: this.tree,
+                    skill: this.id,
+                    position: this.position,
+                    connections: this.connections
+                });
             }
             jqSimpleConnect.repaintAll();
         },
-        onDragEnd: function() {
-            // make db call to save positions
-            //this.saveStorage();
+        onDragEnd: function(absolutePosition) {
+            //console.log("end");
         },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
-        }
-    },
-    mounted() {
-        if (typeof this.storage.connections !== "undefined") {
-            this.storage.connections.forEach(e => {
-                if (e && document.getElementById(e)) {
-                    jqSimpleConnect.connect(
-                        this.$el,
-                        document.getElementById(e),
-                        {
-                            radius: this.thickness,
-                            color: this.color
-                        }
-                    );
-                }
-            });
-        }
+        },
+        str_limit: function(text, count, end) {
+            return (
+                text.slice(0, count) + (text.length > count && end ? "..." : "")
+            );
+        },
+        getPos: function() {
+            this.position = {
+                left: this.random(200, window.innerWidth - 200),
+                top: this.random(200, window.innerWidth - 200)
+            };
 
-        this.tasks = _.sortBy(this.skill_tasks, ["body"]);
-    },
-    props: ["tree", "id", "skill_tasks"]
+            return this.position;
+        }
+    }
 };
 </script>
+
 <style>
 .line {
     position: absolute;
@@ -246,3 +185,4 @@ export default {
     transform: translate(0, -50%);
 }
 </style>
+

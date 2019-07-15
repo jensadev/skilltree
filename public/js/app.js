@@ -3921,16 +3921,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isOpen: false,
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        skill_title: ""
+        name: ""
       })
     };
   },
@@ -3940,7 +3937,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.isOpen) {
         document.addEventListener("click", this.closeIfClickedOutside);
         window.setTimeout(function () {
-          document.getElementById("skill_title").focus();
+          document.getElementById("name").focus();
         }, 0);
       }
     }
@@ -3994,19 +3991,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
-/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
-/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_2__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form */ "./resources/js/components/Form.js");
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -4174,323 +4161,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      isLoadingCourseWork: false,
-      isLoading: false,
-      tree: 0,
-      skill_topicid: this.skill_topicid,
-      skill_courseid: 0,
-      form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        skill_id: 0,
-        skill_title: "",
-        skill_description: "",
-        skill_tasks: []
-      })
-    };
+    return {};
   },
-  methods: {
-    storeTask: function () {
-      var _storeTask = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(task) {
-        var update;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.post("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/", this.form.skill_tasks[task - 1]).then(function (response) {
-                  update = response.data.message;
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 2:
-                this.form.skill_tasks.splice(task - 1, 1);
-                this.form.skill_tasks.push(update);
-                this.form.skill_tasks = _.sortBy(this.form.skill_tasks, ["id", "body"]);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function storeTask(_x) {
-        return _storeTask.apply(this, arguments);
-      }
-
-      return storeTask;
-    }(),
-    updateTask: function () {
-      var _updateTask = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(task) {
-        var update;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios.patch("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/" + this.form.skill_tasks[task - 1].id, this.form.skill_tasks[task - 1]).then(function (response) {
-                  update = response.data.message;
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 2:
-                this.form.skill_tasks.splice(task - 1, 1);
-                this.form.skill_tasks.push(update);
-                this.form.skill_tasks = _.sortBy(this.form.skill_tasks, ["id", "body"]);
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function updateTask(_x2) {
-        return _updateTask.apply(this, arguments);
-      }
-
-      return updateTask;
-    }(),
-    deleteTask: function () {
-      var _deleteTask = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(task) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return axios["delete"]("/skilltrees/" + this.tree + /skills/ + this.form.skill_id + "/tasks/" + this.form.skill_tasks[task - 1].id).then(function (response) {
-                  console.log(response.data.message);
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 2:
-                _context3.next = 4;
-                return this.$nextTick(function () {
-                  this.form.skill_tasks.splice(task - 1, 1);
-                  this.getCourseWork();
-                });
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function deleteTask(_x3) {
-        return _deleteTask.apply(this, arguments);
-      }
-
-      return deleteTask;
-    }(),
-    addCourseWork: function () {
-      var _addCourseWork = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return axios.post("/skilltrees/" + this.tree + "/skills/" + this.form.skill_id + "/coursetasks", {
-                  tasks: this.selectedCourseWork
-                }).then(function (response) {//location = response.data.message;
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 2:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function addCourseWork() {
-        return _addCourseWork.apply(this, arguments);
-      }
-
-      return addCourseWork;
-    }(),
-    getCourseWork: function () {
-      var _getCourseWork = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _this = this;
-
-        var courseWork, found, temp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                this.isLoadingCourseWork = true;
-                _context5.next = 3;
-                return axios.get("/classroom/courses/" + this.skill_course_id + "/courseworks").then(function (response) {
-                  courseWork = response.data.message;
-                })["catch"](function (error) {
-                  console.log(error);
-                });
-
-              case 3:
-                found = [];
-                courseWork.forEach(function (element) {
-                  if (element.topic_id == _this.skill_topic_id) {
-                    found.push({
-                      body: element.title,
-                      course_id: element.course_id,
-                      course_work_id: element.id
-                    });
-                  }
-                });
-                temp = [];
-                temp = _.unionBy(this.form.skill_tasks, found, "body"); //            this.form.skill_tasks = _.sortBy(temp, ["body", "id"]);
-
-                this.form.skill_tasks = temp;
-                this.isLoadingCourseWork = false;
-
-              case 9:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this);
-      }));
-
-      function getCourseWork() {
-        return _getCourseWork.apply(this, arguments);
-      }
-
-      return getCourseWork;
-    }(),
-    deleteSkill: function () {
-      var _deleteSkill = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var lsKey;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                this.isLoading = true;
-                lsKey = "tree_" + this.tree + "_skill_" + this.form.skill_id;
-                _context6.prev = 2;
-                _context6.next = 5;
-                return axios["delete"]("/skilltrees/" + this.tree + "/skills/" + this.form.skill_id).then(function (response) {
-                  localStorage.removeItem(lsKey); // needs to clear connections
-
-                  location = response.data.message;
-                });
-
-              case 5:
-                _context6.next = 11;
-                break;
-
-              case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6["catch"](2);
-                this.errors = _context6.t0;
-                console.log("error" + this.errors);
-
-              case 11:
-                this.isLoading = false;
-
-              case 12:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this, [[2, 7]]);
-      }));
-
-      function deleteSkill() {
-        return _deleteSkill.apply(this, arguments);
-      }
-
-      return deleteSkill;
-    }(),
-    beforeOpen: function beforeOpen(event) {
-      this.form.skill_tasks = [];
-      this.skill_courseid = event.params.skill_courseid;
-      this.skill_topicid = event.params.skill_topicid;
-      this.tree = event.params.tree;
-      this.form.skill_id = event.params.skill_id;
-      this.form.skill_title = event.params.skill_title;
-      this.form.skill_description = event.params.skill_description;
-
-      if (event.params.skill_tasks) {
-        this.form.skill_tasks = event.params.skill_tasks;
-      }
-
-      if (this.skill_courseid != 0) {
-        this.getCourseWork();
-      } else {
-        this.form.skill_tasks = [{
-          body: ""
-        }];
-      }
-    },
-    addTask: function addTask() {
-      this.form.skill_tasks.push({
-        body: ""
-      });
-    },
-    clearConnections: function clearConnections() {
-      var temp = JSON.parse(localStorage.getItem("tree_" + this.tree + "_skill_" + this.form.skill_id));
-      console.log(temp.connections);
-      temp.connections = [];
-      localStorage.removeItem("tree_" + this.tree + "_skill_" + this.form.skill_id);
-      localStorage.setItem("tree_" + this.tree + "_skill_" + this.form.skill_id, JSON.stringify(temp));
-      location = self.location;
-    },
-    submit: function () {
-      var _submit = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                if (!this.form.skill_tasks[0].body) {
-                  delete this.form.originalData.skill_tasks;
-                }
-
-                this.form.submit("/skilltrees/" + this.tree + /skills/ + this.form.skill_id, "patch").then(function (response) {
-                  return location = response.data.message;
-                })["catch"](function (error) {
-                  return console.log(error);
-                });
-
-              case 2:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, this);
-      }));
-
-      function submit() {
-        return _submit.apply(this, arguments);
-      }
-
-      return submit;
-    }(),
-    beforeClose: function beforeClose(event) {
-      console.log(event); //location = "/skilltrees/" + this.tree;
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -5395,10 +5068,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5407,7 +5076,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: "",
         description: "",
         skills: [{
-          skill_title: ""
+          name: ""
         }]
       })
     };
@@ -5415,7 +5084,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     addSkill: function addSkill() {
       this.form.skills.push({
-        skill_title: ""
+        name: ""
       });
     },
     submit: function () {
@@ -5426,7 +5095,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!this.form.skills[0].skill_title) {
+                if (!this.form.skills[0].name) {
                   delete this.form.originalData.skills;
                 }
 
@@ -5519,7 +5188,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       isLoading: false,
       isSaving: false,
-      positions: {}
+      storage: []
     };
   },
   props: ["tree", "save"],
@@ -5603,6 +5272,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }); //location.reload();
     }
+  },
+  created: function created() {
+    Event.$on("position", function (skilldata) {
+      // this.storage[tree][id] = {
+      //     position: position,
+      //     connections: connections
+      // };
+      console.log(skilldata);
+    });
   }
 });
 
@@ -5617,18 +5295,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! draggable-vue-directive */ "./node_modules/draggable-vue-directive/dist/index.js");
-/* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_nl2br__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-nl2br */ "./node_modules/vue-nl2br/dist/vue-nl2br.js");
-/* harmony import */ var vue_nl2br__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_nl2br__WEBPACK_IMPORTED_MODULE_2__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! draggable-vue-directive */ "./node_modules/draggable-vue-directive/dist/index.js");
+/* harmony import */ var draggable_vue_directive__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(draggable_vue_directive__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5685,180 +5353,96 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   directives: {
-    Draggable: draggable_vue_directive__WEBPACK_IMPORTED_MODULE_1__["Draggable"]
+    Draggable: draggable_vue_directive__WEBPACK_IMPORTED_MODULE_0__["Draggable"]
   },
-  components: {
-    Nl2br: vue_nl2br__WEBPACK_IMPORTED_MODULE_2___default.a
-  },
+  props: ["skilltree", "skill"],
   data: function data() {
     return {
-      init: this.loadInit(),
-      color: "#0de1ec",
-      thickness: 1,
-      tasks: [],
-      path: "tree_" + this.tree + "_skill_" + this.id,
       draggableValue: {
         onPositionChange: this.onPosChanged,
         onDragEnd: this.onDragEnd,
         initialPosition: this.getPos()
       },
-      storage: {
-        position: {},
-        connections: this.getCon()
-      }
+      title: "",
+      description: "",
+      id: "",
+      tree: "",
+      line: {
+        color: "#0de1ec",
+        thickness: 1
+      },
+      position: {},
+      tasks: [],
+      connections: [],
+      path: ""
     };
   },
+  mounted: function mounted() {
+    if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
+
+    if (typeof this.skilltree !== "undefined") {
+      this.title = this.skilltree.title;
+      this.description = this.skilltree.description;
+      this.id = 0;
+      this.tree = this.skilltree.id;
+    } else {
+      this.title = this.skill.name;
+      this.description = this.skill.description ? this.skill.description : "";
+      this.id = this.skill.id;
+      this.tree = this.skill.skilltree_id;
+    }
+  },
   methods: {
-    str_limit: function str_limit(text, count, end) {
-      return text.slice(0, count) + (text.length > count && end ? "..." : "");
-    },
-    loadInit: function () {
-      var _loadInit = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                console.log("init"); // if (!this.hasItems() && this.id == 0) {
-                //     let needle = "tree_" + this.tree;
-                //     await axios
-                //         .get("/skilltrees/" + this.tree + "/pos")
-                //         .then(function(response) {
-                //             console.log(response.status);
-                //             if (response.status == 200) {
-                //                 response.data.message.value.forEach(element => {
-                //                     Object.keys(element).forEach(function(key) {
-                //                         localStorage.setItem(key, element[key]);
-                //                     });
-                //                 });
-                //             }
-                //         })
-                //         .then(function() {
-                //             //location.reload();
-                //         })
-                //         .catch(function(error) {
-                //             console.log(error);
-                //         });
-                // }
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function loadInit() {
-        return _loadInit.apply(this, arguments);
-      }
-
-      return loadInit;
-    }(),
     handler: function handler(e) {
       if (e.target.offsetParent.id.includes("skill")) {
         jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
-          radius: this.thickness,
-          color: this.color
+          radius: this.line.thickness,
+          color: this.line.color
         });
 
-        if (!this.storage.connections.includes(e.target.offsetParent.id) && "skill_" + this.id !== e.target.offsetParent.id) {
-          this.storage.connections.push(e.target.offsetParent.id);
+        if (!this.connections.includes(e.target.offsetParent.id) && "skill_" + this.id !== e.target.offsetParent.id) {
+          this.connections.push(e.target.offsetParent.id);
         }
-
-        localStorage.setItem([this.path], JSON.stringify(this.storage));
-      } // remove handler
-
+      }
 
       document.removeEventListener("click", this.handler, true);
     },
     createConnection: function createConnection() {
       document.addEventListener("click", this.handler, true);
     },
-    hasItems: function hasItems() {
-      var test = false;
-
-      try {
-        console.log("hasitems: " + this.id);
-        test = localStorage.getItem([this.path]);
-      } catch (_unused) {
-        console.log("noitems: " + this.id);
-        test = false;
-      }
-
-      return test != null ? true : false;
-    },
-    getCon: function getCon() {
-      if (this.hasItems()) {
-        this.storage = JSON.parse(localStorage.getItem([this.path]));
-      } else {
-        this.storage.connections = [];
-      }
-
-      return this.storage.connections;
-    },
-    getPos: function getPos() {
-      if (this.hasItems()) {
-        this.storage = JSON.parse(localStorage.getItem([this.path]));
-      } else {
-        this.storage = {
-          position: {
-            left: this.random(200, window.innerWidth - 200),
-            top: this.random(200, window.innerWidth - 200)
-          }
-        };
-      }
-
-      return this.storage.position;
-    },
     onPosChanged: function onPosChanged(positionDiff, absolutePosition, event) {
       if (absolutePosition) {
-        this.storage.position = absolutePosition;
-        localStorage.setItem([this.path], JSON.stringify(this.storage));
+        //                console.log(absolutePosition);
+        this.position = absolutePosition;
+        Event.$emit("position", {
+          skilltree: this.tree,
+          skill: this.id,
+          position: this.position,
+          connections: this.connections
+        });
       }
 
       jqSimpleConnect.repaintAll();
     },
-    onDragEnd: function onDragEnd() {// make db call to save positions
-      //this.saveStorage();
+    onDragEnd: function onDragEnd(absolutePosition) {//console.log("end");
     },
     random: function random(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
+    },
+    str_limit: function str_limit(text, count, end) {
+      return text.slice(0, count) + (text.length > count && end ? "..." : "");
+    },
+    getPos: function getPos() {
+      this.position = {
+        left: this.random(200, window.innerWidth - 200),
+        top: this.random(200, window.innerWidth - 200)
+      };
+      return this.position;
     }
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    if (typeof this.storage.connections !== "undefined") {
-      this.storage.connections.forEach(function (e) {
-        if (e && document.getElementById(e)) {
-          jqSimpleConnect.connect(_this.$el, document.getElementById(e), {
-            radius: _this.thickness,
-            color: _this.color
-          });
-        }
-      });
-    }
-
-    this.tasks = _.sortBy(this.skill_tasks, ["body"]);
-  },
-  props: ["tree", "id", "skill_tasks"]
+  }
 });
 
 /***/ }),
@@ -18322,7 +17906,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
+exports.push([module.i, "\n.line {\r\n    position: absolute;\r\n    border: 0.5px #00000010 dashed;\r\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\r\n    visibility: visible;\n}\n.hideArr {\r\n    visibility: hidden;\n}\n.rArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    right: -36px;\r\n    transform: translate(0, -50%);\n}\n.lArr {\r\n    color: #bbb;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: -36px;\r\n    transform: translate(0, -50%);\n}\r\n", ""]);
 
 // exports
 
@@ -65345,27 +64929,24 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.form.skill_title,
-                        expression: "form.skill_title"
+                        value: _vm.form.name,
+                        expression: "form.name"
                       }
                     ],
                     staticClass: "form-control",
-                    class: _vm.form.errors.skill_title ? "is-invalid" : "",
+                    class: _vm.form.errors.name ? "is-invalid" : "",
                     attrs: {
                       type: "text",
-                      name: "skill_title",
-                      id: "skill_title",
-                      placeholder: "Skill title",
-                      "aria-label": "Skill title",
+                      placeholder: "Skill Name",
                       required: ""
                     },
-                    domProps: { value: _vm.form.skill_title },
+                    domProps: { value: _vm.form.name },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.form, "skill_title", $event.target.value)
+                        _vm.$set(_vm.form, "name", $event.target.value)
                       }
                     }
                   }),
@@ -65381,11 +64962,11 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.form.errors.skill_title
+                  _vm.form.errors.name
                     ? _c("div", {
                         staticClass: "invalid-feedback",
                         domProps: {
-                          textContent: _vm._s(_vm.form.errors.skill_title[0])
+                          textContent: _vm._s(_vm.form.errors.name[0])
                         }
                       })
                     : _vm._e()
@@ -65432,8 +65013,7 @@ var render = function() {
         "pivot-y": 0.25,
         width: "60%",
         height: "auto"
-      },
-      on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
+      }
     },
     [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
@@ -65460,344 +65040,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c(
-                  "form",
-                  {
-                    attrs: { id: "skillform" },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.submit($event)
-                      },
-                      keydown: function($event) {
-                        return _vm.form.errorClear($event.target.name)
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "form-group mb-3" }, [
-                      _c("label", { attrs: { for: "skill_title" } }, [
-                        _vm._v("Title")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.skill_title,
-                            expression: "form.skill_title"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.form.errors.skill_title ? "is-invalid" : "",
-                        attrs: {
-                          id: "skill_title",
-                          name: "skill_title",
-                          type: "text",
-                          value: "form.skill_title",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.skill_title },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.form,
-                              "skill_title",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.form.errors.skill_title
-                        ? _c("div", {
-                            staticClass: "invalid-feedback",
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.form.errors.skill_title[0]
-                              )
-                            }
-                          })
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "skill_description" } }, [
-                        _vm._v("Description")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "textarea",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.skill_description,
-                              expression: "form.skill_description"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: _vm.form.errors.skill_description
-                            ? "is-invalid"
-                            : "",
-                          attrs: {
-                            id: "skill_description",
-                            name: "skill_description",
-                            rows: "6"
-                          },
-                          domProps: { value: _vm.form.skill_description },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.form,
-                                "skill_description",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        },
-                        [_vm._v("form.skill_description")]
-                      ),
-                      _vm._v(" "),
-                      _vm.form.errors.skill_description
-                        ? _c("div", {
-                            staticClass: "invalid-feedback",
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.form.errors.skill_description[0]
-                              )
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c(
-                  "form",
-                  {
-                    attrs: { id: "tasksform" },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.submit($event)
-                      },
-                      keydown: function($event) {
-                        return _vm.form.errorClear($event.target.name)
-                      }
-                    }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Tasks")]),
-                        _vm._v(" "),
-                        _vm.isLoadingCourseWork
-                          ? _c(
-                              "div",
-                              {
-                                staticClass: "spinner-border text-muted",
-                                staticStyle: {
-                                  width: "24px",
-                                  height: "24px",
-                                  "margin-left": "16px"
-                                },
-                                attrs: { role: "status" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("Loading...")
-                                ])
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm._l(_vm.form.skill_tasks, function(task, index) {
-                          return _c(
-                            "div",
-                            { key: index, staticClass: "input-group mb-3" },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: task.body,
-                                    expression: "task.body"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  form: "skillform",
-                                  type: "text",
-                                  placeholder: "Task " + (index + 1),
-                                  value: "task.body"
-                                },
-                                domProps: { value: task.body },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(task, "body", $event.target.value)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "input-group-append" }, [
-                                task.id
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.updateTask(index + 1)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("edit")]
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                !task.id
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.storeTask(index + 1)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("add")]
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                task.id
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteTask(index + 1)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons" },
-                                          [_vm._v("delete")]
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ])
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group mb-3" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "d-flex align-items-center border-0 bg-transparent",
-                          attrs: { href: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addTask($event)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("add_circle_outline")
-                          ]),
-                          _vm._v(" "),
-                          _c("small", { staticClass: "text-muted pl-2" }, [
-                            _vm._v("Add a Task")
-                          ])
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ]),
+          _c("div", { staticClass: "modal-body" }),
           _vm._v(" "),
-          _c("footer", { staticClass: "modal-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-secondary mr-2",
-                attrs: { type: "button" },
-                on: { click: _vm.clearConnections }
-              },
-              [_vm._v("Clear Connections")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-danger mr-2",
-                attrs: { type: "button" },
-                on: { click: _vm.deleteSkill }
-              },
-              [_vm._v("Delete Skill")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: {
-                  form: "skillform",
-                  type: "submit",
-                  disabled: _vm.form.errorAny()
-                }
-              },
-              [_vm._v("Update Skill")]
-            )
-          ])
+          _c("footer", { staticClass: "modal-footer" })
         ])
       ])
     ]
@@ -66738,8 +65983,6 @@ var render = function() {
                         staticClass: "form-control",
                         class: _vm.form.errors.title ? "is-invalid" : "",
                         attrs: {
-                          id: "title",
-                          name: "title",
                           type: "text",
                           placeholder: "e.g Design",
                           required: ""
@@ -66782,8 +66025,6 @@ var render = function() {
                         staticClass: "form-control",
                         class: _vm.form.errors.description ? "is-invalid" : "",
                         attrs: {
-                          id: "description",
-                          name: "description",
                           rows: "6",
                           placeholder: "Description of Skilltree..."
                         },
@@ -66828,8 +66069,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: skill.skill_title,
-                                expression: "skill.skill_title"
+                                value: skill.name,
+                                expression: "skill.name"
                               }
                             ],
                             key: index,
@@ -66838,17 +66079,13 @@ var render = function() {
                               type: "text",
                               placeholder: "Skill " + (index + 1)
                             },
-                            domProps: { value: skill.skill_title },
+                            domProps: { value: skill.name },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  skill,
-                                  "skill_title",
-                                  $event.target.value
-                                )
+                                _vm.$set(skill, "name", $event.target.value)
                               }
                             }
                           })
@@ -67052,49 +66289,66 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
-        _c("h2", {
-          staticClass: "h5 mb-0",
-          domProps: {
-            textContent: _vm._s(
-              _vm.$attrs.data.skill_title
-                ? _vm.str_limit(_vm.$attrs.data.skill_title, 17, true)
-                : _vm.str_limit(_vm.$attrs.data.title, 17, true)
+        _c("h2", { staticClass: "h5 mb-0" }, [
+          _vm._v(_vm._s(_vm.str_limit(_vm.title, 17, true)))
+        ]),
+        _vm._v(" "),
+        _vm.id != 0
+          ? _c(
+              "a",
+              {
+                staticClass: "btn btn-less",
+                staticStyle: { padding: "0" },
+                attrs: { href: "#", role: "button", title: "Edit Skill" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.$modal.show("edit-skill", {
+                      skill: _vm.skill,
+                      tasks: _vm.tasks
+                    })
+                  }
+                }
+              },
+              [
+                _c(
+                  "i",
+                  {
+                    staticClass: "material-icons",
+                    staticStyle: {
+                      "font-size": "1.25rem",
+                      "line-height": "1.2"
+                    }
+                  },
+                  [_vm._v("edit")]
+                )
+              ]
             )
-          }
-        })
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _vm.$attrs.data.skill_description || _vm.$attrs.data.description
-        ? _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("nl2br", {
-                attrs: {
-                  tag: "p",
-                  text: _vm.$attrs.data.skill_description
-                    ? _vm.str_limit(_vm.$attrs.data.skill_description, 40, true)
-                    : _vm.str_limit(_vm.$attrs.data.description, 40, true),
-                  "class-name": "card-text"
-                }
-              })
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.tasks
-        ? _c(
-            "ul",
-            { staticClass: "list-group list-group-flush" },
-            _vm._l(_vm.tasks, function(task, index) {
-              return _c("li", { key: index, staticClass: "list-group-item" }, [
-                _c("small", [_vm._v(_vm._s(task.body.substr(0, 25)))])
-              ])
-            }),
-            0
-          )
-        : _vm._e(),
+      _c("div", { staticClass: "card-body" }, [
+        _vm.description
+          ? _c("p", { staticClass: "card-text mb-0" }, [
+              _vm._v(_vm._s(_vm.str_limit(_vm.description, 40, true)))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.tasks.length > 0
+          ? _c(
+              "ul",
+              { staticClass: "list-unstyled mb-0 border-top" },
+              _vm._l(_vm.tasks, function(task, index) {
+                return _c("li", { key: index, staticClass: "list-item" }, [
+                  _c("small", [
+                    _vm._v(_vm._s(_vm.str_limit(task.body, 20, true)))
+                  ])
+                ])
+              }),
+              0
+            )
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.id != 0
         ? _c(
@@ -67257,143 +66511,6 @@ function normalizeComponent (
   }
 }
 
-
-/***/ }),
-
-/***/ "./node_modules/vue-nl2br/dist/vue-nl2br.js":
-/*!**************************************************!*\
-  !*** ./node_modules/vue-nl2br/dist/vue-nl2br.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else {}
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  functional: true,
-  props: {
-    tag: {
-      type: String,
-      required: true
-    },
-    text: {
-      type: String,
-      required: true
-    }
-  },
-  render: function render(createElement, context) {
-    return createElement(context.props.tag, context.props.text.split('\n').reduce(function (accumulator, string) {
-      if (!Array.isArray(accumulator)) {
-        return [accumulator, createElement('br'), string];
-      }
-      return accumulator.concat([createElement('br'), string]);
-    }));
-  }
-};
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Nl2br = __webpack_require__(0);
-
-var _Nl2br2 = _interopRequireDefault(_Nl2br);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Nl2br2.default;
-
-/***/ })
-/******/ ]);
-});
 
 /***/ }),
 

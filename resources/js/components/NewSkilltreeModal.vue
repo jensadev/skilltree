@@ -34,8 +34,6 @@
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input
-                                        id="title"
-                                        name="title"
                                         class="form-control"
                                         :class="form.errors.title ? 'is-invalid' : ''"
                                         type="text"
@@ -52,8 +50,6 @@
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <textarea
-                                        id="description"
-                                        name="description"
                                         class="form-control"
                                         :class="form.errors.description ? 'is-invalid' : ''"
                                         rows="6"
@@ -75,7 +71,7 @@
                                         type="text"
                                         :placeholder="'Skill ' + (index + 1)"
                                         v-for="(skill,index) in form.skills"
-                                        v-model="skill.skill_title"
+                                        v-model="skill.name"
                                         :key="index"
                                     />
                                 </div>
@@ -114,16 +110,16 @@ export default {
             form: new Form({
                 title: "",
                 description: "",
-                skills: [{ skill_title: "" }]
+                skills: [{ name: "" }]
             })
         };
     },
     methods: {
         addSkill() {
-            this.form.skills.push({ skill_title: "" });
+            this.form.skills.push({ name: "" });
         },
         async submit() {
-            if (!this.form.skills[0].skill_title) {
+            if (!this.form.skills[0].name) {
                 delete this.form.originalData.skills;
             }
 

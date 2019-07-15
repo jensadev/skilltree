@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Skill::class, function (Faker $faker) {
     return [
-        'skill_title' => $faker->word,
+        'name' => $faker->word,
         'skilltree_id' => factory(App\Skilltree::class)
     ];
 });

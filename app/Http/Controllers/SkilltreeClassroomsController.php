@@ -36,7 +36,7 @@ class SkilltreeClassroomsController extends Controller
     {
 
         foreach (request('topics') as $value) {
-            $skilltree->addSkill(['skill_title' => $value[2], 'course_id' => $value[0], 'topic_id' => $value[1]]);
+            $skilltree->addSkill(['title' => $value[2], 'course_id' => $value[0], 'topic_id' => $value[1]]);
             // $skill->addOrUpdateMeta('courseId', (int) $value[0]);
             // $skill->addOrUpdateMeta('topicId', (int) $value[1]);
         }

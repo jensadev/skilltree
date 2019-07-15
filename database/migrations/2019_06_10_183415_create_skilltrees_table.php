@@ -20,6 +20,7 @@ class CreateSkilltreesTable extends Migration
             $table->text('description');
             $table->text('notes')->nullable();
             $table->string('course_id', 20)->nullable();
+            $table->text('positions')->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

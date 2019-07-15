@@ -44,7 +44,7 @@ export default {
         return {
             isLoading: false,
             isSaving: false,
-            positions: {}
+            storage: []
         };
     },
     props: ["tree", "save"],
@@ -100,6 +100,16 @@ export default {
             });
             //location.reload();
         }
+    },
+    created() {
+        Event.$on("position", skilldata => {
+            // this.storage[tree][id] = {
+            //     position: position,
+            //     connections: connections
+            // };
+
+            console.log(skilldata);
+        });
     }
 };
 </script>

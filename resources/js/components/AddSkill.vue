@@ -10,13 +10,10 @@
                         <div class="input-group">
                             <input
                                 type="text"
-                                name="skill_title"
-                                id="skill_title"
                                 class="form-control"
-                                placeholder="Skill title"
-                                aria-label="Skill title"
-                                :class="form.errors.skill_title ? 'is-invalid' : ''"
-                                v-model="form.skill_title"
+                                placeholder="Skill Name"
+                                :class="form.errors.name ? 'is-invalid' : ''"
+                                v-model="form.name"
                                 required
                             />
                             <div class="input-group-append">
@@ -28,8 +25,8 @@
                             </div>
                             <div
                                 class="invalid-feedback"
-                                v-if="form.errors.skill_title"
-                                v-text="form.errors.skill_title[0]"
+                                v-if="form.errors.name"
+                                v-text="form.errors.name[0]"
                             ></div>
                         </div>
                     </form>
@@ -47,7 +44,7 @@ export default {
         return {
             isOpen: false,
             form: new Form({
-                skill_title: ""
+                name: ""
             })
         };
     },
@@ -58,7 +55,7 @@ export default {
                 document.addEventListener("click", this.closeIfClickedOutside);
 
                 window.setTimeout(function() {
-                    document.getElementById("skill_title").focus();
+                    document.getElementById("name").focus();
                 }, 0);
             }
         }

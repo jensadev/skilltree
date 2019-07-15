@@ -29,7 +29,7 @@ class SkilltreeTest extends TestCase
     function it_can_add_a_skill()
     {
         $skilltree = factory('App\Skilltree')->create();
-        $skill = $skilltree->addSkill(['skill_title' => 'Test skill']);
+        $skill = $skilltree->addSkill(['name' => 'Test skill']);
 
         $this->assertCount(1, $skilltree->skills);
         $this->assertTrue($skilltree->skills->contains($skill));

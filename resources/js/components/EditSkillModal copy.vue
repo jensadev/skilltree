@@ -8,6 +8,8 @@
         :pivot-y="0.25"
         width="60%"
         height="auto"
+        @before-open="beforeOpen"
+        @before-close="beforeClose"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -24,7 +26,7 @@
                     </button>
                 </header>
                 <div class="modal-body">
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-lg-6">
                             <form
                                 @submit.prevent="submit"
@@ -136,10 +138,10 @@
                                 </div>
                             </form>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
                 <footer class="modal-footer">
-                    <!-- <button
+                    <button
                         class="btn btn-outline-secondary mr-2"
                         type="button"
                         @click="clearConnections"
@@ -154,7 +156,7 @@
                         class="btn btn-primary"
                         type="submit"
                         :disabled="form.errorAny()"
-                    >Update Skill</button>-->
+                    >Update Skill</button>
                 </footer>
             </div>
         </div>
@@ -167,9 +169,222 @@ import { constants } from "crypto";
 
 export default {
     data() {
-        return {};
+        return {
+            isLoadingCourseWork: false,
+            isLoading: false,
+            tree: 0,
+            skill_topicid: this.skill_topicid,
+            skill_courseid: 0,
+            form: new Form({
+                skill_id: 0,
+                skill_title: "",
+                skill_description: "",
+                skill_tasks: []
+            })
+        };
     },
-    methods: {}
+    methods: {
+        async storeTask(task) {
+            let update;
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks/",
+                    this.form.skill_tasks[task - 1]
+                )
+                .then(function(response) {
+                    update = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.form.skill_tasks.splice(task - 1, 1);
+            this.form.skill_tasks.push(update);
+            this.form.skill_tasks = _.sortBy(this.form.skill_tasks, [
+                "id",
+                "body"
+            ]);
+        },
+        async updateTask(task) {
+            let update;
+            await axios
+                .patch(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks/" +
+                        this.form.skill_tasks[task - 1].id,
+                    this.form.skill_tasks[task - 1]
+                )
+                .then(function(response) {
+                    update = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.form.skill_tasks.splice(task - 1, 1);
+            this.form.skill_tasks.push(update);
+            this.form.skill_tasks = _.sortBy(this.form.skill_tasks, [
+                "id",
+                "body"
+            ]);
+        },
+        async deleteTask(task) {
+            await axios
+                .delete(
+                    "/skilltrees/" +
+                        this.tree +
+                        /skills/ +
+                        this.form.skill_id +
+                        "/tasks/" +
+                        this.form.skill_tasks[task - 1].id
+                )
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            await this.$nextTick(function() {
+                this.form.skill_tasks.splice(task - 1, 1);
+                this.getCourseWork();
+            });
+        },
+        async addCourseWork() {
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.tree +
+                        "/skills/" +
+                        this.form.skill_id +
+                        "/coursetasks",
+                    {
+                        tasks: this.selectedCourseWork
+                    }
+                )
+                .then(function(response) {
+                    //location = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        },
+        async getCourseWork() {
+            let courseWork;
+            this.isLoadingCourseWork = true;
+            await axios
+                .get(
+                    "/classroom/courses/" +
+                        this.skill_course_id +
+                        "/courseworks"
+                )
+                .then(function(response) {
+                    courseWork = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+
+            let found = [];
+            courseWork.forEach(element => {
+                if (element.topic_id == this.skill_topic_id) {
+                    found.push({
+                        body: element.title,
+                        course_id: element.course_id,
+                        course_work_id: element.id
+                    });
+                }
+            });
+
+            let temp = [];
+            temp = _.unionBy(this.form.skill_tasks, found, "body");
+            //            this.form.skill_tasks = _.sortBy(temp, ["body", "id"]);
+            this.form.skill_tasks = temp;
+            this.isLoadingCourseWork = false;
+        },
+        async deleteSkill() {
+            this.isLoading = true;
+            let lsKey = "tree_" + this.tree + "_skill_" + this.form.skill_id;
+            try {
+                await axios
+                    .delete(
+                        "/skilltrees/" +
+                            this.tree +
+                            "/skills/" +
+                            this.form.skill_id
+                    )
+                    .then(function(response) {
+                        localStorage.removeItem(lsKey);
+                        // needs to clear connections
+                        location = response.data.message;
+                    });
+            } catch (error) {
+                this.errors = error;
+                console.log("error" + this.errors);
+            }
+            this.isLoading = false;
+        },
+        beforeOpen(event) {
+            this.form.skill_tasks = [];
+            this.skill_courseid = event.params.skill_courseid;
+            this.skill_topicid = event.params.skill_topicid;
+            this.tree = event.params.tree;
+            this.form.skill_id = event.params.skill_id;
+            this.form.skill_title = event.params.skill_title;
+            this.form.skill_description = event.params.skill_description;
+
+            if (event.params.skill_tasks) {
+                this.form.skill_tasks = event.params.skill_tasks;
+            }
+
+            if (this.skill_courseid != 0) {
+                this.getCourseWork();
+            } else {
+                this.form.skill_tasks = [{ body: "" }];
+            }
+        },
+        addTask() {
+            this.form.skill_tasks.push({ body: "" });
+        },
+        clearConnections() {
+            let temp = JSON.parse(
+                localStorage.getItem(
+                    "tree_" + this.tree + "_skill_" + this.form.skill_id
+                )
+            );
+            console.log(temp.connections);
+            temp.connections = [];
+            localStorage.removeItem(
+                "tree_" + this.tree + "_skill_" + this.form.skill_id
+            );
+            localStorage.setItem(
+                "tree_" + this.tree + "_skill_" + this.form.skill_id,
+                JSON.stringify(temp)
+            );
+            location = self.location;
+        },
+        async submit() {
+            if (!this.form.skill_tasks[0].body) {
+                delete this.form.originalData.skill_tasks;
+            }
+
+            this.form
+                .submit(
+                    "/skilltrees/" + this.tree + /skills/ + this.form.skill_id,
+                    "patch"
+                )
+                .then(response => (location = response.data.message))
+                .catch(error => console.log(error));
+        },
+        beforeClose(event) {
+            console.log(event);
+            //location = "/skilltrees/" + this.tree;
+        }
+    }
 };
 </script>
 

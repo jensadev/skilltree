@@ -32,8 +32,8 @@ class ManageSkilltreesTest extends TestCase
         $this->signIn();
         $attributes = factory(Skilltree::class)->raw();
         $attributes['skills'] = [
-            ['skill_title' => 'Skill 1'],
-            ['skill_title' => 'Skill 2']
+            ['name' => 'Skill 1'],
+            ['name' => 'Skill 2']
         ];
         $this->post('/skilltrees', $attributes);
 

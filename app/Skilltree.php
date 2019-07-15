@@ -37,7 +37,7 @@ class Skilltree extends Model
     /**
      * Add a skill to the skilltree.
      * 
-     * @param string $skill_title
+     * @param array $skill
      */
     public function addSkill($skill)
     {

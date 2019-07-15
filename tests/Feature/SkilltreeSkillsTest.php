@@ -26,7 +26,7 @@ class SkilltreeSkillsTest extends TestCase
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)
-            ->post($skilltree->path() . '/skills', ['skill_title' => 'Test skill']);
+            ->post($skilltree->path() . '/skills', ['name' => 'Test skill']);
 
         $this->get($skilltree->path())
             ->assertSee('Test skill');
@@ -39,11 +39,11 @@ class SkilltreeSkillsTest extends TestCase
 
         $this->actingAs($skilltree->owner)
             ->patch($skilltree->skills[0]->path(), [
-                'skill_title' => 'changed'
+                'name' => 'changed'
             ]);
 
         $this->assertDatabaseHas('skills', [
-            'skill_title' => 'changed'
+            'name' => 'changed'
         ]);
     }
 
@@ -53,7 +53,7 @@ class SkilltreeSkillsTest extends TestCase
         $this->withoutExceptionHandling();
         $this->signIn();
         $skilltree = factory('App\Skilltree')->create();
-        $skill = $skilltree->addSkill(["skill_title" => "delete me"]);
+        $skill = $skilltree->addSkill(["name" => "delete me"]);
 
         $this->actingAs($skilltree->owner)
             ->delete($skill->path())
@@ -67,10 +67,10 @@ class SkilltreeSkillsTest extends TestCase
     {
         $this->signIn();
         $skilltree = factory('App\Skilltree')->create();
-        $this->post($skilltree->path() . '/skills', ['skill_title' => 'Test skill'])
+        $this->post($skilltree->path() . '/skills', ['name' => 'Test skill'])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('skills', ['skill_title' => 'Test skill']);
+        $this->assertDatabaseMissing('skills', ['name' => 'Test skill']);
     }
 
     /** @test **/
@@ -80,10 +80,10 @@ class SkilltreeSkillsTest extends TestCase
 
         $skilltree = SkilltreeFactory::withSkills(1)->create();
 
-        $this->patch($skilltree->skills[0]->path(), ['skill_title' => 'changed'])
+        $this->patch($skilltree->skills[0]->path(), ['name' => 'changed'])
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('skills', ['skill_title' => 'changed']);
+        $this->assertDatabaseMissing('skills', ['name' => 'changed']);
     }
 
     /** @test **/
@@ -91,9 +91,21 @@ class SkilltreeSkillsTest extends TestCase
     {
         $skilltree = SkilltreeFactory::create();
 
-        $attributes = factory('App\Skill')->raw(['skill_title' => '']);
+        $attributes = factory('App\Skill')->raw(['name' => '']);
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/skills', $attributes)
-            ->assertSessionHasErrors('skill_title');
+            ->assertSessionHasErrors('name');
+    }
+
+    /** @test **/
+    function a_skill_can_have_a_description()
+    {
+        $skilltree = SkilltreeFactory::create();
+
+        $attributes = factory('App\Skill')->raw(['name' => 'Test', 'description' => 'Some text']);
+        $this->actingAs($skilltree->owner)
+            ->post($skilltree->path() . '/skills', $attributes);
+
+        $this->assertDatabaseHas('skills', ['description' => 'Some text']);
     }
 }

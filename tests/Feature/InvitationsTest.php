@@ -94,7 +94,7 @@ class InvitationsTest extends TestCase
 
         // invited user can add skills
         $this->signIn($newUser);
-        $this->post(action('SkilltreeSkillsController@store', $skilltree), $skill = ['skill_title' => 'Foo skill']);
+        $this->post(action('SkilltreeSkillsController@store', $skilltree), $skill = ['name' => 'Foo skill']);
 
         $this->assertDatabaseHas('skills', $skill);
     }
