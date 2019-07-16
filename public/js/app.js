@@ -5137,6 +5137,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+var _data$props$methods$m;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5183,7 +5185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __webpack_exports__["default"] = (_data$props$methods$m = {
   data: function data() {
     return {
       isLoading: false,
@@ -5272,17 +5274,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }); //location.reload();
     }
-  },
-  created: function created() {
-    Event.$on("position", function (skilldata) {
-      // this.storage[tree][id] = {
-      //     position: position,
-      //     connections: connections
-      // };
-      console.log(skilldata);
-    });
   }
-});
+}, _defineProperty(_data$props$methods$m, "methods", {
+  getPositions: function getPositions(data) {
+    var posdata = JSON.parse(data);
+    this.storage[posdata.skill] = {
+      positions: posdata.positions,
+      connections: posdata.connections
+    };
+    console.log(this.storage);
+  }
+}), _defineProperty(_data$props$methods$m, "watch", {
+  update: function update() {
+    console.log(this.storage);
+  }
+}), _defineProperty(_data$props$methods$m, "created", function created() {
+  var _this = this;
+
+  Event.$on("position", function (data) {
+    _.debounce(_this.getPositions(data), 500);
+  });
+}), _data$props$methods$m);
 
 /***/ }),
 
@@ -5380,7 +5392,7 @@ __webpack_require__.r(__webpack_exports__);
       path: ""
     };
   },
-  mounted: function mounted() {
+  beforeMount: function beforeMount() {
     if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
 
     if (typeof this.skilltree !== "undefined") {
@@ -5417,12 +5429,13 @@ __webpack_require__.r(__webpack_exports__);
       if (absolutePosition) {
         //                console.log(absolutePosition);
         this.position = absolutePosition;
-        Event.$emit("position", {
+        var posdata = {
           skilltree: this.tree,
           skill: this.id,
           position: this.position,
           connections: this.connections
-        });
+        };
+        Event.$emit("position", JSON.stringify(posdata));
       }
 
       jqSimpleConnect.repaintAll();

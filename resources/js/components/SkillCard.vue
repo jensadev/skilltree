@@ -83,7 +83,7 @@ export default {
             path: ""
         };
     },
-    mounted() {
+    beforeMount() {
         if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
 
         if (typeof this.skilltree !== "undefined") {
@@ -124,12 +124,15 @@ export default {
             if (absolutePosition) {
                 //                console.log(absolutePosition);
                 this.position = absolutePosition;
-                Event.$emit("position", {
+
+                let posdata = {
                     skilltree: this.tree,
                     skill: this.id,
                     position: this.position,
                     connections: this.connections
-                });
+                };
+
+                Event.$emit("position", JSON.stringify(posdata));
             }
             jqSimpleConnect.repaintAll();
         },

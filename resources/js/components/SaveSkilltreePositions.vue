@@ -101,14 +101,24 @@ export default {
             //location.reload();
         }
     },
-    created() {
-        Event.$on("position", skilldata => {
-            // this.storage[tree][id] = {
-            //     position: position,
-            //     connections: connections
-            // };
-
-            console.log(skilldata);
+    methods: {
+        getPositions: function(data) {
+            let posdata = JSON.parse(data);
+            this.storage[posdata.skill] = {
+                positions: posdata.positions,
+                connections: posdata.connections
+            };
+            console.log(this.storage);
+        }
+    },
+    watch: {
+        update: function() {
+            console.log(this.storage);
+        }
+    },
+    created: function() {
+        Event.$on("position", data => {
+            _.debounce(this.getPositions(data), 500);
         });
     }
 };
