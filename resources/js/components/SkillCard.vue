@@ -132,12 +132,12 @@ export default {
                     connections: this.connections
                 };
 
-                Event.$emit("position", JSON.stringify(posdata));
+                Event.$emit("setPosCon", JSON.stringify(posdata));
             }
             jqSimpleConnect.repaintAll();
         },
         onDragEnd: function(absolutePosition) {
-            //console.log("end");
+            Event.$emit("savePosCon");
         },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;

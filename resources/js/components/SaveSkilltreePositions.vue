@@ -44,6 +44,7 @@ export default {
         return {
             isLoading: false,
             isSaving: false,
+            skilltree: 0,
             storage: []
         };
     },
@@ -102,23 +103,29 @@ export default {
         }
     },
     methods: {
-        getPositions: function(data) {
+        setSkillStorage: _.debounce(function(data) {
             let posdata = JSON.parse(data);
+            this.skilltree = posdata.skilltree;
             this.storage[posdata.skill] = {
-                positions: posdata.positions,
+                position: posdata.position,
                 connections: posdata.connections
             };
+        }, 500),
+        saveSkillStorage: _.debounce(function() {
             console.log(this.storage);
-        }
-    },
-    watch: {
-        update: function() {
-            console.log(this.storage);
-        }
+
+            localStorage.setItem(
+                [this.skilltree],
+                JSON.stringify(this.storage)
+            );
+        }, 500)
     },
     created: function() {
-        Event.$on("position", data => {
-            _.debounce(this.getPositions(data), 500);
+        Event.$on("setPosCon", data => {
+            this.setSkillStorage(data);
+        });
+        Event.$on("savePosCon", data => {
+            this.saveSkillStorage(data);
         });
     }
 };

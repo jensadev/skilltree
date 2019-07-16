@@ -5190,6 +5190,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       isLoading: false,
       isSaving: false,
+      skilltree: 0,
       storage: []
     };
   },
@@ -5276,23 +5277,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }
 }, _defineProperty(_data$props$methods$m, "methods", {
-  getPositions: function getPositions(data) {
+  setSkillStorage: _.debounce(function (data) {
     var posdata = JSON.parse(data);
+    this.skilltree = posdata.skilltree;
     this.storage[posdata.skill] = {
-      positions: posdata.positions,
+      position: posdata.position,
       connections: posdata.connections
     };
+  }, 500),
+  saveSkillStorage: _.debounce(function () {
     console.log(this.storage);
-  }
-}), _defineProperty(_data$props$methods$m, "watch", {
-  update: function update() {
-    console.log(this.storage);
-  }
+    localStorage.setItem([this.skilltree], JSON.stringify(this.storage));
+  }, 500)
 }), _defineProperty(_data$props$methods$m, "created", function created() {
   var _this = this;
 
-  Event.$on("position", function (data) {
-    _.debounce(_this.getPositions(data), 500);
+  Event.$on("setPosCon", function (data) {
+    _this.setSkillStorage(data);
+  });
+  Event.$on("savePosCon", function (data) {
+    _this.saveSkillStorage(data);
   });
 }), _data$props$methods$m);
 
@@ -5435,12 +5439,13 @@ __webpack_require__.r(__webpack_exports__);
           position: this.position,
           connections: this.connections
         };
-        Event.$emit("position", JSON.stringify(posdata));
+        Event.$emit("setPosCon", JSON.stringify(posdata));
       }
 
       jqSimpleConnect.repaintAll();
     },
-    onDragEnd: function onDragEnd(absolutePosition) {//console.log("end");
+    onDragEnd: function onDragEnd(absolutePosition) {
+      Event.$emit("savePosCon");
     },
     random: function random(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
