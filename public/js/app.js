@@ -5397,8 +5397,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   beforeMount: function beforeMount() {
-    if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
-
     if (typeof this.skilltree !== "undefined") {
       this.title = this.skilltree.title;
       this.description = this.skilltree.description;
@@ -5409,6 +5407,7 @@ __webpack_require__.r(__webpack_exports__);
       this.description = this.skill.description ? this.skill.description : "";
       this.id = this.skill.id;
       this.tree = this.skill.skilltree_id;
+      if (this.skill.tasks) this.tasks = this.skill.tasks;
     }
   },
   methods: {
@@ -5454,10 +5453,23 @@ __webpack_require__.r(__webpack_exports__);
       return text.slice(0, count) + (text.length > count && end ? "..." : "");
     },
     getPos: function getPos() {
-      this.position = {
-        left: this.random(200, window.innerWidth - 200),
-        top: this.random(200, window.innerWidth - 200)
-      };
+      if (JSON.parse(localStorage.getItem(this.tree))[this.id] == null || typeof JSON.parse(localStorage.getItem(this.tree))[this.id] !== "undefined") {
+        var data = JSON.parse(localStorage.getItem(this.tree))[this.id];
+        console.log(data);
+
+        if (data.position) {
+          this.position = {
+            left: data.position.left,
+            top: data.position.top
+          };
+        }
+      } else {
+        this.position = {
+          left: this.random(200, window.innerWidth - 200),
+          top: this.random(200, window.innerWidth - 200)
+        };
+      }
+
       return this.position;
     }
   }

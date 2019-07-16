@@ -84,8 +84,6 @@ export default {
         };
     },
     beforeMount() {
-        if (this.skill && this.skill.tasks) this.tasks = this.skill.tasks;
-
         if (typeof this.skilltree !== "undefined") {
             this.title = this.skilltree.title;
             this.description = this.skilltree.description;
@@ -98,6 +96,8 @@ export default {
                 : "";
             this.id = this.skill.id;
             this.tree = this.skill.skilltree_id;
+
+            if (this.skill.tasks) this.tasks = this.skill.tasks;
         }
     },
     methods: {
@@ -148,10 +148,25 @@ export default {
             );
         },
         getPos: function() {
-            this.position = {
-                left: this.random(200, window.innerWidth - 200),
-                top: this.random(200, window.innerWidth - 200)
-            };
+            if (
+                JSON.parse(localStorage.getItem(this.tree))[this.id] == null ||
+                typeof JSON.parse(localStorage.getItem(this.tree))[this.id] !==
+                    "undefined"
+            ) {
+                let data = JSON.parse(localStorage.getItem(this.tree))[this.id];
+                console.log(data);
+                if (data.position) {
+                    this.position = {
+                        left: data.position.left,
+                        top: data.position.top
+                    };
+                }
+            } else {
+                this.position = {
+                    left: this.random(200, window.innerWidth - 200),
+                    top: this.random(200, window.innerWidth - 200)
+                };
+            }
 
             return this.position;
         }
