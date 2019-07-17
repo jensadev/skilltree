@@ -104,7 +104,6 @@ export default {
     mounted() {
         if (localStorage.hasOwnProperty(this.tree)) {
             let data = JSON.parse(localStorage.getItem(this.tree));
-            console.log(data[this.id]);
             if (
                 data[this.id] !== null &&
                 data[this.id].connections.length > 0
@@ -141,30 +140,38 @@ export default {
                     this.connections.push(e.target.offsetParent.id);
                 }
             }
+            Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
+            Event.$emit("savePosCon", this.id);
+
             document.removeEventListener("click", this.handler, true);
         },
         createConnection: function() {
             document.addEventListener("click", this.handler, true);
         },
+        getCardData: function() {
+            let posdata = {
+                skilltree: this.tree,
+                skill: this.id,
+                position: this.position,
+                connections: this.connections
+            };
+            return posdata;
+        },
         onPosChanged: function(positionDiff, absolutePosition, event) {
             if (absolutePosition) {
-                //                console.log(absolutePosition);
                 this.position = absolutePosition;
 
-                let posdata = {
-                    skilltree: this.tree,
-                    skill: this.id,
-                    position: this.position,
-                    connections: this.connections
-                };
-
-                Event.$emit("setPosCon", JSON.stringify(posdata));
+                Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
+                //this.broadcast(JSON.stringify(posdata));
             }
             jqSimpleConnect.repaintAll();
         },
         onDragEnd: function(absolutePosition) {
-            Event.$emit("savePosCon");
+            Event.$emit("savePosCon", this.id);
         },
+        // broadcast: _.debounce(function(data) {
+        //     Event.$emit("setPosCon", data);
+        // }, 500),
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
         },
@@ -193,7 +200,6 @@ export default {
                     top: this.random(200, window.innerWidth - 200)
                 };
             }
-
             return this.position;
         }
     }

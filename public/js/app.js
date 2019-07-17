@@ -5133,18 +5133,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var _data$props$methods$m;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 //
 //
 //
@@ -5185,122 +5173,100 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_data$props$methods$m = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isLoading: false,
       isSaving: false,
       skilltree: 0,
-      storage: []
+      storage: {}
     };
   },
   props: ["tree", "save"],
   methods: {
-    savePositions: function () {
-      var _savePositions = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                this.isSaving = true;
-
-                if (this.hasItems()) {
-                  this.positions = this.getStorage();
-                }
-
-                _context.prev = 2;
-                _context.next = 5;
-                return axios.post("/skilltrees/" + this.tree + "/pos", {
-                  positions: this.positions
-                }).then(function (response) {
-                  console.log(response.status);
-                });
-
-              case 5:
-                _context.next = 11;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](2);
-                this.errors = _context.t0;
-                console.log("error" + this.errors);
-
-              case 11:
-                this.isSaving = false;
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[2, 7]]);
-      }));
-
-      function savePositions() {
-        return _savePositions.apply(this, arguments);
+    // async savePositions() {
+    //     this.isSaving = true;
+    //     if (this.hasItems()) {
+    //         this.positions = this.getStorage();
+    //     }
+    //     try {
+    //         await axios
+    //             .post("/skilltrees/" + this.tree + "/pos", {
+    //                 positions: this.positions
+    //             })
+    //             .then(function(response) {
+    //                 console.log(response.status);
+    //             });
+    //     } catch (error) {
+    //         this.errors = error;
+    //         console.log("error" + this.errors);
+    //     }
+    //     this.isSaving = false;
+    // },
+    // hasItems() {
+    //     let test = false;
+    //     try {
+    //         test = localStorage.getItem([
+    //             "tree_" + this.tree + "_skill_" + 0
+    //         ]);
+    //     } catch {
+    //         test = false;
+    //     }
+    //     return test != null ? true : false;
+    // },
+    // getStorage() {
+    //     let temp = [];
+    //     let needle = "tree_" + this.tree;
+    //     Object.keys(localStorage).forEach(function(key) {
+    //         if (key.includes(needle)) {
+    //             temp.push({ [key]: localStorage.getItem(key) });
+    //         }
+    //     });
+    //     return temp;
+    // },
+    // restorePositions() {
+    //     this.isLoading = true;
+    //     let needle = "tree_" + this.tree;
+    //     Object.keys(localStorage).forEach(function(key) {
+    //         if (key.includes(needle)) {
+    //             localStorage.removeItem(key);
+    //         }
+    //     });
+    //     //location.reload();
+    // },
+    //setSkillStorage: _.debounce(function(data) {
+    setSkillStorage: function setSkillStorage(data) {
+      var posdata = JSON.parse(data);
+      this.skilltree = posdata.skilltree;
+      this.storage[posdata.skill] = {
+        position: posdata.position,
+        connections: posdata.connections
+      }; //console.log(this.storage);
+      //}, 500),
+    },
+    //saveSkillStorage: _.debounce(function() {
+    saveSkillStorage: function saveSkillStorage(skill) {
+      if (localStorage.getItem(this.skilltree) !== null) {
+        var ls = JSON.parse(localStorage.getItem(this.skilltree));
+        ls[skill] = this.storage[skill];
+        this.storage = ls;
       }
 
-      return savePositions;
-    }(),
-    hasItems: function hasItems() {
-      var test = false;
+      localStorage.setItem(this.skilltree, JSON.stringify(this.storage));
+    } //}, 500)
 
-      try {
-        test = localStorage.getItem(["tree_" + this.tree + "_skill_" + 0]);
-      } catch (_unused) {
-        test = false;
-      }
-
-      return test != null ? true : false;
-    },
-    getStorage: function getStorage() {
-      var temp = [];
-      var needle = "tree_" + this.tree;
-      Object.keys(localStorage).forEach(function (key) {
-        if (key.includes(needle)) {
-          temp.push(_defineProperty({}, key, localStorage.getItem(key)));
-        }
-      });
-      return temp;
-    },
-    restorePositions: function restorePositions() {
-      this.isLoading = true;
-      var needle = "tree_" + this.tree;
-      Object.keys(localStorage).forEach(function (key) {
-        if (key.includes(needle)) {
-          localStorage.removeItem(key);
-        }
-      }); //location.reload();
-    }
-  }
-}, _defineProperty(_data$props$methods$m, "methods", {
-  //setSkillStorage: _.debounce(function(data) {
-  setSkillStorage: function setSkillStorage(data) {
-    var posdata = JSON.parse(data);
-    this.skilltree = posdata.skilltree;
-    this.storage[posdata.skill] = {
-      position: posdata.position,
-      connections: posdata.connections
-    }; //}, 500),
   },
-  //saveSkillStorage: _.debounce(function() {
-  saveSkillStorage: function saveSkillStorage() {
-    localStorage.setItem([this.skilltree], JSON.stringify(this.storage));
-  } //}, 500)
+  created: function created() {
+    var _this = this;
 
-}), _defineProperty(_data$props$methods$m, "created", function created() {
-  var _this = this;
-
-  Event.$on("setPosCon", function (data) {
-    _this.setSkillStorage(data);
-  });
-  Event.$on("savePosCon", function (data) {
-    _this.saveSkillStorage(data);
-  });
-}), _data$props$methods$m);
+    Event.$on("updatePosCon", function (data) {
+      _this.setSkillStorage(data);
+    });
+    Event.$on("savePosCon", function (data) {
+      _this.saveSkillStorage(data);
+    });
+  }
+});
 
 /***/ }),
 
@@ -5422,7 +5388,6 @@ __webpack_require__.r(__webpack_exports__);
 
     if (localStorage.hasOwnProperty(this.tree)) {
       var data = JSON.parse(localStorage.getItem(this.tree));
-      console.log(data[this.id]);
 
       if (data[this.id] !== null && data[this.id].connections.length > 0) {
         this.connections = data[this.id].connections;
@@ -5450,29 +5415,36 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
+      Event.$emit("savePosCon", this.id);
       document.removeEventListener("click", this.handler, true);
     },
     createConnection: function createConnection() {
       document.addEventListener("click", this.handler, true);
     },
+    getCardData: function getCardData() {
+      var posdata = {
+        skilltree: this.tree,
+        skill: this.id,
+        position: this.position,
+        connections: this.connections
+      };
+      return posdata;
+    },
     onPosChanged: function onPosChanged(positionDiff, absolutePosition, event) {
       if (absolutePosition) {
-        //                console.log(absolutePosition);
         this.position = absolutePosition;
-        var posdata = {
-          skilltree: this.tree,
-          skill: this.id,
-          position: this.position,
-          connections: this.connections
-        };
-        Event.$emit("setPosCon", JSON.stringify(posdata));
+        Event.$emit("updatePosCon", JSON.stringify(this.getCardData())); //this.broadcast(JSON.stringify(posdata));
       }
 
       jqSimpleConnect.repaintAll();
     },
     onDragEnd: function onDragEnd(absolutePosition) {
-      Event.$emit("savePosCon");
+      Event.$emit("savePosCon", this.id);
     },
+    // broadcast: _.debounce(function(data) {
+    //     Event.$emit("setPosCon", data);
+    // }, 500),
     random: function random(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     },

@@ -45,64 +45,62 @@ export default {
             isLoading: false,
             isSaving: false,
             skilltree: 0,
-            storage: []
+            storage: {}
         };
     },
     props: ["tree", "save"],
     methods: {
-        async savePositions() {
-            this.isSaving = true;
-            if (this.hasItems()) {
-                this.positions = this.getStorage();
-            }
-            try {
-                await axios
-                    .post("/skilltrees/" + this.tree + "/pos", {
-                        positions: this.positions
-                    })
-                    .then(function(response) {
-                        console.log(response.status);
-                    });
-            } catch (error) {
-                this.errors = error;
-                console.log("error" + this.errors);
-            }
-            this.isSaving = false;
-        },
-        hasItems() {
-            let test = false;
-            try {
-                test = localStorage.getItem([
-                    "tree_" + this.tree + "_skill_" + 0
-                ]);
-            } catch {
-                test = false;
-            }
-            return test != null ? true : false;
-        },
-        getStorage() {
-            let temp = [];
-            let needle = "tree_" + this.tree;
-            Object.keys(localStorage).forEach(function(key) {
-                if (key.includes(needle)) {
-                    temp.push({ [key]: localStorage.getItem(key) });
-                }
-            });
+        // async savePositions() {
+        //     this.isSaving = true;
+        //     if (this.hasItems()) {
+        //         this.positions = this.getStorage();
+        //     }
+        //     try {
+        //         await axios
+        //             .post("/skilltrees/" + this.tree + "/pos", {
+        //                 positions: this.positions
+        //             })
+        //             .then(function(response) {
+        //                 console.log(response.status);
+        //             });
+        //     } catch (error) {
+        //         this.errors = error;
+        //         console.log("error" + this.errors);
+        //     }
+        //     this.isSaving = false;
+        // },
+        // hasItems() {
+        //     let test = false;
+        //     try {
+        //         test = localStorage.getItem([
+        //             "tree_" + this.tree + "_skill_" + 0
+        //         ]);
+        //     } catch {
+        //         test = false;
+        //     }
+        //     return test != null ? true : false;
+        // },
+        // getStorage() {
+        //     let temp = [];
+        //     let needle = "tree_" + this.tree;
+        //     Object.keys(localStorage).forEach(function(key) {
+        //         if (key.includes(needle)) {
+        //             temp.push({ [key]: localStorage.getItem(key) });
+        //         }
+        //     });
 
-            return temp;
-        },
-        restorePositions() {
-            this.isLoading = true;
-            let needle = "tree_" + this.tree;
-            Object.keys(localStorage).forEach(function(key) {
-                if (key.includes(needle)) {
-                    localStorage.removeItem(key);
-                }
-            });
-            //location.reload();
-        }
-    },
-    methods: {
+        //     return temp;
+        // },
+        // restorePositions() {
+        //     this.isLoading = true;
+        //     let needle = "tree_" + this.tree;
+        //     Object.keys(localStorage).forEach(function(key) {
+        //         if (key.includes(needle)) {
+        //             localStorage.removeItem(key);
+        //         }
+        //     });
+        //     //location.reload();
+        // },
         //setSkillStorage: _.debounce(function(data) {
         setSkillStorage: function(data) {
             let posdata = JSON.parse(data);
@@ -111,19 +109,25 @@ export default {
                 position: posdata.position,
                 connections: posdata.connections
             };
+            //console.log(this.storage);
             //}, 500),
         },
         //saveSkillStorage: _.debounce(function() {
-        saveSkillStorage: function() {
-            localStorage.setItem(
-                [this.skilltree],
-                JSON.stringify(this.storage)
-            );
+        saveSkillStorage: function(skill) {
+            if (localStorage.getItem(this.skilltree) !== null) {
+                let ls = JSON.parse(localStorage.getItem(this.skilltree));
+
+                ls[skill] = this.storage[skill];
+
+                this.storage = ls;
+            }
+
+            localStorage.setItem(this.skilltree, JSON.stringify(this.storage));
         }
         //}, 500)
     },
     created: function() {
-        Event.$on("setPosCon", data => {
+        Event.$on("updatePosCon", data => {
             this.setSkillStorage(data);
         });
         Event.$on("savePosCon", data => {
