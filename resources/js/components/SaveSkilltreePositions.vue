@@ -2,7 +2,7 @@
     <div class="save-skilltree-positions">
         <button
             class="btn dashbaricon"
-            @click.prevent="restorePositions"
+            @click.prevent="restorePosCon"
             title="Restore Skilltree positions"
             v-bind="{isLoading}"
             :disabled="isLoading"
@@ -20,8 +20,8 @@
         <!--v-if="save"-->
         <button
             class="btn dashbaricon"
-            @click.prevent="savePositions"
-            title="Save Skilltree positions"
+            @click.prevent="savePosConDB"
+            title="Save Skilltree positions and connections to Database."
             v-bind="{isSaving}"
             :disabled="isSaving"
         >
@@ -50,25 +50,21 @@ export default {
     },
     props: ["tree", "save"],
     methods: {
-        // async savePositions() {
-        //     this.isSaving = true;
-        //     if (this.hasItems()) {
-        //         this.positions = this.getStorage();
-        //     }
-        //     try {
-        //         await axios
-        //             .post("/skilltrees/" + this.tree + "/pos", {
-        //                 positions: this.positions
-        //             })
-        //             .then(function(response) {
-        //                 console.log(response.status);
-        //             });
-        //     } catch (error) {
-        //         this.errors = error;
-        //         console.log("error" + this.errors);
-        //     }
-        //     this.isSaving = false;
-        // },
+        async savePosConDB() {
+            this.isSaving = true;
+            let ls = JSON.parse(localStorage.getItem(this.skilltree));
+            await axios
+                .post("/skilltrees/" + this.skilltree + "/pos", {
+                    data: ls
+                })
+                .then(function(response) {
+                    console.log(response.status);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.isSaving = false;
+        },
         // hasItems() {
         //     let test = false;
         //     try {
@@ -91,17 +87,18 @@ export default {
 
         //     return temp;
         // },
-        // restorePositions() {
-        //     this.isLoading = true;
-        //     let needle = "tree_" + this.tree;
-        //     Object.keys(localStorage).forEach(function(key) {
-        //         if (key.includes(needle)) {
-        //             localStorage.removeItem(key);
-        //         }
-        //     });
-        //     //location.reload();
-        // },
-        //setSkillStorage: _.debounce(function(data) {
+        restorePosCon: function() {
+            this.isLoading = true;
+            localStorage.removeItem(this.skilltree);
+            //     let needle = "tree_" + this.tree;
+            //     Object.keys(localStorage).forEach(function(key) {
+            //         if (key.includes(needle)) {
+            //             localStorage.removeItem(key);
+            //         }
+            //     });
+            //     //location.reload();
+            this.isLoading = false;
+        },
         setSkillStorage: function(data) {
             let posdata = JSON.parse(data);
             this.skilltree = posdata.skilltree;
@@ -110,9 +107,7 @@ export default {
                 connections: posdata.connections
             };
             //console.log(this.storage);
-            //}, 500),
         },
-        //saveSkillStorage: _.debounce(function() {
         saveSkillStorage: function(skill) {
             if (localStorage.getItem(this.skilltree) !== null) {
                 let ls = JSON.parse(localStorage.getItem(this.skilltree));
@@ -121,10 +116,29 @@ export default {
 
                 this.storage = ls;
             }
-
             localStorage.setItem(this.skilltree, JSON.stringify(this.storage));
+        },
+        async loadStorage(id) {
+            this.isLoading = true;
+            await axios
+                .get("/skilltrees/" + id + "/pos")
+                .then(function(response) {
+                    if (response.data.message != "No positions found") {
+                        localStorage.setItem(
+                            id,
+                            JSON.stringify(response.data.message.value)
+                        );
+                        location.reload();
+                    } else {
+                        console.log(response.data.message); // toast
+                        //$(".toast").toast("show");
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.isLoading = false;
         }
-        //}, 500)
     },
     created: function() {
         Event.$on("updatePosCon", data => {
@@ -133,6 +147,10 @@ export default {
         Event.$on("savePosCon", data => {
             this.saveSkillStorage(data);
         });
+
+        if (localStorage.getItem(this.tree) === null) {
+            this.loadStorage(this.tree);
+        }
     }
 };
 </script>

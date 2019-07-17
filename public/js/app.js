@@ -5133,6 +5133,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -5184,25 +5192,43 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ["tree", "save"],
   methods: {
-    // async savePositions() {
-    //     this.isSaving = true;
-    //     if (this.hasItems()) {
-    //         this.positions = this.getStorage();
-    //     }
-    //     try {
-    //         await axios
-    //             .post("/skilltrees/" + this.tree + "/pos", {
-    //                 positions: this.positions
-    //             })
-    //             .then(function(response) {
-    //                 console.log(response.status);
-    //             });
-    //     } catch (error) {
-    //         this.errors = error;
-    //         console.log("error" + this.errors);
-    //     }
-    //     this.isSaving = false;
-    // },
+    savePosConDB: function () {
+      var _savePosConDB = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var ls;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.isSaving = true;
+                ls = JSON.parse(localStorage.getItem(this.skilltree));
+                _context.next = 4;
+                return axios.post("/skilltrees/" + this.skilltree + "/pos", {
+                  data: ls
+                }).then(function (response) {
+                  console.log(response.status);
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 4:
+                this.isSaving = false;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function savePosConDB() {
+        return _savePosConDB.apply(this, arguments);
+      }
+
+      return savePosConDB;
+    }(),
     // hasItems() {
     //     let test = false;
     //     try {
@@ -5224,17 +5250,18 @@ __webpack_require__.r(__webpack_exports__);
     //     });
     //     return temp;
     // },
-    // restorePositions() {
-    //     this.isLoading = true;
-    //     let needle = "tree_" + this.tree;
-    //     Object.keys(localStorage).forEach(function(key) {
-    //         if (key.includes(needle)) {
-    //             localStorage.removeItem(key);
-    //         }
-    //     });
-    //     //location.reload();
-    // },
-    //setSkillStorage: _.debounce(function(data) {
+    restorePosCon: function restorePosCon() {
+      this.isLoading = true;
+      localStorage.removeItem(this.skilltree); //     let needle = "tree_" + this.tree;
+      //     Object.keys(localStorage).forEach(function(key) {
+      //         if (key.includes(needle)) {
+      //             localStorage.removeItem(key);
+      //         }
+      //     });
+      //     //location.reload();
+
+      this.isLoading = false;
+    },
     setSkillStorage: function setSkillStorage(data) {
       var posdata = JSON.parse(data);
       this.skilltree = posdata.skilltree;
@@ -5242,9 +5269,7 @@ __webpack_require__.r(__webpack_exports__);
         position: posdata.position,
         connections: posdata.connections
       }; //console.log(this.storage);
-      //}, 500),
     },
-    //saveSkillStorage: _.debounce(function() {
     saveSkillStorage: function saveSkillStorage(skill) {
       if (localStorage.getItem(this.skilltree) !== null) {
         var ls = JSON.parse(localStorage.getItem(this.skilltree));
@@ -5253,8 +5278,46 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       localStorage.setItem(this.skilltree, JSON.stringify(this.storage));
-    } //}, 500)
+    },
+    loadStorage: function () {
+      var _loadStorage = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isLoading = true;
+                _context2.next = 3;
+                return axios.get("/skilltrees/" + id + "/pos").then(function (response) {
+                  if (response.data.message != "No positions found") {
+                    localStorage.setItem(id, JSON.stringify(response.data.message.value));
+                    location.reload();
+                  } else {
+                    console.log(response.data.message); // toast
+                    //$(".toast").toast("show");
+                  }
+                })["catch"](function (error) {
+                  console.log(error);
+                });
 
+              case 3:
+                this.isLoading = false;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loadStorage(_x) {
+        return _loadStorage.apply(this, arguments);
+      }
+
+      return loadStorage;
+    }()
   },
   created: function created() {
     var _this = this;
@@ -5265,6 +5328,10 @@ __webpack_require__.r(__webpack_exports__);
     Event.$on("savePosCon", function (data) {
       _this.saveSkillStorage(data);
     });
+
+    if (localStorage.getItem(this.tree) === null) {
+      this.loadStorage(this.tree);
+    }
   }
 });
 
@@ -66216,7 +66283,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.restorePositions($event)
+              return _vm.restorePosCon($event)
             }
           }
         },
@@ -66252,11 +66319,14 @@ var render = function() {
       _vm._b(
         {
           staticClass: "btn dashbaricon",
-          attrs: { title: "Save Skilltree positions", disabled: _vm.isSaving },
+          attrs: {
+            title: "Save Skilltree positions and connections to Database.",
+            disabled: _vm.isSaving
+          },
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.savePositions($event)
+              return _vm.savePosConDB($event)
             }
           }
         },

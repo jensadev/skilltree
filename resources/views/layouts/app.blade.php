@@ -87,10 +87,11 @@
             </div>
         </nav>
         <main>
+
             @yield('content')
 
             <loader @onCenterLoading="status()"></loader>
-
+            {{-- @include('skilltrees.toast') --}}
         </main>
     </div>
     @if (Request::is('skilltrees/*'))

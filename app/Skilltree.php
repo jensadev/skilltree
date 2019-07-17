@@ -36,7 +36,7 @@ class Skilltree extends Model
 
     /**
      * Add a skill to the skilltree.
-     * 
+     *
      * @param array $skill
      */
     public function addSkill($skill)
@@ -46,7 +46,7 @@ class Skilltree extends Model
 
     /**
      * Add skills to the skilltree.
-     * 
+     *
      * @param array $skills
      */
     public function addSkills($skills)
@@ -76,15 +76,15 @@ class Skilltree extends Model
 
     public function showPositions()
     {
-        if ($this->hasMeta('positions')) {
-            return $this->getMeta('positions');
+        if ($poscon = $this->getMeta('poscon')) {
+            return $poscon;
         }
         return "No positions found";
     }
 
-    public function storePositions($positions)
+    public function storePositions($data)
     {
-        return $this->addOrUpdateMeta('positions', $positions);
+        return $this->addOrUpdateMeta('poscon', $data);
     }
 
     // public function storeClassroomid($classroomid)

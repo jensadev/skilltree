@@ -20,6 +20,6 @@ class SkilltreePositionsController extends Controller
     public function store(Skilltree $skilltree, Request $request)
     {
         $this->authorize('update', $skilltree);
-        $skilltree->storePositions($request->positions);
+        $skilltree->storePositions($request->data);
     }
 }
