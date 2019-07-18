@@ -24,6 +24,9 @@
                     <i class="material-icons">settings</i>
                 </a>
             @endif
+                <a href="#" class="btn dashbaricon" role="button">
+                    <i class="material-icons">bug_report</i>
+                </a>
         </div>
     </div>
 </nav>

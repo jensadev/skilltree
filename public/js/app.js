@@ -2076,10 +2076,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     isOpen: function isOpen() {
       if (this.isOpen) {
-        document.addEventListener("click", this.closeIfClickedOutside);
-        window.setTimeout(function () {
-          document.getElementById("name").focus();
-        }, 0);
+        document.addEventListener("click", this.closeIfClickedOutside); // window.setTimeout(function() {
+        //     document.getElementById("name").focus();
+        // }, 0);
       }
     }
   },
@@ -3417,6 +3416,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3439,7 +3445,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 this.isSaving = true;
                 ls = JSON.parse(localStorage.getItem(this.skilltree));
-                _context.next = 4;
+
+                if (!ls) {
+                  ls = {};
+                }
+
+                ;
+                _context.next = 6;
                 return axios.post("/skilltrees/" + this.skilltree + "/pos", {
                   data: ls
                 }).then(function (response) {
@@ -3448,10 +3460,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 4:
+              case 6:
                 this.isSaving = false;
 
-              case 5:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -3465,11 +3477,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return savePosConDB;
     }(),
-    restorePosCon: function restorePosCon() {
-      this.isLoading = true;
+    clearPosCon: function clearPosCon() {
+      this.storage = {};
       localStorage.removeItem(this.skilltree);
-      this.isLoading = false;
+      jqSimpleConnect.removeAll();
     },
+    restorePosCon: function () {
+      var _restorePosCon = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isLoading = true;
+                this.loadStorage(this.tree);
+                this.isLoading = false;
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function restorePosCon() {
+        return _restorePosCon.apply(this, arguments);
+      }
+
+      return restorePosCon;
+    }(),
     setSkillStorage: function setSkillStorage(data) {
       var posdata = JSON.parse(data);
       this.skilltree = posdata.skilltree;
@@ -3490,13 +3528,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadStorage: function () {
       var _loadStorage = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.isLoading = true;
-                _context2.next = 3;
+                _context3.next = 3;
                 return axios.get("/skilltrees/" + id + "/pos").then(function (response) {
                   if (response.data.message != "No positions found") {
                     localStorage.setItem(id, JSON.stringify(response.data.message.value));
@@ -3514,10 +3552,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function loadStorage(_x) {
@@ -36913,7 +36951,7 @@ function createPanZoom(domElement, options) {
   function listenForEvents() {
     owner.addEventListener('mousedown', onMouseDown)
     owner.addEventListener('dblclick', onDoubleClick)
-    owner.addEventListener('touchstart', onTouch)
+    owner.addEventListener('touchstart', onTouch, { passive: true })
     owner.addEventListener('keydown', onKeyDown)
 
     // Need to listen on the owner container, so that we are not limited
@@ -43549,11 +43587,26 @@ var render = function() {
   return _c("div", { staticClass: "save-skilltree-positions" }, [
     _c(
       "button",
+      {
+        staticClass: "btn dashbaricon",
+        attrs: { title: "Clear Skilltree positions and connections." },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.clearPosCon($event)
+          }
+        }
+      },
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("clear")])]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
       _vm._b(
         {
           staticClass: "btn dashbaricon",
           attrs: {
-            title: "Restore Skilltree positions",
+            title: "Restore Skilltree positions and connections from Database.",
             disabled: _vm.isLoading
           },
           on: {

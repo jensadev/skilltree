@@ -54,9 +54,9 @@ export default {
             if (this.isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
 
-                window.setTimeout(function() {
-                    document.getElementById("name").focus();
-                }, 0);
+                // window.setTimeout(function() {
+                //     document.getElementById("name").focus();
+                // }, 0);
             }
         }
     },
