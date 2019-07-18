@@ -200,18 +200,27 @@ export default {
                 position: ls[this.form.id].position,
                 connections: []
             };
-            console.log(getCardData);
             Event.$emit("clearCon");
             Event.$emit("updatePosCon", JSON.stringify(getCardData));
             Event.$emit("savePosCon", this.form.id);
-            // ls[this.form.id].connections = [];
-            // localStorage.setItem(this.skilltree, JSON.stringify(ls));
-            // jqSimpleConnect.repaintAll();
         },
         async deleteSkill() {
             console.log("delete skill");
             //            let ls = localStorage.getItem(this.skilltree);
-        }
+        },
+        async submit() {
+            // if (!this.form.skill_tasks[0].body) {
+            //     delete this.form.originalData.skill_tasks;
+            // }
+
+            this.form
+                .submit(
+                    "/skilltrees/" + this.skilltree + /skills/ + this.form.id,
+                    "patch"
+                )
+                .then(response => (location = response.data.message))
+                .catch(error => console.log(error));
+        },
     }
 };
 </script>

@@ -180,16 +180,12 @@ export default {
                 this.position = absolutePosition;
 
                 Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
-                //this.broadcast(JSON.stringify(posdata));
             }
             jqSimpleConnect.repaintAll();
         },
         onDragEnd: function(absolutePosition) {
             Event.$emit("savePosCon", this.id);
         },
-        // broadcast: _.debounce(function(data) {
-        //     Event.$emit("setPosCon", data);
-        // }, 500),
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
         },

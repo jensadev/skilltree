@@ -2340,12 +2340,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         position: ls[this.form.id].position,
         connections: []
       };
-      console.log(getCardData);
       Event.$emit("clearCon");
       Event.$emit("updatePosCon", JSON.stringify(getCardData));
-      Event.$emit("savePosCon", this.form.id); // ls[this.form.id].connections = [];
-      // localStorage.setItem(this.skilltree, JSON.stringify(ls));
-      // jqSimpleConnect.repaintAll();
+      Event.$emit("savePosCon", this.form.id);
     },
     deleteSkill: function () {
       var _deleteSkill = _asyncToGenerator(
@@ -2370,6 +2367,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return deleteSkill;
+    }(),
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // if (!this.form.skill_tasks[0].body) {
+                //     delete this.form.originalData.skill_tasks;
+                // }
+                this.form.submit("/skilltrees/" + this.skilltree + /skills/ + this.form.id, "patch").then(function (response) {
+                  return location = response.data.message;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
     }()
   }
 });
@@ -3693,7 +3721,7 @@ __webpack_require__.r(__webpack_exports__);
     onPosChanged: function onPosChanged(positionDiff, absolutePosition, event) {
       if (absolutePosition) {
         this.position = absolutePosition;
-        Event.$emit("updatePosCon", JSON.stringify(this.getCardData())); //this.broadcast(JSON.stringify(posdata));
+        Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
       }
 
       jqSimpleConnect.repaintAll();
@@ -3701,9 +3729,6 @@ __webpack_require__.r(__webpack_exports__);
     onDragEnd: function onDragEnd(absolutePosition) {
       Event.$emit("savePosCon", this.id);
     },
-    // broadcast: _.debounce(function(data) {
-    //     Event.$emit("setPosCon", data);
-    // }, 500),
     random: function random(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     },
