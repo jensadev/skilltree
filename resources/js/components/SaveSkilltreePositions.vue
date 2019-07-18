@@ -65,38 +65,9 @@ export default {
                 });
             this.isSaving = false;
         },
-        // hasItems() {
-        //     let test = false;
-        //     try {
-        //         test = localStorage.getItem([
-        //             "tree_" + this.tree + "_skill_" + 0
-        //         ]);
-        //     } catch {
-        //         test = false;
-        //     }
-        //     return test != null ? true : false;
-        // },
-        // getStorage() {
-        //     let temp = [];
-        //     let needle = "tree_" + this.tree;
-        //     Object.keys(localStorage).forEach(function(key) {
-        //         if (key.includes(needle)) {
-        //             temp.push({ [key]: localStorage.getItem(key) });
-        //         }
-        //     });
-
-        //     return temp;
-        // },
         restorePosCon: function() {
             this.isLoading = true;
             localStorage.removeItem(this.skilltree);
-            //     let needle = "tree_" + this.tree;
-            //     Object.keys(localStorage).forEach(function(key) {
-            //         if (key.includes(needle)) {
-            //             localStorage.removeItem(key);
-            //         }
-            //     });
-            //     //location.reload();
             this.isLoading = false;
         },
         setSkillStorage: function(data) {
@@ -106,7 +77,6 @@ export default {
                 position: posdata.position,
                 connections: posdata.connections
             };
-            //console.log(this.storage);
         },
         saveSkillStorage: function(skill) {
             if (localStorage.getItem(this.skilltree) !== null) {

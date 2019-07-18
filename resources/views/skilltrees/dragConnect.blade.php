@@ -19,8 +19,8 @@
             }
         });
         window.addEventListener("keyup", function(e) {
-            controller.pause();                        
+            controller.pause();
         });
         controller.pause();
-    });
+    }, { passive: true });
 </script>

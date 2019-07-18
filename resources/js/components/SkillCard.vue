@@ -100,44 +100,62 @@ export default {
             if (this.skill.tasks) this.tasks = this.skill.tasks;
         }
         this.draggableValue.initialPosition = this.getPos();
+
+        Event.$on("clearCon", data => {
+            this.connections = [];
+        });
     },
     mounted() {
         if (localStorage.hasOwnProperty(this.tree)) {
             let data = JSON.parse(localStorage.getItem(this.tree));
-            if (
-                data[this.id] !== null &&
-                data[this.id].connections.length > 0
-            ) {
-                this.connections = data[this.id].connections;
 
-                this.connections.forEach(connection => {
-                    if (connection && document.getElementById(connection)) {
-                        jqSimpleConnect.connect(
-                            this.$el,
-                            document.getElementById(connection),
-                            {
-                                radius: this.line.thickness,
-                                color: this.line.color
-                            }
-                        );
-                    }
-                });
+            if (data[this.id]) {
+                if (
+                    data[this.id] !== null &&
+                    data[this.id].connections.length > 0
+                ) {
+                    this.connections = data[this.id].connections;
+                    this.connections.forEach(connection => {
+                        if (
+                            connection.target &&
+                            document.getElementById(connection.target)
+                        ) {
+                            connection.idstring = jqSimpleConnect.connect(
+                                this.$el,
+                                document.getElementById(connection.target),
+                                {
+                                    radius: this.line.thickness,
+                                    color: this.line.color
+                                }
+                            );
+                        }
+                    });
+                }
             }
         }
     },
     methods: {
         handler: function(e) {
             if (e.target.offsetParent.id.includes("skill")) {
-                jqSimpleConnect.connect(this.$el, e.target.offsetParent, {
-                    radius: this.line.thickness,
-                    color: this.line.color
-                });
+                let con = jqSimpleConnect.connect(
+                    this.$el,
+                    e.target.offsetParent,
+                    {
+                        radius: this.line.thickness,
+                        color: this.line.color
+                    }
+                );
 
                 if (
-                    !this.connections.includes(e.target.offsetParent.id) &&
+                    _.find(this.connections, {
+                        target: e.target.offsetParent.id
+                    }) === undefined &&
                     "skill_" + this.id !== e.target.offsetParent.id
                 ) {
-                    this.connections.push(e.target.offsetParent.id);
+                    this.connections.push({
+                        idstring: con,
+                        target: e.target.offsetParent.id
+                    });
                 }
             }
             Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));

@@ -8,6 +8,7 @@
         :pivot-y="0.25"
         width="60%"
         height="auto"
+        @before-open="beforeOpen"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -24,7 +25,7 @@
                     </button>
                 </header>
                 <div class="modal-body">
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-lg-6">
                             <form
                                 @submit.prevent="submit"
@@ -32,42 +33,42 @@
                                 id="skillform"
                             >
                                 <div class="form-group mb-3">
-                                    <label for="skill_title">Title</label>
+                                    <label for="name">Name</label>
                                     <input
-                                        id="skill_title"
-                                        name="skill_title"
+                                        id="name"
+                                        name="name"
                                         class="form-control"
                                         type="text"
-                                        v-model="form.skill_title"
-                                        value="form.skill_title"
-                                        :class="form.errors.skill_title ? 'is-invalid' : ''"
+                                        v-model="form.name"
+                                        value="form.name"
+                                        :class="form.errors.name ? 'is-invalid' : ''"
                                         required
                                     />
                                     <div
                                         class="invalid-feedback"
-                                        v-if="form.errors.skill_title"
-                                        v-text="form.errors.skill_title[0]"
+                                        v-if="form.errors.name"
+                                        v-text="form.errors.name[0]"
                                     ></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="skill_description">Description</label>
+                                    <label for="description">Description</label>
                                     <textarea
-                                        id="skill_description"
-                                        name="skill_description"
+                                        id="description"
+                                        name="description"
                                         class="form-control"
                                         rows="6"
-                                        :class="form.errors.skill_description ? 'is-invalid' : ''"
-                                        v-model="form.skill_description"
-                                    >form.skill_description</textarea>
+                                        :class="form.errors.description ? 'is-invalid' : ''"
+                                        v-model="form.description"
+                                    >form.description</textarea>
                                     <div
                                         class="invalid-feedback"
-                                        v-if="form.errors.skill_description"
-                                        v-text="form.errors.skill_description[0]"
+                                        v-if="form.errors.description"
+                                        v-text="form.errors.description[0]"
                                     ></div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-lg-6">
+                        <!--                        <div class="col-lg-6">
                             <form
                                 @submit.prevent="submit"
                                 @keydown="form.errorClear($event.target.name)"
@@ -136,26 +137,27 @@
                                 </div>
                             </form>
                         </div>
-                    </div>-->
+                        </div>-->
+                    </div>
+                    <footer class="modal-footer">
+                        <button
+                            class="btn btn-outline-secondary mr-2"
+                            type="button"
+                            @click="clearConnections"
+                        >Clear Connections</button>
+                        <button
+                            class="btn btn-outline-danger mr-2"
+                            type="button"
+                            @click="deleteSkill"
+                        >Delete Skill</button>
+                        <button
+                            form="skillform"
+                            class="btn btn-primary"
+                            type="submit"
+                            :disabled="form.errorAny()"
+                        >Update Skill</button>
+                    </footer>
                 </div>
-                <footer class="modal-footer">
-                    <!-- <button
-                        class="btn btn-outline-secondary mr-2"
-                        type="button"
-                        @click="clearConnections"
-                    >Clear Connections</button>
-                    <button
-                        class="btn btn-outline-danger mr-2"
-                        type="button"
-                        @click="deleteSkill"
-                    >Delete Skill</button>
-                    <button
-                        form="skillform"
-                        class="btn btn-primary"
-                        type="submit"
-                        :disabled="form.errorAny()"
-                    >Update Skill</button>-->
-                </footer>
             </div>
         </div>
     </modal>
@@ -163,13 +165,54 @@
 
 <script>
 import Form from "./Form";
-import { constants } from "crypto";
 
 export default {
     data() {
-        return {};
+        return {
+            isLoading: false,
+            skilltree: 0,
+            form: new Form({
+                id: 0,
+                name: "",
+                description: "",
+                tasks: [{}]
+            })
+        };
     },
-    methods: {}
+    methods: {
+        beforeOpen: function(event) {
+            console.log(event);
+            this.skilltree = event.params.skill.skilltree_id;
+            this.form.id = event.params.skill.id;
+            this.form.name = event.params.skill.name;
+            this.form.description = event.params.skill.description;
+            this.form.tasks = event.params.tasks;
+        },
+        clearConnections: function() {
+            let ls = JSON.parse(localStorage.getItem(this.skilltree));
+            ls[this.form.id].connections.forEach(element => {
+                jqSimpleConnect.removeConnection(element.idstring);
+            });
+
+            let getCardData = {
+                skilltree: this.skilltree,
+                skill: this.form.id,
+                position: ls[this.form.id].position,
+                connections: []
+            };
+            console.log(getCardData);
+            Event.$emit("clearCon");
+            Event.$emit("updatePosCon", JSON.stringify(getCardData));
+            Event.$emit("savePosCon", this.form.id);
+            // ls[this.form.id].connections = [];
+            // localStorage.setItem(this.skilltree, JSON.stringify(ls));
+            // jqSimpleConnect.repaintAll();
+        },
+        async deleteSkill() {
+            console.log("delete skill");
+            //            let ls = localStorage.getItem(this.skilltree);
+        }
+    }
 };
 </script>
 
