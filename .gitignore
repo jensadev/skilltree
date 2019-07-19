@@ -13,3 +13,4 @@ credentials.json
 .eslintrc.json
 .vscode/
 quickstart.php
+public/css/fonts
