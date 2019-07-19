@@ -26,24 +26,41 @@ $dark: $kolgra;
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:800|Titillium+Web:300,400,600&display=swap');
+@font-face {
+    font-family: "Soleto regular";
+    src: url("/css/fonts/Dalton Maag - Soleto.ttf");
+}
+@font-face {
+    font-family: "Soleto light";
+    src: url("/css/fonts/Dalton Maag - Soleto Light.ttf");
+}
+@font-face {
+    font-family: "Soleto medium";
+    src: url("/css/fonts/Dalton Maag - Soleto Medium.ttf");
+}
+@font-face {
+    font-family: "Soleto XBold";
+    src: url("/css/fonts/Dalton Maag - Soleto XBold.ttf");
+}
+
 
 @mixin font-xbold {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Soleto XBold', 'Open Sans', sans-serif;
     font-weight: 800;
 }
 
 @mixin font-medium {
-    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Soleto Medium', 'Titillium Web', sans-serif;
     font-weight: 600;
 }
 
 @mixin font-regular {
-    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Soleto Regular', 'Titillium Web', sans-serif;
     font-weight: 400;
 }
 
 @mixin font-light {
-    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Soleto Light', 'Titillium Web', sans-serif;
     font-weight: 300;
 }
 
@@ -51,6 +68,6 @@ $dark: $kolgra;
 $body-bg: $light;
 
 // Typography
-$font-family-sans-serif: 'Titillium Web', sans-serif;
+$font-family-sans-serif: 'Soleto Regular', 'Titillium Web', sans-serif;
 $font-size-base: 1rem;
 $line-height-base: 1.6;

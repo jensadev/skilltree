@@ -66,7 +66,7 @@ $cards-per-line: (
     margin: 0;
     padding: 0;
     .material-icons {
-        margin-left: 8px;
+        margin-left: 0.5rem;
     }
 }
 .dashbaricon:focus {
@@ -103,23 +103,23 @@ $cards-per-line: (
     width: 180px;
     z-index: 5;
     .list-group-item {
-        padding: 0.25rem 0.5rem;
+        padding: 0.5rem 0.75rem;
     }
 }
 
 .card-body {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
 }
 
 .card-footer {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
 }
 
 .card-header {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
 
     .btn-less {
-        height: 24px;
+        height: 1.25rem;
     }
     .h5 {
         margin-bottom: 0.2rem;

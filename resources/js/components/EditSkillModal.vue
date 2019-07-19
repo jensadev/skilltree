@@ -68,7 +68,7 @@
                                 </div>
                             </form>
                         </div>
-                        <!--                        <div class="col-lg-6">
+                        <div class="col-lg-6">
                             <form
                                 @submit.prevent="submit"
                                 @keydown="form.errorClear($event.target.name)"
@@ -87,7 +87,7 @@
                                     <div
                                         class="input-group mb-3"
                                         :key="index"
-                                        v-for="(task, index) in form.skill_tasks"
+                                        v-for="(task, index) in form.tasks"
                                     >
                                         <input
                                             form="skillform"
@@ -137,7 +137,6 @@
                                 </div>
                             </form>
                         </div>
-                        </div>-->
                     </div>
                     <footer class="modal-footer">
                         <button
@@ -170,12 +169,15 @@ export default {
     data() {
         return {
             isLoading: false,
+            isLoadingCourseWork: false,
             skilltree: 0,
             form: new Form({
                 id: 0,
                 name: "",
                 description: "",
-                tasks: [{}]
+                tasks: [],
+                course_id: 0,
+                topic_id: 0
             })
         };
     },
@@ -186,7 +188,12 @@ export default {
             this.form.id = event.params.skill.id;
             this.form.name = event.params.skill.name;
             this.form.description = event.params.skill.description;
-            this.form.tasks = event.params.tasks;
+
+            if (event.params.tasks.length > 0) {
+                this.form.tasks = event.params.tasks;
+            } else {
+                this.form.tasks = [{ body: "" }];
+            }
         },
         clearConnections: function() {
             let ls = JSON.parse(localStorage.getItem(this.skilltree));
@@ -206,12 +213,25 @@ export default {
         },
         async deleteSkill() {
             console.log("delete skill");
-            //            let ls = localStorage.getItem(this.skilltree);
+            this.isLoading = true;
+
+            await axios
+                .delete(
+                    "/skilltrees/" + this.skilltree + "/skills/" + this.form.id
+                )
+                .then(function(response) {
+                    //localStorage.removeItem(this.skilltree);
+                    // needs to clear connections
+                    location = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
         },
         async submit() {
-            // if (!this.form.skill_tasks[0].body) {
-            //     delete this.form.originalData.skill_tasks;
-            // }
+            if (!this.form.tasks[0].body) {
+                delete this.form.originalData.tasks;
+            }
 
             this.form
                 .submit(
@@ -221,6 +241,73 @@ export default {
                 .then(response => (location = response.data.message))
                 .catch(error => console.log(error));
         },
+        addTask() {
+            this.form.tasks.push({ body: "" });
+        },
+        async storeTask(task) {
+            let update;
+            await axios
+                .post(
+                    "/skilltrees/" +
+                        this.skilltree +
+                        /skills/ +
+                        this.form.id +
+                        "/tasks/",
+                    this.form.tasks[task - 1]
+                )
+                .then(function(response) {
+                    update = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.form.tasks.splice(task - 1, 1);
+            this.form.tasks.push(update);
+            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+        },
+        async updateTask(task) {
+            let update;
+            await axios
+                .patch(
+                    "/skilltrees/" +
+                        this.skilltree +
+                        /skills/ +
+                        this.form.id +
+                        "/tasks/" +
+                        this.form.tasks[task - 1].id,
+                    this.form.tasks[task - 1]
+                )
+                .then(function(response) {
+                    update = response.data.message;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            this.form.tasks.splice(task - 1, 1);
+            this.form.tasks.push(update);
+            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+        },
+        async deleteTask(task) {
+            await axios
+                .delete(
+                    "/skilltrees/" +
+                        this.skilltree +
+                        /skills/ +
+                        this.form.id +
+                        "/tasks/" +
+                        this.form.tasks[task - 1].id
+                )
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            await this.$nextTick(function() {
+                this.form.tasks.splice(task - 1, 1);
+                //                this.getCourseWork();
+            });
+        }
     }
 };
 </script>
