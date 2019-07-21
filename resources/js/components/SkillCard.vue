@@ -18,7 +18,7 @@
             </a>
         </div>
         <div class="card-body">
-            <p class="card-text mb-0" v-if="description">{{ str_limit(description, 40, true) }}</p>
+            <p class="card-text mb-0" v-if="description">{{ str_limit(description, 35, true) }}</p>
             <ul v-if="tasks.length > 0" class="list-unstyled mb-0">
                 <li class="list-item text-muted" :key="index" v-for="(task, index) in tasks">
                     <small>{{ str_limit(task.body, 20, true) }}</small>

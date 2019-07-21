@@ -24,7 +24,7 @@
                     <i class="material-icons">settings</i>
                 </a>
             @endif
-                <a href="#" class="btn dashbaricon" role="button">
+                <a href="#" class="btn dashbaricon" role="button" title="Report a Bug">
                     <i class="material-icons">bug_report</i>
                 </a>
         </div>

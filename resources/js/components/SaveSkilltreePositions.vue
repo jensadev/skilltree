@@ -3,14 +3,14 @@
         <button
             class="btn dashbaricon"
             @click.prevent="clearPosCon"
-            title="Clear Skilltree positions and connections."
+            title="Clear Skilltree positions and connections"
         >
             <i class="material-icons">clear</i>
         </button>
         <button
             class="btn dashbaricon"
             @click.prevent="restorePosCon"
-            title="Restore Skilltree positions and connections from Database."
+            title="Restore Skilltree positions and connections from Database"
             v-bind="{isLoading}"
             :disabled="isLoading"
         >
@@ -28,7 +28,7 @@
         <button
             class="btn dashbaricon"
             @click.prevent="savePosConDB"
-            title="Save Skilltree positions and connections to Database."
+            title="Save Skilltree positions and connections to Database"
             v-bind="{isSaving}"
             :disabled="isSaving"
         >
@@ -60,7 +60,9 @@ export default {
         async savePosConDB() {
             this.isSaving = true;
             let ls = JSON.parse(localStorage.getItem(this.skilltree));
-            if (!ls) { ls = {}};
+            if (!ls) {
+                ls = {};
+            }
             await axios
                 .post("/skilltrees/" + this.skilltree + "/pos", {
                     data: ls

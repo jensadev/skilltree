@@ -176,8 +176,8 @@ export default {
                 name: "",
                 description: "",
                 tasks: [],
-                course_id: 0,
-                topic_id: 0
+                courseId: 0,
+                topicId: 0
             })
         };
     },
