@@ -21,5 +21,9 @@ class SkilltreePositionsController extends Controller
     {
         $this->authorize('update', $skilltree);
         $skilltree->storePositions($request->data);
+
+        if (request()->wantsJson()) {
+            return ['message' => "Skilltree positions saved."];
+        }
     }
 }

@@ -71,17 +71,25 @@ class LoginController extends Controller
             'refresh_token' => $user->refreshToken,
             'expires_in' => $user->expiresIn
         ];
-        /*
-        $client = new Google_Client();
-        $client->setApplicationName('Skilltree');
-        $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES);
-        $client->setAccessToken($google_client_token);
-        $service = new Google_Service_Classroom($client);
-        dd($service->courses->listCourses());
-*/
+
         $existingUser = User::where('email', $user->getEmail())->first();
 
-        if ($existingUser) {
+        if ($existingUser && $existingUser->provider_id === null) {
+            $findme   = 'elev';
+            $pos = strpos($user->getEmail(), $findme);
+
+            $attributes = [
+                'provider_name'     => $driver,
+                'provider_id'       => $user->getId(),
+                'name'              => $user->getName(),
+                'teacher'           => $pos === false ? true : false,
+                'g_token' => json_encode($google_client_token),
+                'email_verified_at' => now(),
+                'avatar'            => $user->getAvatar()
+            ];
+            $existingUser->update($attributes);
+            auth()->login($existingUser, true);
+        } elseif ($existingUser) {
             $attributes = [
                 'g_token' => json_encode($google_client_token)
             ];

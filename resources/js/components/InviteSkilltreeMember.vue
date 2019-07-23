@@ -81,6 +81,7 @@ export default {
                 .submit(this.url)
                 .then(function(response) {
                     location = response.data.message;
+                    //console.log(response.data.message);
                 })
                 .catch(error => console.log(error));
         }

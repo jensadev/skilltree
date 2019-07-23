@@ -13,12 +13,16 @@ class SkilltreeInvitationsController extends Controller
     {
         $user = User::whereEmail(request('email'))->first();
 
+        if (!$user) {
+            $user = User::create(['email' => request('email')]);
+        }
+
         $skilltree->invite($user);
 
         if (request()->wantsJson()) {
             return ['message' => $skilltree->path()];
         }
 
-        return redirect($skilltree->path());
+        return redirect($skilltree->path())->with('flash', 'User invited');
     }
 }

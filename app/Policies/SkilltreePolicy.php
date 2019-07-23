@@ -19,4 +19,9 @@ class SkilltreePolicy
     {
         return $user->is($skilltree->owner);
     }
+
+    public function read(User $user, Skilltree $skilltree)
+    {
+        return $skilltree->members->contains($user);
+    }
 }

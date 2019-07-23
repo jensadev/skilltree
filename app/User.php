@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'g_token', 'g_exspiresin',
+        'name', 'email', 'email_verified_at', 'password', 'g_token', 'g_exspiresin',  'provider_name', 'provider_id', 'avatar'
     ];
 
     /**
@@ -49,8 +49,7 @@ class User extends Authenticatable
     {
         return Skilltree::where('owner_id', $this->id)
             ->orWhereHas('members', function ($query) {
-                $query->where('user_id', $this->id)
-                    ->where('teacher', true);
+                $query->where('user_id', $this->id);
             })
             ->latest('updated_at')
             ->get();

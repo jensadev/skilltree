@@ -68,10 +68,15 @@ export default {
                     data: ls
                 })
                 .then(function(response) {
-                    console.log(response.status);
+                    if (response.status === 200) {
+                        flash({
+                            body: response.data.message,
+                            type: "alert-success"
+                        });
+                    }
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
             this.isSaving = false;
         },
@@ -115,21 +120,23 @@ export default {
                         );
                         location.reload();
                     } else {
-                        console.log(response.data.message); // toast
-                        //$(".toast").toast("show");
+                        flash({
+                            body: "No positions found.",
+                            type: "alert-warning"
+                        });
                     }
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
             this.isLoading = false;
         }
     },
     created: function() {
-        Event.$on("updatePosCon", data => {
+        window.events.$on("updatePosCon", data => {
             this.setSkillStorage(data);
         });
-        Event.$on("savePosCon", data => {
+        window.events.$on("savePosCon", data => {
             this.saveSkillStorage(data);
         });
 

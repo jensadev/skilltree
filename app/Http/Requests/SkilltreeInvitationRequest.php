@@ -33,7 +33,10 @@ class SkilltreeInvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users,email', 'not_regex:/(@elev)/'] // 'not_regex:/(@elev)/']
+            //'email' => ['required', 'exists:users,email', 'not_regex:/(@elev)/'] // 'not_regex:/(@elev)/']
+            'email' => [
+                'required'
+            ]
         ];
     }
 

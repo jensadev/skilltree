@@ -24,6 +24,7 @@ Vue.use(VModal);
 
 
 Vue.component('add-skill', require('./components/AddSkill.vue').default);
+Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('loader', require('./components/Loader.vue').default);
 Vue.component('invite-skilltree-member', require('./components/InviteSkilltreeMember.vue').default);
 Vue.component('save-skilltree-positions', require('./components/SaveSkilltreePositions.vue').default);
@@ -39,7 +40,11 @@ Vue.component('manage-skilltree-modal', require('./components/ManageSkilltreeMod
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-window.Event = new Vue();
+window.events = new Vue();
+
+window.flash = function(message) {
+    window.events.$emit('flash', message);
+};
 
 const app = new Vue({
     el: '#app',

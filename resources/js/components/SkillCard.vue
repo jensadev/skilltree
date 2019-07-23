@@ -108,7 +108,7 @@ export default {
         }
         this.draggableValue.initialPosition = this.getPos();
 
-        Event.$on("clearCon", data => {
+        window.events.$on("clearCon", data => {
             this.connections = [];
         });
     },
@@ -165,8 +165,11 @@ export default {
                     });
                 }
             }
-            Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
-            Event.$emit("savePosCon", this.id);
+            window.events.$emit(
+                "updatePosCon",
+                JSON.stringify(this.getCardData())
+            );
+            window.events.$emit("savePosCon", this.id);
 
             document.removeEventListener("click", this.handler, true);
         },
@@ -186,12 +189,15 @@ export default {
             if (absolutePosition) {
                 this.position = absolutePosition;
 
-                Event.$emit("updatePosCon", JSON.stringify(this.getCardData()));
+                window.events.$emit(
+                    "updatePosCon",
+                    JSON.stringify(this.getCardData())
+                );
             }
             jqSimpleConnect.repaintAll();
         },
         onDragEnd: function(absolutePosition) {
-            Event.$emit("savePosCon", this.id);
+            window.events.$emit("savePosCon", this.id);
         },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;

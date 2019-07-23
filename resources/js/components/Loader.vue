@@ -14,7 +14,7 @@ export default {
         };
     },
     created() {
-        Event.$on("onCenterLoading", () => {
+        window.events.$on("onCenterLoading", () => {
             if (this.loading == false) {
                 this.loading = true;
             } else {

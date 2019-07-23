@@ -90,6 +90,7 @@
 
             @yield('content')
 
+            <flash message="{{ session('flash') }}"></flash>
             <loader @onCenterLoading="status()"></loader>
             {{-- @include('skilltrees.toast') --}}
         </main>
