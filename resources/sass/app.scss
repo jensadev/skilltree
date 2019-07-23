@@ -100,7 +100,7 @@ $cards-per-line: (
 
 .skill-card {
     position: absolute;
-    width: 180px;
+    width: 12rem;
     z-index: 5;
     .list-group-item {
         padding: 0.5rem 0.75rem;
@@ -118,11 +118,9 @@ $cards-per-line: (
 .card-header {
     padding: 0.5rem 0.75rem;
 
-    .btn-less {
-        height: 1.25rem;
-    }
     .h5 {
-        margin-bottom: 0.2rem;
+        overflow: auto; 
+        font-size: 1rem;
     }
 }
 

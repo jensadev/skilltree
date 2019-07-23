@@ -2062,6 +2062,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2076,9 +2077,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     isOpen: function isOpen() {
       if (this.isOpen) {
-        document.addEventListener("click", this.closeIfClickedOutside); // window.setTimeout(function() {
-        //     document.getElementById("name").focus();
-        // }, 0);
+        document.addEventListener("click", this.closeIfClickedOutside);
+        Vue.nextTick().then(function () {
+          document.getElementById("add-skill-name").focus();
+        });
       }
     }
   },
@@ -2610,9 +2612,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isOpen: function isOpen() {
       if (this.isOpen) {
         document.addEventListener("click", this.closeIfClickedOutside);
-        window.setTimeout(function () {
+        Vue.nextTick().then(function () {
           document.getElementById("email").focus();
-        }, 0);
+        });
       }
     }
   },
@@ -3072,10 +3074,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isAddingStudents: false,
       isLoadingCourses: false,
       isLoadingTopics: false,
       isConnectingCourse: false,
@@ -3084,6 +3110,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selectedTopics: [],
       isConnected: false,
       id: this.skilltree.id,
+      studentEmails: "",
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         title: this.skilltree.title,
         description: this.skilltree.description,
@@ -3167,6 +3194,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return submit;
+    }(),
+    addStudents: function () {
+      var _addStudents = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log(this.studentEmails);
+                _context3.next = 3;
+                return axios.put("/skilltrees/" + this.id + "/students", this.studentEmails).then(function (response) {
+                  console.log(response);
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function addStudents() {
+        return _addStudents.apply(this, arguments);
+      }
+
+      return addStudents;
     }() // async getCourses() {
     //     let courses;
     //     this.isLoadingCourses = true;
@@ -3728,6 +3785,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   directives: {
@@ -3750,7 +3814,7 @@ __webpack_require__.r(__webpack_exports__);
       tree: "",
       line: {
         color: "#0de1ec",
-        thickness: 1
+        thickness: 2
       },
       position: {},
       tasks: [],
@@ -8455,7 +8519,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.line {\n    position: absolute;\n    border: 0.5px #00000010 dashed;\n    z-index: -1;\n}\n.skill-card:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
+exports.push([module.i, "\n.skill-card:hover .hideArr {\n    visibility: visible;\n}\n.hideArr {\n    visibility: hidden;\n}\n.rArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    right: -36px;\n    transform: translate(0, -50%);\n}\n.lArr {\n    color: #bbb;\n    position: absolute;\n    top: 50%;\n    left: -36px;\n    transform: translate(0, -50%);\n}\n", ""]);
 
 // exports
 
@@ -42281,6 +42345,7 @@ var render = function() {
                     staticClass: "form-control",
                     class: _vm.form.errors.name ? "is-invalid" : "",
                     attrs: {
+                      id: "add-skill-name",
                       type: "text",
                       placeholder: "Skill Name",
                       required: ""
@@ -43241,7 +43306,82 @@ var render = function() {
                       "aria-labelledby": "students-tab"
                     }
                   },
-                  [_vm._v("Students Tab")]
+                  [
+                    _c("h5", [_vm._v("Students Tab")]),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        attrs: { id: "studentForm" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.addStudents($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.studentEmails,
+                              expression: "studentEmails"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "studentEmails",
+                            id: "studentEmails",
+                            cols: "30",
+                            rows: "10"
+                          },
+                          domProps: { value: _vm.studentEmails },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.studentEmails = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary mr-2",
+                            attrs: { type: "submit" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Add Students\n                                "
+                            ),
+                            _vm.isAddingStudents
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "spinner-border",
+                                    staticStyle: {
+                                      width: "24px",
+                                      height: "24px",
+                                      "margin-left": "14px"
+                                    },
+                                    attrs: { role: "status" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Loading...")
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  ]
                 )
               ]
             )
@@ -43737,54 +43877,67 @@ var render = function() {
           expression: "draggableValue"
         }
       ],
-      staticClass: "card skill-card",
+      staticClass: "card skill-card shadow-sm",
       attrs: { id: "skill_" + _vm.id }
     },
     [
-      _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
-        _c("h2", { staticClass: "h5 mb-0" }, [
-          _vm._v(_vm._s(_vm.str_limit(_vm.title, 17, true)))
-        ]),
-        _vm._v(" "),
-        _vm.id != 0
-          ? _c(
-              "a",
-              {
-                staticClass: "btn btn-less",
-                staticStyle: { padding: "0" },
-                attrs: { href: "#", role: "button", title: "Edit Skill" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.$modal.show("edit-skill", {
-                      skill: _vm.skill,
-                      tasks: _vm.tasks
-                    })
-                  }
-                }
-              },
-              [
-                _c(
-                  "i",
-                  {
-                    staticClass: "material-icons",
-                    staticStyle: {
-                      "font-size": "1.25rem",
-                      "line-height": "1.2"
+      _c(
+        "div",
+        {
+          staticClass:
+            "card-header d-flex justify-content-between align-items-end",
+          staticStyle: { "padding-bottom": "0" }
+        },
+        [
+          _c("h2", { staticClass: "h5" }, [
+            _vm._v(_vm._s(_vm.str_limit(_vm.title, 15, true)))
+          ]),
+          _vm._v(" "),
+          _vm.id != 0
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn btn-less",
+                  staticStyle: { padding: "0" },
+                  attrs: { href: "#", role: "button", title: "Edit Skill" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.$modal.show("edit-skill", {
+                        skill: _vm.skill,
+                        tasks: _vm.tasks
+                      })
                     }
-                  },
-                  [_vm._v("edit")]
-                )
-              ]
-            )
-          : _vm._e()
-      ]),
+                  }
+                },
+                [
+                  _c(
+                    "i",
+                    {
+                      staticClass: "material-icons",
+                      staticStyle: {
+                        "font-size": "1.25rem",
+                        "line-height": "1"
+                      }
+                    },
+                    [_vm._v("edit")]
+                  )
+                ]
+              )
+            : _vm._e()
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _vm.description
-          ? _c("p", { staticClass: "card-text mb-0" }, [
-              _vm._v(_vm._s(_vm.str_limit(_vm.description, 35, true)))
-            ])
+          ? _c(
+              "p",
+              {
+                staticClass: "card-text mb-0",
+                staticStyle: { "font-size": "90%" }
+              },
+              [_vm._v(_vm._s(_vm.str_limit(_vm.description, 35, true)))]
+            )
           : _vm._e(),
         _vm._v(" "),
         _vm.tasks.length > 0

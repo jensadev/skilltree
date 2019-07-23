@@ -10763,7 +10763,7 @@ a.text-dark:focus {
 
 .skill-card {
   position: absolute;
-  width: 180px;
+  width: 12rem;
   z-index: 5;
 }
 
@@ -10783,12 +10783,9 @@ a.text-dark:focus {
   padding: 0.5rem 0.75rem;
 }
 
-.card-header .btn-less {
-  height: 1.25rem;
-}
-
 .card-header .h5 {
-  margin-bottom: 0.2rem;
+  overflow: auto;
+  font-size: 1rem;
 }
 
 .root {

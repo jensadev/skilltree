@@ -1,7 +1,10 @@
 <template>
-    <div class="card skill-card" :id="'skill_' + id" v-draggable="draggableValue">
-        <div class="card-header d-flex justify-content-between">
-            <h2 class="h5 mb-0">{{ str_limit(title, 17, true) }}</h2>
+    <div class="card skill-card shadow-sm" :id="'skill_' + id" v-draggable="draggableValue">
+        <div
+            class="card-header d-flex justify-content-between align-items-end"
+            style="padding-bottom: 0;"
+        >
+            <h2 class="h5">{{ str_limit(title, 15, true) }}</h2>
             <a
                 v-if="id != 0"
                 href="#"
@@ -14,11 +17,15 @@
                 })"
                 title="Edit Skill"
             >
-                <i class="material-icons" style="font-size:1.25rem; line-height: 1.2">edit</i>
+                <i class="material-icons" style="font-size:1.25rem; line-height: 1">edit</i>
             </a>
         </div>
         <div class="card-body">
-            <p class="card-text mb-0" v-if="description">{{ str_limit(description, 35, true) }}</p>
+            <p
+                class="card-text mb-0"
+                v-if="description"
+                style="font-size: 90%;"
+            >{{ str_limit(description, 35, true) }}</p>
             <ul v-if="tasks.length > 0" class="list-unstyled mb-0">
                 <li class="list-item text-muted" :key="index" v-for="(task, index) in tasks">
                     <small>{{ str_limit(task.body, 20, true) }}</small>
@@ -75,7 +82,7 @@ export default {
             tree: "",
             line: {
                 color: "#0de1ec",
-                thickness: 1
+                thickness: 2
             },
             position: {},
             tasks: [],
@@ -221,12 +228,6 @@ export default {
 </script>
 
 <style>
-.line {
-    position: absolute;
-    border: 0.5px #00000010 dashed;
-    z-index: -1;
-}
-
 .skill-card:hover .hideArr {
     visibility: visible;
 }

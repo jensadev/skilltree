@@ -307,7 +307,30 @@
                             id="students"
                             role="tabpanel"
                             aria-labelledby="students-tab"
-                        >Students Tab</div>
+                        >
+                            <h5>Students Tab</h5>
+                            <form @submit.prevent="addStudents" id="studentForm">
+                                <textarea
+                                    name="studentEmails"
+                                    id="studentEmails"
+                                    class="form-control"
+                                    cols="30"
+                                    rows="10"
+                                    v-model="studentEmails"
+                                ></textarea>
+                                <button class="btn btn-secondary mr-2" type="submit">
+                                    Add Students
+                                    <div
+                                        class="spinner-border"
+                                        role="status"
+                                        v-if="isAddingStudents"
+                                        style="width:24px; height:24px; margin-left:14px;"
+                                    >
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <footer class="modal-footer justify-content-between">
@@ -364,6 +387,7 @@ import Form from "./Form";
 export default {
     data() {
         return {
+            isAddingStudents: false,
             isLoadingCourses: false,
             isLoadingTopics: false,
             isConnectingCourse: false,
@@ -372,6 +396,7 @@ export default {
             selectedTopics: [],
             isConnected: false,
             id: this.skilltree.id,
+            studentEmails: "",
             form: new Form({
                 title: this.skilltree.title,
                 description: this.skilltree.description,
@@ -415,6 +440,17 @@ export default {
                     location = response.data.message;
                 })
                 .catch(error => console.log(error));
+        },
+        async addStudents() {
+            console.log(this.studentEmails);
+            await axios
+                .put("/skilltrees/" + this.id + "/students", this.studentEmails)
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
         }
         // async getCourses() {
         //     let courses;

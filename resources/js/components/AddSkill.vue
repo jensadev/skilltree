@@ -9,6 +9,7 @@
                     <form @submit.prevent="submit" @keydown="form.errorClear($event.target.name)">
                         <div class="input-group">
                             <input
+                                id="add-skill-name"
                                 type="text"
                                 class="form-control"
                                 placeholder="Skill Name"
@@ -54,9 +55,9 @@ export default {
             if (this.isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
 
-                // window.setTimeout(function() {
-                //     document.getElementById("name").focus();
-                // }, 0);
+                Vue.nextTick().then(function() {
+                    document.getElementById("add-skill-name").focus();
+                });
             }
         }
     },

@@ -3,7 +3,7 @@
         <div class="crumb">
             <h1 class="h3 text-capitalize mb-1"><a  href="/skilltrees">Skilltrees</a>
                 @if(isset($skilltree))
-                    / {{ $skilltree->title }}
+                    / {{ str_limit($skilltree->title, 30) }}
                 @endif
             </h1>
         </div>

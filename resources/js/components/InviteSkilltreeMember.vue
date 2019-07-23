@@ -60,9 +60,9 @@ export default {
         isOpen() {
             if (this.isOpen) {
                 document.addEventListener("click", this.closeIfClickedOutside);
-                window.setTimeout(function() {
+                Vue.nextTick().then(function() {
                     document.getElementById("email").focus();
-                }, 0);
+                });
             }
         }
     },
