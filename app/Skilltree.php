@@ -64,6 +64,11 @@ class Skilltree extends Model
         return $this->members()->attach($user);
     }
 
+    public function uninvite(User $user)
+    {
+        return $this->members()->detach($user);
+    }
+
     public function members()
     {
         return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps();

@@ -68,7 +68,7 @@ export default {
     directives: {
         Draggable
     },
-    props: ["skilltree", "skill"],
+    props: ["skilltree", "skill", "teacher"],
     data() {
         return {
             draggableValue: {
@@ -106,6 +106,7 @@ export default {
 
             if (this.skill.tasks) this.tasks = this.skill.tasks;
         }
+
         this.draggableValue.initialPosition = this.getPos();
 
         window.events.$on("clearCon", data => {

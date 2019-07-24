@@ -25,7 +25,7 @@
         <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark shadow">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="/img/nti_logo_white.svg" height="30" alt="{{ config('app.name', 'Laravel') }}">
+                        <img src="/img/nti_logo_white_umea.svg" height="30" alt="{{ config('app.name', 'Laravel') }}">
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

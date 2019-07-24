@@ -8,25 +8,27 @@
             </h1>
         </div>
         <div class="dashbar d-flex justify-content-between">
-            @if(isset($skilltrees))
+            @if(isset($skilltrees) && auth()->user()->teacher)
                 <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('new-skilltree')" title="Create a new Skilltree">
                     <i class="material-icons">add_box</i>
                 </a>
             @endif
             @if(isset($skilltree))
-                <add-skill :url="'{{ $skilltree->path() . '/skills' }}'">
-                </add-skill>
-                <invite-skilltree-member :url="'{{ $skilltree->path() . '/invitations' }}'">
-                </invite-skilltree-member>
-                <save-skilltree-positions :tree="'{{ $skilltree->id }}'" :save="'{{ auth()->user()->id == $skilltree->owner_id ? true : false }}'">
-                </save-skilltree-positions>
-                <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Manage Skilltree">
-                    <i class="material-icons">settings</i>
-                </a>
+                @can('update', $skilltree)
+                    <add-skill :url="'{{ $skilltree->path() . '/skills' }}'">
+                    </add-skill>
+                    <invite-skilltree-member :url="'{{ $skilltree->path() . '/invitation' }}'">
+                    </invite-skilltree-member>
+                    <save-load-skilltree-pos-con :tree="'{{ $skilltree->id }}'" :save="'{{ auth()->user()->id == $skilltree->owner_id ? true : false }}'">
+                    </save-load-skilltree-pos-con>
+                    <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('manage-skilltree')" title="Manage Skilltree">
+                        <i class="material-icons">settings</i>
+                    </a>
+                @endcan
             @endif
-                <a href="#" class="btn dashbaricon" role="button" title="Report a Bug">
-                    <i class="material-icons">bug_report</i>
-                </a>
+            <a href="#" class="btn dashbaricon" role="button" title="Report a Bug">
+                <i class="material-icons">bug_report</i>
+            </a>
         </div>
     </div>
 </nav>

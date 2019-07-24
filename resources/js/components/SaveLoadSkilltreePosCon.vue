@@ -1,5 +1,5 @@
 <template>
-    <div class="save-skilltree-positions">
+    <div class="save-load-skilltree-pos-con">
         <button
             class="btn dashbaricon"
             @click.prevent="clearPosCon"
@@ -110,6 +110,7 @@ export default {
         },
         async loadStorage(id) {
             this.isLoading = true;
+            window.events.$emit("onCenterLoading");
             await axios
                 .get("/skilltrees/" + id + "/pos")
                 .then(function(response) {
@@ -130,6 +131,7 @@ export default {
                     flash({ body: error, type: "alert-danger" });
                 });
             this.isLoading = false;
+            window.events.$emit("onCenterLoading");
         }
     },
     created: function() {

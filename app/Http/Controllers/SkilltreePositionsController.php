@@ -9,7 +9,7 @@ class SkilltreePositionsController extends Controller
 {
     public function show(Skilltree $skilltree)
     {
-        $this->authorize('update', $skilltree);
+        $this->authorize('read', $skilltree);
 
         if (request()->wantsJson()) {
             return ['message' => $skilltree->showPositions()];

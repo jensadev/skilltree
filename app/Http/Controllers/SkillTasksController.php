@@ -21,9 +21,8 @@ class SkillTasksController extends Controller
     public function store(Skilltree $skilltree, Skill $skill)
     {
         $this->authorize('update', $skilltree);
-        request()->validate(['body' => 'required|min:3']);
 
-        $task = $skill->addTask(request('body'));
+        $task = $skill->addTask($this->validateRequest());
 
         if (request('courseWorkId')) {
             $task->update(['course_id' => request('course_id'), 'course_work_id' => request('course_work_id')]);

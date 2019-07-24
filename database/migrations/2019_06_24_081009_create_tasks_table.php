@@ -17,7 +17,6 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('skill_id');
             $table->string('body');
-            $table->boolean('completed')->default(false);
             $table->string('course_id', 20)->nullable();
             $table->string('course_work_id', 20)->nullable();
             $table->timestamps();

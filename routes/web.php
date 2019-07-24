@@ -20,7 +20,9 @@ Route::group(
         Route::resource('skilltrees', 'SkilltreesController');
 
         // invitations
-        Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@store');
+        Route::post('skilltrees/{skilltree}/invitation', 'SkilltreeInvitationsController@store');
+        Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@classStore');
+        Route::delete('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@destroy');
         Route::post('skilltrees/{skilltree}/classroom/invitations', 'SkilltreeInvitationsController@classroomStore');
 
         // skills

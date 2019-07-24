@@ -5,21 +5,33 @@
     {{-- <skill-cards
         :skilltree="{{ $skilltree }}"
         :skills="{{ $skilltree->skills }}"></skill-cards> --}}
-    <section class="skillzone">
-        <skill-card
-            :skilltree="{{ $skilltree }}"
-            class="root"
-        ></skill-card>
-        @foreach ($skilltree->skills as $skill)
+        <section class="skillzone">
+        @can('update', $skilltree)
             <skill-card
-                :skill="{{ $skill }}"
+                :skilltree="{{ $skilltree }}"
+                class="root"
             ></skill-card>
-        @endforeach
-    </section>
-    <edit-skill-modal></edit-skill-modal>
-    <manage-skilltree-modal
-        :skilltree="{{ $skilltree }}"
-        :members="{{ $skilltree->members }}">
-    </manage-skilltree-modal>
+            @foreach ($skilltree->skills as $skill)
+                <skill-card
+                    :skill="{{ $skill }}"
+                ></skill-card>
+            @endforeach
+        <edit-skill-modal></edit-skill-modal>
+        <manage-skilltree-modal
+            :skilltree="{{ $skilltree }}"
+            :members="{{ $skilltree->members->where('teacher', true) }}">
+        </manage-skilltree-modal>
+        @elsecan('read', $skilltree)
+            <student-skill-card
+                :skilltree="{{ $skilltree }}"
+                class="root"
+            ></student-skill-card>
+            @foreach ($skilltree->skills as $skill)
+                <student-skill-card
+                    :skill="{{ $skill }}"
+                ></student-skill-card>
+            @endforeach
+        @endcan
+        </section>
     @include('skilltrees.activity.feed')
 @endsection

@@ -2306,6 +2306,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2350,9 +2351,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         position: ls[this.form.id].position,
         connections: []
       };
-      Event.$emit("clearCon");
-      Event.$emit("updatePosCon", JSON.stringify(getCardData));
-      Event.$emit("savePosCon", this.form.id);
+      window.events.$emit("clearCon");
+      window.events.$emit("updatePosCon", JSON.stringify(getCardData));
+      window.events.$emit("savePosCon", this.form.id);
     },
     deleteSkill: function () {
       var _deleteSkill = _asyncToGenerator(
@@ -2722,6 +2723,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2746,6 +2755,48 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
       }
     });
+    window.events.$on("studentLoad", function (id) {
+      _this.loadStorage(id);
+    });
+  },
+  methods: {
+    loadStorage: function () {
+      var _loadStorage = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.loading = true;
+                _context.next = 3;
+                return axios.get("/skilltrees/" + id + "/pos").then(function (response) {
+                  sessionStorage.setItem(id, JSON.stringify(response.data.message.value));
+                  location.reload();
+                })["catch"](function (error) {
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
+                });
+
+              case 3:
+                this.loading = false;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function loadStorage(_x) {
+        return _loadStorage.apply(this, arguments);
+      }
+
+      return loadStorage;
+    }()
   }
 });
 
@@ -3260,7 +3311,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 console.log(this.studentEmails);
                 _context3.next = 3;
-                return axios.put("/skilltrees/" + this.id + "/students", this.studentEmails).then(function (response) {
+                return axios.post("/skilltrees/" + this.id + "/invitations", this.studentEmails).then(function (response) {
                   console.log(response);
                 })["catch"](function (error) {
                   console.log(error);
@@ -3550,10 +3601,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3732,7 +3783,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 this.isLoading = true;
-                _context3.next = 3;
+                window.events.$emit("onCenterLoading");
+                _context3.next = 4;
                 return axios.get("/skilltrees/" + id + "/pos").then(function (response) {
                   if (response.data.message != "No positions found") {
                     localStorage.setItem(id, JSON.stringify(response.data.message.value));
@@ -3750,10 +3802,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 });
 
-              case 3:
-                this.isLoading = false;
-
               case 4:
+                this.isLoading = false;
+                window.events.$emit("onCenterLoading");
+
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -3865,7 +3918,7 @@ __webpack_require__.r(__webpack_exports__);
   directives: {
     Draggable: draggable_vue_directive__WEBPACK_IMPORTED_MODULE_0__["Draggable"]
   },
-  props: ["skilltree", "skill"],
+  props: ["skilltree", "skill", "teacher"],
   data: function data() {
     return {
       draggableValue: {
@@ -4002,6 +4055,151 @@ __webpack_require__.r(__webpack_exports__);
         this.position = {
           left: this.random(200, window.innerWidth - 200),
           top: this.random(200, window.innerWidth - 200)
+        };
+      }
+
+      return this.position;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["skilltree", "skill"],
+  data: function data() {
+    return {
+      title: "",
+      description: "",
+      id: "",
+      tree: "",
+      line: {
+        color: "#0de1ec",
+        thickness: 2
+      },
+      position: {},
+      tasks: [],
+      connections: [],
+      completed: ""
+    };
+  },
+  created: function created() {
+    if (typeof this.skilltree !== "undefined") {
+      this.title = this.skilltree.title;
+      this.description = this.skilltree.description;
+      this.id = 0;
+      this.tree = this.skilltree.id;
+    } else {
+      this.title = this.skill.name;
+      this.description = this.skill.description ? this.skill.description : "";
+      this.id = this.skill.id;
+      this.tree = this.skill.skilltree_id;
+      if (this.skill.tasks) this.tasks = this.skill.tasks;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    if (this.id == 0 && !sessionStorage.hasOwnProperty(this.tree)) {
+      window.events.$emit("studentLoad", this.tree);
+    }
+
+    if (sessionStorage.hasOwnProperty(this.tree)) {
+      var data = JSON.parse(sessionStorage.getItem(this.tree));
+
+      if (data[this.id]) {
+        if (data[this.id] !== null && data[this.id].connections.length > 0) {
+          this.connections = data[this.id].connections;
+          this.connections.forEach(function (connection) {
+            if (connection.target && document.getElementById(connection.target)) {
+              connection.idstring = jqSimpleConnect.connect(_this.$el, document.getElementById(connection.target), {
+                radius: _this.line.thickness,
+                color: _this.line.color
+              });
+            }
+          });
+        }
+      }
+    }
+
+    this.getPos();
+    this.$el.style.top = this.position.top;
+    this.$el.style.left = this.position.left;
+    jqSimpleConnect.repaintAll();
+  },
+  methods: {
+    random: function random(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
+    str_limit: function str_limit(text, count, end) {
+      return text.slice(0, count) + (text.length > count && end ? "..." : "");
+    },
+    getPos: function getPos() {
+      if (sessionStorage.hasOwnProperty(this.tree)) {
+        var data = JSON.parse(sessionStorage.getItem(this.tree));
+
+        if (data[this.id]) {
+          this.position = {
+            left: data[this.id].position.left + "px",
+            top: data[this.id].position.top + "px"
+          };
+        } else {
+          this.position = {
+            left: this.random(200, window.innerWidth - 200) + "px",
+            top: this.random(200, window.innerWidth - 200) + "px"
+          };
+        }
+      } else {
+        this.position = {
+          left: this.random(200, window.innerWidth - 200) + "px",
+          top: this.random(200, window.innerWidth - 200) + "px"
         };
       }
 
@@ -8587,7 +8785,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.alert {\r\n    position: fixed;\r\n    bottom: 1rem;\r\n    left: 2%;\r\n    width: 96%;\r\n    z-index: 1100;\n}\r\n", ""]);
+exports.push([module.i, "\n.alert {\n    position: fixed;\n    bottom: 1rem;\n    left: 2%;\n    width: 96%;\n    z-index: 1100;\n}\n", ""]);
 
 // exports
 
@@ -42746,7 +42944,8 @@ var render = function() {
                                   form: "skillform",
                                   type: "text",
                                   placeholder: "Task " + (index + 1),
-                                  value: "task.body"
+                                  value: "task.body",
+                                  required: ""
                                 },
                                 domProps: { value: task.body },
                                 on: {
@@ -43896,10 +44095,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043& ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43911,7 +44110,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "save-skilltree-positions" }, [
+  return _c("div", { staticClass: "save-load-skilltree-pos-con" }, [
     _c(
       "button",
       {
@@ -44177,6 +44376,103 @@ var render = function() {
         },
         [_c("i", { staticClass: "material-icons" }, [_vm._v("forward")])]
       )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "card skill-card shadow-sm",
+      style: { left: _vm.position.left, top: _vm.position.top },
+      attrs: { id: "skill_" + _vm.id }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "card-header d-flex justify-content-between align-items-end",
+          staticStyle: { "padding-bottom": "0" }
+        },
+        [
+          _c("h2", { staticClass: "h5" }, [
+            _vm._v(_vm._s(_vm.str_limit(_vm.title, 15, true)))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _vm.description
+          ? _c(
+              "p",
+              {
+                staticClass: "card-text mb-0",
+                staticStyle: { "font-size": "90%" }
+              },
+              [_vm._v(_vm._s(_vm.str_limit(_vm.description, 35, true)))]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.tasks.length > 0
+          ? _c(
+              "ul",
+              { staticClass: "list-unstyled mb-0" },
+              _vm._l(_vm.tasks, function(task, index) {
+                return _c(
+                  "li",
+                  { key: index, staticClass: "list-item text-muted" },
+                  [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.str_limit(task.body, 20, true)))
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.id != 0
+        ? _c(
+            "div",
+            { staticClass: "progress", staticStyle: { height: "5px" } },
+            [
+              _c("div", {
+                staticClass: "progress-bar bg-pink",
+                style: { width: _vm.completed },
+                attrs: {
+                  role: "progressbar",
+                  "aria-valuenow": "0",
+                  "aria-valuemin": "0",
+                  "aria-valuemax": "100"
+                }
+              })
+            ]
+          )
+        : _vm._e()
     ]
   )
 }
@@ -56487,8 +56783,9 @@ Vue.component('add-skill', __webpack_require__(/*! ./components/AddSkill.vue */ 
 Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue")["default"]);
 Vue.component('loader', __webpack_require__(/*! ./components/Loader.vue */ "./resources/js/components/Loader.vue")["default"]);
 Vue.component('invite-skilltree-member', __webpack_require__(/*! ./components/InviteSkilltreeMember.vue */ "./resources/js/components/InviteSkilltreeMember.vue")["default"]);
-Vue.component('save-skilltree-positions', __webpack_require__(/*! ./components/SaveSkilltreePositions.vue */ "./resources/js/components/SaveSkilltreePositions.vue")["default"]);
+Vue.component('save-load-skilltree-pos-con', __webpack_require__(/*! ./components/SaveLoadSkilltreePosCon.vue */ "./resources/js/components/SaveLoadSkilltreePosCon.vue")["default"]);
 Vue.component('skill-card', __webpack_require__(/*! ./components/SkillCard.vue */ "./resources/js/components/SkillCard.vue")["default"]);
+Vue.component('student-skill-card', __webpack_require__(/*! ./components/StudentSkillCard.vue */ "./resources/js/components/StudentSkillCard.vue")["default"]);
 Vue.component('edit-skill-modal', __webpack_require__(/*! ./components/EditSkillModal.vue */ "./resources/js/components/EditSkillModal.vue")["default"]);
 Vue.component('new-skilltree-modal', __webpack_require__(/*! ./components/NewSkilltreeModal.vue */ "./resources/js/components/NewSkilltreeModal.vue")["default"]);
 Vue.component('manage-skilltree-modal', __webpack_require__(/*! ./components/ManageSkilltreeModal.vue */ "./resources/js/components/ManageSkilltreeModal.vue")["default"]);
@@ -57184,17 +57481,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/SaveSkilltreePositions.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/SaveSkilltreePositions.vue ***!
-  \************************************************************/
+/***/ "./resources/js/components/SaveLoadSkilltreePosCon.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/SaveLoadSkilltreePosCon.vue ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SaveSkilltreePositions.vue?vue&type=template&id=26390043& */ "./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043&");
-/* harmony import */ var _SaveSkilltreePositions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SaveSkilltreePositions.vue?vue&type=script&lang=js& */ "./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js&");
+/* harmony import */ var _SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82& */ "./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82&");
+/* harmony import */ var _SaveLoadSkilltreePosCon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js& */ "./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -57204,9 +57501,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SaveSkilltreePositions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SaveLoadSkilltreePosCon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -57216,38 +57513,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/SaveSkilltreePositions.vue"
+component.options.__file = "resources/js/components/SaveLoadSkilltreePosCon.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveSkilltreePositions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveSkilltreePositions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveSkilltreePositions.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveSkilltreePositions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveLoadSkilltreePosCon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveLoadSkilltreePosCon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82& ***!
+  \********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveSkilltreePositions.vue?vue&type=template&id=26390043& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveSkilltreePositions.vue?vue&type=template&id=26390043&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveLoadSkilltreePosCon.vue?vue&type=template&id=f5a63e82&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveSkilltreePositions_vue_vue_type_template_id_26390043___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveLoadSkilltreePosCon_vue_vue_type_template_id_f5a63e82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -57335,6 +57632,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkillCard_vue_vue_type_template_id_3adb6aa6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkillCard_vue_vue_type_template_id_3adb6aa6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/StudentSkillCard.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/StudentSkillCard.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentSkillCard.vue?vue&type=template&id=0916b871& */ "./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871&");
+/* harmony import */ var _StudentSkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentSkillCard.vue?vue&type=script&lang=js& */ "./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentSkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/StudentSkillCard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentSkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StudentSkillCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StudentSkillCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentSkillCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./StudentSkillCard.vue?vue&type=template&id=0916b871& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StudentSkillCard.vue?vue&type=template&id=0916b871&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentSkillCard_vue_vue_type_template_id_0916b871___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

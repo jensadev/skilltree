@@ -444,7 +444,10 @@ export default {
         async addStudents() {
             console.log(this.studentEmails);
             await axios
-                .put("/skilltrees/" + this.id + "/students", this.studentEmails)
+                .post(
+                    "/skilltrees/" + this.id + "/invitations",
+                    this.studentEmails
+                )
                 .then(function(response) {
                     console.log(response);
                 })

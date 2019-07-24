@@ -96,6 +96,7 @@
                                             v-model="task.body"
                                             :placeholder="'Task ' + (index + 1)"
                                             value="task.body"
+                                            required
                                         />
                                         <div class="input-group-append">
                                             <button
@@ -207,9 +208,9 @@ export default {
                 position: ls[this.form.id].position,
                 connections: []
             };
-            Event.$emit("clearCon");
-            Event.$emit("updatePosCon", JSON.stringify(getCardData));
-            Event.$emit("savePosCon", this.form.id);
+            window.events.$emit("clearCon");
+            window.events.$emit("updatePosCon", JSON.stringify(getCardData));
+            window.events.$emit("savePosCon", this.form.id);
         },
         async deleteSkill() {
             console.log("delete skill");
