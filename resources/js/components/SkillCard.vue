@@ -1,6 +1,12 @@
 <template>
     <div class="card skill-card shadow-sm" :id="'skill_' + id" v-draggable="draggableValue">
         <div
+            class="position-absolute text-light d-flex justify-content-center align-items-center h-100 w-100 card-bg"
+            v-if="icon"
+        >
+            <i class="material-icons" style="font-size: 3rem;">{{ icon }}</i>
+        </div>
+        <div
             class="card-header d-flex justify-content-between align-items-end"
             style="padding-bottom: 0;"
         >
@@ -78,6 +84,7 @@ export default {
             },
             title: "",
             description: "",
+            icon: "",
             id: "",
             tree: "",
             line: {
@@ -98,6 +105,7 @@ export default {
             this.tree = this.skilltree.id;
         } else {
             this.title = this.skill.name;
+            this.icon = this.skill.icon;
             this.description = this.skill.description
                 ? this.skill.description
                 : "";
@@ -255,6 +263,9 @@ export default {
     top: 50%;
     left: -36px;
     transform: translate(0, -50%);
+}
+.card-bg {
+    z-index: -1;
 }
 </style>
 

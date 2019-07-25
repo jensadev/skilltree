@@ -55,10 +55,11 @@ class SkilltreeSkillsController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name' => 'required|min:3',
+            'name' => 'required|min:3|string',
             'description' => 'nullable|min:3',
-            'course_id' => 'nullable',
-            'topic_id' => 'nullable'
+            'icon' => 'nullable|string|max:30',
+            'course_id' => 'nullable|numeric',
+            'topic_id' => 'nullable|numeric'
         ]);
     }
 }

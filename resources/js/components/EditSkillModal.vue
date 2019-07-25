@@ -66,6 +66,30 @@
                                         v-text="form.errors.description[0]"
                                     ></div>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label for="icon">
+                                        Add an Icon from
+                                        <a
+                                            target="_blank"
+                                            href="https://material.io/tools/icons/?icon=extension&style=sharp"
+                                        >Material Design</a>
+                                    </label>
+                                    <input
+                                        id="icon"
+                                        name="icon"
+                                        class="form-control"
+                                        type="text"
+                                        v-model="form.icon"
+                                        value="form.icon"
+                                        :class="form.errors.icon ? 'is-invalid' : ''"
+                                        placeholder="Icon text name"
+                                    />
+                                    <div
+                                        class="invalid-feedback"
+                                        v-if="form.errors.icon"
+                                        v-text="form.errors.icon[0]"
+                                    ></div>
+                                </div>
                             </form>
                         </div>
                         <div class="col-lg-6">
@@ -96,7 +120,6 @@
                                             v-model="task.body"
                                             :placeholder="'Task ' + (index + 1)"
                                             value="task.body"
-                                            required
                                         />
                                         <div class="input-group-append">
                                             <button
@@ -176,6 +199,7 @@ export default {
                 id: 0,
                 name: "",
                 description: "",
+                icon: "",
                 tasks: [],
                 courseId: 0,
                 topicId: 0
@@ -189,6 +213,7 @@ export default {
             this.form.id = event.params.skill.id;
             this.form.name = event.params.skill.name;
             this.form.description = event.params.skill.description;
+            this.form.icon = event.params.skill.icon;
 
             if (event.params.tasks.length > 0) {
                 this.form.tasks = event.params.tasks;
