@@ -22,13 +22,14 @@ class SkilltreeSkillsTest extends TestCase
     /** @test */
     function a_skilltree_can_have_skills()
     {
-        $this->withoutExceptionHandling();
+        $this->signIn();
         $skilltree = SkilltreeFactory::create();
 
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/skills', ['name' => 'Test skill']);
 
-        $this->get($skilltree->path())
+        $this->actingAs($skilltree->owner)
+            ->get($skilltree->path())
             ->assertSee('Test skill');
     }
 
@@ -50,7 +51,6 @@ class SkilltreeSkillsTest extends TestCase
     /** @test */
     function a_user_can_delete_a_skill()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
         $skilltree = factory('App\Skilltree')->create();
         $skill = $skilltree->addSkill(["name" => "delete me"]);

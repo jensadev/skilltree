@@ -8,7 +8,7 @@
             class="position-absolute text-light d-flex justify-content-center align-items-center h-100 w-100 card-bg"
             v-if="icon"
         >
-            <i class="material-icons" style="font-size: 3rem;">{{ icon }}</i>
+            <i class="material-icons" style="font-size: 4rem;">{{ icon }}</i>
         </div>
         <div
             class="card-header d-flex justify-content-between align-items-end"
@@ -24,7 +24,10 @@
             >{{ str_limit(description, 35, true) }}</p>
             <ul v-if="tasks.length > 0" class="list-unstyled mb-0">
                 <li class="list-item text-muted" :key="index" v-for="(task, index) in tasks">
-                    <small>{{ str_limit(task.body, 20, true) }}</small>
+                    <a :href="task.link" v-if="task.link" target="_blank">
+                        <small>{{ str_limit(task.body, 20, true) }}</small>
+                    </a>
+                    <small v-else>{{ str_limit(task.body, 20, true) }}</small>
                 </li>
             </ul>
         </div>

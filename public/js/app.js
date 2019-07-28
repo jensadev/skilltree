@@ -2124,6 +2124,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BugReport.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BugReport.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    hello: function hello() {
+      flash({
+        body: "Keep calm and hit F5.",
+        type: "alert-danger"
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditSkillModal.vue?vue&type=script&lang=js& ***!
@@ -2330,6 +2359,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2337,20 +2395,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isLoading: false,
       isLoadingCourseWork: false,
       skilltree: 0,
+      tasks: [],
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         id: 0,
         name: "",
         description: "",
         icon: "",
-        tasks: [],
         courseId: 0,
         topicId: 0
       })
     };
   },
+  // watch: {
+  //     tasks: function() {
+  //         window.events.$emit("updateTasks", JSON.stringify(this.tasks));
+  //     }
+  // },
   methods: {
     beforeOpen: function beforeOpen(event) {
-      console.log(event);
       this.skilltree = event.params.skill.skilltree_id;
       this.form.id = event.params.skill.id;
       this.form.name = event.params.skill.name;
@@ -2358,9 +2420,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.icon = event.params.skill.icon;
 
       if (event.params.tasks.length > 0) {
-        this.form.tasks = event.params.tasks;
+        this.tasks = event.params.tasks;
       } else {
-        this.form.tasks = [{
+        this.tasks = [{
           body: ""
         }];
       }
@@ -2421,17 +2483,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!this.form.tasks[0].body) {
-                  delete this.form.originalData.tasks;
-                }
-
+                // if (!this.form.tasks[0].body) {
+                //     delete this.form.originalData.tasks;
+                // }
                 this.form.submit("/skilltrees/" + this.skilltree + /skills/ + this.form.id, "patch").then(function (response) {
                   return location = response.data.message;
                 })["catch"](function (error) {
-                  return console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
-              case 2:
+              case 1:
               case "end":
                 return _context2.stop();
             }
@@ -2446,7 +2510,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return submit;
     }(),
     addTask: function addTask() {
-      this.form.tasks.push({
+      this.tasks.push({
         body: ""
       });
     },
@@ -2459,17 +2523,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return axios.post("/skilltrees/" + this.skilltree + /skills/ + this.form.id + "/tasks/", this.form.tasks[task - 1]).then(function (response) {
+                console.log(this.tasks[task - 1]);
+                _context3.next = 3;
+                return axios.post("/skilltrees/" + this.skilltree + "/skills/" + this.form.id + "/tasks/", this.tasks[task - 1]).then(function (response) {
                   update = response.data.message;
+                  flash({
+                    body: "Task Stored",
+                    type: "alert-success"
+                  });
                 })["catch"](function (error) {
-                  console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
-              case 2:
-                this.form.tasks.splice(task - 1, 1);
-                this.form.tasks.push(update);
-                this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+              case 3:
+                this.tasks.splice(task - 1, 1);
+                this.tasks.push(update); //            this.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
 
               case 5:
               case "end":
@@ -2494,17 +2565,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return axios.patch("/skilltrees/" + this.skilltree + /skills/ + this.form.id + "/tasks/" + this.form.tasks[task - 1].id, this.form.tasks[task - 1]).then(function (response) {
+                console.log(this.tasks[task - 1]);
+                _context4.next = 3;
+                return axios.patch("/skilltrees/" + this.skilltree + "/skills/" + this.form.id + "/tasks/" + this.tasks[task - 1].id, this.tasks[task - 1]).then(function (response) {
                   update = response.data.message;
+                  flash({
+                    body: "Task Updated",
+                    type: "alert-success"
+                  });
                 })["catch"](function (error) {
-                  console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
-              case 2:
-                this.form.tasks.splice(task - 1, 1);
-                this.form.tasks.push(update);
-                this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+              case 3:
+                this.tasks.splice(task - 1, 1);
+                this.tasks.push(update); //            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
 
               case 5:
               case "end":
@@ -2529,16 +2607,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return axios["delete"]("/skilltrees/" + this.skilltree + /skills/ + this.form.id + "/tasks/" + this.form.tasks[task - 1].id).then(function (response) {
-                  console.log(response.data.message);
+                return axios["delete"]("/skilltrees/" + this.skilltree + "/skills/" + this.form.id + "/tasks/" + this.tasks[task - 1].id).then(function (response) {
+                  flash({
+                    body: "Task Deleted",
+                    type: "alert-success"
+                  });
                 })["catch"](function (error) {
-                  console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
               case 2:
                 _context5.next = 4;
                 return this.$nextTick(function () {
-                  this.form.tasks.splice(task - 1, 1); //                this.getCourseWork();
+                  this.tasks.splice(task - 1, 1); //                this.getCourseWork();
                 });
 
               case 4:
@@ -3228,6 +3312,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3252,6 +3382,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["skilltree", "members"],
   methods: {
+    loadMember: function () {
+      var _loadMember = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(id); // await axios
+                //     .get("/user/" + id + "/meta")
+                //     .then(function(response) {
+                //         console.log(response.data.message);
+                //     })
+                //     .catch(function(error) {
+                //         flash({ body: error, type: "alert-danger" });
+                //     });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function loadMember(_x) {
+        return _loadMember.apply(this, arguments);
+      }
+
+      return loadMember;
+    }(),
     // async deleteCourseConnection() {
     //     let con = true;
     //     await axios
@@ -3269,27 +3430,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteSkilltree: function () {
       var _deleteSkilltree = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 id = this.id;
-                _context.next = 3;
+                _context2.next = 3;
                 return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
                   localStorage.removeItem(id);
                   location = response.data.message;
                 })["catch"](function (error) {
-                  console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
               case 3:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function deleteSkilltree() {
@@ -3301,23 +3465,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   location = response.data.message;
                 })["catch"](function (error) {
-                  return console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function submit() {
@@ -3329,25 +3496,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addStudents: function () {
       var _addStudents = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                console.log(this.studentEmails);
-                _context3.next = 3;
-                return axios.post("/skilltrees/" + this.id + "/invitations", this.studentEmails).then(function (response) {
-                  console.log(response);
+                _context4.next = 2;
+                return axios.post("/skilltrees/" + this.id + "/invitations", {
+                  emails: this.studentEmails
+                }).then(function (response) {
+                  flash({
+                    body: "Students invited",
+                    type: "alert-success"
+                  });
                 })["catch"](function (error) {
-                  console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
-              case 3:
+              case 2:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function addStudents() {
@@ -3604,7 +3778,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.form.submit("/skilltrees").then(function (response) {
                   return location = response.data.message;
                 })["catch"](function (error) {
-                  return console.log(error);
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
                 });
 
               case 2:
@@ -3995,7 +4172,9 @@ __webpack_require__.r(__webpack_exports__);
     this.draggableValue.initialPosition = this.getPos();
     window.events.$on("clearCon", function (data) {
       _this.connections = [];
-    });
+    }); // window.events.$on("updateTasks", data => {
+    //     this.tasks = JSON.parse(data);
+    // });
   },
   mounted: function mounted() {
     var _this2 = this;
@@ -4107,6 +4286,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -42801,6 +42983,45 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BugReport.vue?vue&type=template&id=5befc226&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BugReport.vue?vue&type=template&id=5befc226& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "bug-report" }, [
+    _c(
+      "button",
+      {
+        staticClass: "btn dashbaricon",
+        attrs: { role: "button", title: "Report a Bug" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.hello($event)
+          }
+        }
+      },
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("bug_report")])]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditSkillModal.vue?vue&type=template&id=5e9088b1& ***!
@@ -42918,7 +43139,12 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "description" } }, [
-                        _vm._v("Description")
+                        _vm._v(
+                          "\n                                    Description\n                                    "
+                        ),
+                        _c("small", { staticClass: "text-muted" }, [
+                          _vm._v("- optional")
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -42973,7 +43199,7 @@ var render = function() {
                     _c("div", { staticClass: "form-group mb-3" }, [
                       _c("label", { attrs: { for: "icon" } }, [
                         _vm._v(
-                          "\n                                    Add an Icon from\n                                    "
+                          "\n                                    Add\n                                    "
                         ),
                         _c(
                           "a",
@@ -42985,7 +43211,13 @@ var render = function() {
                             }
                           },
                           [_vm._v("Material Design")]
-                        )
+                        ),
+                        _vm._v(
+                          "\n                                    Icon\n                                    "
+                        ),
+                        _c("small", { staticClass: "text-muted" }, [
+                          _vm._v("- optional")
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -43050,7 +43282,14 @@ var render = function() {
                       "div",
                       { staticClass: "form-group" },
                       [
-                        _c("label", [_vm._v("Tasks")]),
+                        _c("label", [
+                          _vm._v(
+                            "\n                                    Tasks\n                                    "
+                          ),
+                          _c("small", { staticClass: "text-muted" }, [
+                            _vm._v("- optional")
+                          ])
+                        ]),
                         _vm._v(" "),
                         _vm.isLoadingCourseWork
                           ? _c(
@@ -43072,7 +43311,7 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        _vm._l(_vm.form.tasks, function(task, index) {
+                        _vm._l(_vm.tasks, function(task, index) {
                           return _c(
                             "div",
                             { key: index, staticClass: "input-group mb-3" },
@@ -43088,7 +43327,7 @@ var render = function() {
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  form: "skillform",
+                                  form: "tasksform",
                                   type: "text",
                                   placeholder: "Task " + (index + 1),
                                   value: "task.body"
@@ -43104,13 +43343,75 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: task.link,
+                                    expression: "task.link"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  form: "tasksform",
+                                  type: "text",
+                                  placeholder: "http://Url - optional",
+                                  value: "task.link"
+                                },
+                                domProps: { value: task.link },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(task, "link", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              task.id
+                                ? _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: task.id,
+                                        expression: "task.id"
+                                      }
+                                    ],
+                                    attrs: {
+                                      hidden: "",
+                                      form: "tasksform",
+                                      type: "text",
+                                      value: "task.id"
+                                    },
+                                    domProps: { value: task.id },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          task,
+                                          "id",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
                               _c("div", { staticClass: "input-group-append" }, [
                                 task.id
                                   ? _c(
                                       "button",
                                       {
                                         staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
+                                        attrs: {
+                                          form: "tasksform",
+                                          type: "button"
+                                        },
                                         on: {
                                           click: function($event) {
                                             return _vm.updateTask(index + 1)
@@ -43132,7 +43433,10 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
+                                        attrs: {
+                                          form: "tasksform",
+                                          type: "button"
+                                        },
                                         on: {
                                           click: function($event) {
                                             return _vm.storeTask(index + 1)
@@ -43143,7 +43447,7 @@ var render = function() {
                                         _c(
                                           "i",
                                           { staticClass: "material-icons" },
-                                          [_vm._v("add")]
+                                          [_vm._v("save")]
                                         )
                                       ]
                                     )
@@ -43154,7 +43458,10 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass: "btn dashbaricon",
-                                        attrs: { type: "button" },
+                                        attrs: {
+                                          form: "tasksform",
+                                          type: "button"
+                                        },
                                         on: {
                                           click: function($event) {
                                             return _vm.deleteTask(index + 1)
@@ -43497,7 +43804,8 @@ var render = function() {
         reset: true,
         "pivot-y": 0.25,
         width: "60%",
-        height: "auto"
+        height: "auto",
+        scrollable: true
       }
     },
     [
@@ -43824,6 +44132,65 @@ var render = function() {
                   [
                     _c("h5", [_vm._v("Students Tab")]),
                     _vm._v(" "),
+                    _vm.members
+                      ? _c(
+                          "section",
+                          {
+                            staticClass: "accordion list-group",
+                            attrs: { id: "accordionStudents" }
+                          },
+                          _vm._l(_vm.members, function(member, index) {
+                            return _c(
+                              "div",
+                              {
+                                key: index,
+                                attrs: { id: "heading" + (index + 1) }
+                              },
+                              [
+                                _c("button", {
+                                  staticClass:
+                                    "list-group-item list-group-item-action",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "collapse",
+                                    "data-target": "#collapse" + (index + 1),
+                                    "aria-expanded": "true",
+                                    "aria-controls": "collapse" + (index + 1)
+                                  },
+                                  domProps: {
+                                    textContent: _vm._s(member.name)
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.loadMember(member.id)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "collapse list-group-item",
+                                    attrs: {
+                                      id: "collapse" + (index + 1),
+                                      "aria-labelledby":
+                                        "heading" + (index + 1),
+                                      "data-parent": "#accordionStudents"
+                                    }
+                                  },
+                                  [
+                                    _c("p", {
+                                      domProps: { textContent: _vm._s(member) }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "form",
                       {
@@ -43847,6 +44214,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            form: "studentForm",
                             name: "studentEmails",
                             id: "studentEmails",
                             cols: "30",
@@ -43867,7 +44235,7 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-secondary mr-2",
-                            attrs: { type: "submit" }
+                            attrs: { type: "submit", form: "studentForm" }
                           },
                           [
                             _vm._v(
@@ -43923,21 +44291,23 @@ var render = function() {
                   ? _c(
                       "div",
                       _vm._l(_vm.members, function(member, index) {
-                        return _c("img", {
-                          key: index,
-                          staticClass: "rounded-circle mr-1",
-                          staticStyle: { width: "24px" },
-                          attrs: {
-                            src: member.avatar,
-                            alt: member.name,
-                            title:
-                              "User " +
-                              member.name +
-                              " is allowed to edit Skilltree",
-                            "data-toggle": "tooltip",
-                            "data-placement": "bottom"
-                          }
-                        })
+                        return member.teacher == true
+                          ? _c("img", {
+                              key: index,
+                              staticClass: "rounded-circle mr-1",
+                              staticStyle: { width: "24px" },
+                              attrs: {
+                                src: member.avatar,
+                                alt: member.name,
+                                title:
+                                  "User " +
+                                  member.name +
+                                  " is allowed to edit Skilltree",
+                                "data-toggle": "tooltip",
+                                "data-placement": "bottom"
+                              }
+                            })
+                          : _vm._e()
                       }),
                       0
                     )
@@ -44408,7 +44778,7 @@ var render = function() {
                 "i",
                 {
                   staticClass: "material-icons",
-                  staticStyle: { "font-size": "3rem" }
+                  staticStyle: { "font-size": "4rem" }
                 },
                 [_vm._v(_vm._s(_vm.icon))]
               )
@@ -44471,7 +44841,7 @@ var render = function() {
                 staticClass: "card-text mb-0",
                 staticStyle: { "font-size": "90%" }
               },
-              [_vm._v(_vm._s(_vm.str_limit(_vm.description, 35, true)))]
+              [_vm._v(_vm._s(_vm.str_limit(_vm.description, 45, true)))]
             )
           : _vm._e(),
         _vm._v(" "),
@@ -44587,7 +44957,7 @@ var render = function() {
                 "i",
                 {
                   staticClass: "material-icons",
-                  staticStyle: { "font-size": "3rem" }
+                  staticStyle: { "font-size": "4rem" }
                 },
                 [_vm._v(_vm._s(_vm.icon))]
               )
@@ -44630,9 +45000,19 @@ var render = function() {
                   "li",
                   { key: index, staticClass: "list-item text-muted" },
                   [
-                    _c("small", [
-                      _vm._v(_vm._s(_vm.str_limit(task.body, 20, true)))
-                    ])
+                    task.link
+                      ? _c(
+                          "a",
+                          { attrs: { href: task.link, target: "_blank" } },
+                          [
+                            _c("small", [
+                              _vm._v(_vm._s(_vm.str_limit(task.body, 20, true)))
+                            ])
+                          ]
+                        )
+                      : _c("small", [
+                          _vm._v(_vm._s(_vm.str_limit(task.body, 20, true)))
+                        ])
                   ]
                 )
               }),
@@ -56971,6 +57351,7 @@ Vue.component('loader', __webpack_require__(/*! ./components/Loader.vue */ "./re
 Vue.component('invite-skilltree-member', __webpack_require__(/*! ./components/InviteSkilltreeMember.vue */ "./resources/js/components/InviteSkilltreeMember.vue")["default"]);
 Vue.component('save-load-skilltree-pos-con', __webpack_require__(/*! ./components/SaveLoadSkilltreePosCon.vue */ "./resources/js/components/SaveLoadSkilltreePosCon.vue")["default"]);
 Vue.component('skill-card', __webpack_require__(/*! ./components/SkillCard.vue */ "./resources/js/components/SkillCard.vue")["default"]);
+Vue.component('bug-report', __webpack_require__(/*! ./components/BugReport.vue */ "./resources/js/components/BugReport.vue")["default"]);
 Vue.component('student-skill-card', __webpack_require__(/*! ./components/StudentSkillCard.vue */ "./resources/js/components/StudentSkillCard.vue")["default"]);
 Vue.component('edit-skill-modal', __webpack_require__(/*! ./components/EditSkillModal.vue */ "./resources/js/components/EditSkillModal.vue")["default"]);
 Vue.component('new-skilltree-modal', __webpack_require__(/*! ./components/NewSkilltreeModal.vue */ "./resources/js/components/NewSkilltreeModal.vue")["default"]);
@@ -57120,6 +57501,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddSkill_vue_vue_type_template_id_eeb3c8ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddSkill_vue_vue_type_template_id_eeb3c8ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/BugReport.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/BugReport.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BugReport.vue?vue&type=template&id=5befc226& */ "./resources/js/components/BugReport.vue?vue&type=template&id=5befc226&");
+/* harmony import */ var _BugReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BugReport.vue?vue&type=script&lang=js& */ "./resources/js/components/BugReport.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BugReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/BugReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/BugReport.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/BugReport.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BugReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BugReport.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BugReport.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BugReport_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/BugReport.vue?vue&type=template&id=5befc226&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/BugReport.vue?vue&type=template&id=5befc226& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BugReport.vue?vue&type=template&id=5befc226& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BugReport.vue?vue&type=template&id=5befc226&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BugReport_vue_vue_type_template_id_5befc226___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

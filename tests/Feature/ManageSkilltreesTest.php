@@ -172,8 +172,31 @@ class ManageSkilltreesTest extends TestCase
 
         $attributes['positions'] = "position: 0";
 
-        $this->actingAs($skilltree->owner)->post($skilltree->path() . '/pos', $attributes);
+        $skilltree->storePositions($attributes);
 
-        $this->get($skilltree->path() . '/pos')->assertSee("position: 0");
+        $this->actingAs($skilltree->owner)->get($skilltree->path() . '/pos')->assertSee("position: 0");
+    }
+
+    /** @test */
+    function a_student_user_cannot_create_skilltrees()
+    {
+        $this->signInStudent();
+        $this->get('/skilltrees/create')->assertStatus(403);
+
+        $attributes = factory(Skilltree::class)->raw();
+        $this->followingRedirects()
+            ->post('/skilltrees', $attributes)
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('skilltrees', $attributes);
+    }
+
+    /** @test **/
+    function student_users_cannot_delete_skilltrees()
+    {
+        $this->signInStudent();
+        $skilltree = SkilltreeFactory::create();
+        $this->delete($skilltree->path())
+            ->assertStatus(403);
     }
 }

@@ -51,7 +51,10 @@
                                     ></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">
+                                        Description
+                                        <small class="text-muted">- optional</small>
+                                    </label>
                                     <textarea
                                         id="description"
                                         name="description"
@@ -68,11 +71,15 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="icon">
-                                        Add an Icon from
+                                        Add
                                         <a
                                             target="_blank"
                                             href="https://material.io/tools/icons/?icon=extension&style=sharp"
                                         >Material Design</a>
+                                        Icon
+                                        <small
+                                            class="text-muted"
+                                        >- optional</small>
                                     </label>
                                     <input
                                         id="icon"
@@ -99,7 +106,10 @@
                                 id="tasksform"
                             >
                                 <div class="form-group">
-                                    <label>Tasks</label>
+                                    <label>
+                                        Tasks
+                                        <small class="text-muted">- optional</small>
+                                    </label>
                                     <div
                                         class="spinner-border text-muted"
                                         role="status"
@@ -111,18 +121,35 @@
                                     <div
                                         class="input-group mb-3"
                                         :key="index"
-                                        v-for="(task, index) in form.tasks"
+                                        v-for="(task, index) in tasks"
                                     >
                                         <input
-                                            form="skillform"
+                                            form="tasksform"
                                             class="form-control"
                                             type="text"
                                             v-model="task.body"
                                             :placeholder="'Task ' + (index + 1)"
                                             value="task.body"
                                         />
+                                        <input
+                                            form="tasksform"
+                                            class="form-control"
+                                            type="text"
+                                            v-model="task.link"
+                                            placeholder="http://Url - optional"
+                                            value="task.link"
+                                        />
+                                        <input
+                                            hidden
+                                            form="tasksform"
+                                            type="text"
+                                            v-if="task.id"
+                                            v-model="task.id"
+                                            value="task.id"
+                                        />
                                         <div class="input-group-append">
                                             <button
+                                                form="tasksform"
                                                 class="btn dashbaricon"
                                                 type="button"
                                                 v-if="task.id"
@@ -131,14 +158,16 @@
                                                 <i class="material-icons">edit</i>
                                             </button>
                                             <button
+                                                form="tasksform"
                                                 class="btn dashbaricon"
                                                 type="button"
                                                 v-if="!task.id"
                                                 @click="storeTask(index + 1)"
                                             >
-                                                <i class="material-icons">add</i>
+                                                <i class="material-icons">save</i>
                                             </button>
                                             <button
+                                                form="tasksform"
                                                 class="btn dashbaricon"
                                                 type="button"
                                                 v-if="task.id"
@@ -195,20 +224,24 @@ export default {
             isLoading: false,
             isLoadingCourseWork: false,
             skilltree: 0,
+            tasks: [],
             form: new Form({
                 id: 0,
                 name: "",
                 description: "",
                 icon: "",
-                tasks: [],
                 courseId: 0,
                 topicId: 0
             })
         };
     },
+    // watch: {
+    //     tasks: function() {
+    //         window.events.$emit("updateTasks", JSON.stringify(this.tasks));
+    //     }
+    // },
     methods: {
         beforeOpen: function(event) {
-            console.log(event);
             this.skilltree = event.params.skill.skilltree_id;
             this.form.id = event.params.skill.id;
             this.form.name = event.params.skill.name;
@@ -216,9 +249,9 @@ export default {
             this.form.icon = event.params.skill.icon;
 
             if (event.params.tasks.length > 0) {
-                this.form.tasks = event.params.tasks;
+                this.tasks = event.params.tasks;
             } else {
-                this.form.tasks = [{ body: "" }];
+                this.tasks = [{ body: "" }];
             }
         },
         clearConnections: function() {
@@ -255,9 +288,9 @@ export default {
                 });
         },
         async submit() {
-            if (!this.form.tasks[0].body) {
-                delete this.form.originalData.tasks;
-            }
+            // if (!this.form.tasks[0].body) {
+            //     delete this.form.originalData.tasks;
+            // }
 
             this.form
                 .submit(
@@ -265,72 +298,78 @@ export default {
                     "patch"
                 )
                 .then(response => (location = response.data.message))
-                .catch(error => console.log(error));
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
         },
         addTask() {
-            this.form.tasks.push({ body: "" });
+            this.tasks.push({ body: "" });
         },
         async storeTask(task) {
             let update;
+            console.log(this.tasks[task - 1]);
             await axios
                 .post(
                     "/skilltrees/" +
                         this.skilltree +
-                        /skills/ +
+                        "/skills/" +
                         this.form.id +
                         "/tasks/",
-                    this.form.tasks[task - 1]
+                    this.tasks[task - 1]
                 )
                 .then(function(response) {
                     update = response.data.message;
+                    flash({ body: "Task Stored", type: "alert-success" });
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
-            this.form.tasks.splice(task - 1, 1);
-            this.form.tasks.push(update);
-            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+            this.tasks.splice(task - 1, 1);
+            this.tasks.push(update);
+            //            this.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
         },
         async updateTask(task) {
             let update;
+            console.log(this.tasks[task - 1]);
             await axios
                 .patch(
                     "/skilltrees/" +
                         this.skilltree +
-                        /skills/ +
+                        "/skills/" +
                         this.form.id +
                         "/tasks/" +
-                        this.form.tasks[task - 1].id,
-                    this.form.tasks[task - 1]
+                        this.tasks[task - 1].id,
+                    this.tasks[task - 1]
                 )
                 .then(function(response) {
                     update = response.data.message;
+                    flash({ body: "Task Updated", type: "alert-success" });
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
-            this.form.tasks.splice(task - 1, 1);
-            this.form.tasks.push(update);
-            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
+            this.tasks.splice(task - 1, 1);
+            this.tasks.push(update);
+            //            this.form.tasks = _.sortBy(this.form.tasks, ["id", "body"]);
         },
         async deleteTask(task) {
             await axios
                 .delete(
                     "/skilltrees/" +
                         this.skilltree +
-                        /skills/ +
+                        "/skills/" +
                         this.form.id +
                         "/tasks/" +
-                        this.form.tasks[task - 1].id
+                        this.tasks[task - 1].id
                 )
                 .then(function(response) {
-                    console.log(response.data.message);
+                    flash({ body: "Task Deleted", type: "alert-success" });
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
             await this.$nextTick(function() {
-                this.form.tasks.splice(task - 1, 1);
+                this.tasks.splice(task - 1, 1);
                 //                this.getCourseWork();
             });
         }

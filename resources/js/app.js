@@ -29,6 +29,7 @@ Vue.component('loader', require('./components/Loader.vue').default);
 Vue.component('invite-skilltree-member', require('./components/InviteSkilltreeMember.vue').default);
 Vue.component('save-load-skilltree-pos-con', require('./components/SaveLoadSkilltreePosCon.vue').default);
 Vue.component('skill-card', require('./components/SkillCard.vue').default);
+Vue.component('bug-report', require('./components/BugReport.vue').default);
 Vue.component('student-skill-card', require('./components/StudentSkillCard.vue').default);
 Vue.component('edit-skill-modal', require('./components/EditSkillModal.vue').default);
 Vue.component('new-skilltree-modal', require('./components/NewSkilltreeModal.vue').default);

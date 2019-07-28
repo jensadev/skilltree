@@ -18,15 +18,18 @@ class SkilltreesController extends Controller
 
     public function store()
     {
-        $skilltree = auth()->user()->skilltrees()->create($this->validateRequest());
+        if (auth()->user()->teacher == true) {
+            $skilltree = auth()->user()->skilltrees()->create($this->validateRequest());
 
-        if ($skills = request('skills')) {
-            $skilltree->addSkills($skills);
+            if ($skills = request('skills')) {
+                $skilltree->addSkills($skills);
+            }
+            if (request()->wantsJson()) {
+                return ['message' => $skilltree->path()];
+            }
+            return redirect($skilltree->path());
         }
-        if (request()->wantsJson()) {
-            return ['message' => $skilltree->path()];
-        }
-        return redirect($skilltree->path());
+        abort(403);
     }
 
     public function show(Skilltree $skilltree)
@@ -43,7 +46,10 @@ class SkilltreesController extends Controller
      */
     public function create()
     {
-        return view('skilltrees.create');
+        if (auth()->user()->teacher == true) {
+            return view('skilltrees.create');
+        }
+        abort(403);
     }
 
     public function edit(Skilltree $skilltree)

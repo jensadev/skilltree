@@ -8,6 +8,7 @@
         :pivot-y="0.25"
         width="60%"
         height="auto"
+        :scrollable="true"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -309,8 +310,48 @@
                             aria-labelledby="students-tab"
                         >
                             <h5>Students Tab</h5>
+                            <section
+                                class="accordion list-group"
+                                id="accordionStudents"
+                                v-if="members"
+                            >
+                                <div
+                                    :id="'heading' + (index + 1)"
+                                    v-for="(member, index) in members"
+                                    :key="index"
+                                >
+                                    <button
+                                        class="list-group-item list-group-item-action"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        :data-target="'#collapse' + (index + 1)"
+                                        aria-expanded="true"
+                                        :aria-controls="'collapse' + (index + 1)"
+                                        v-text="member.name"
+                                        @click="loadMember(member.id)"
+                                    ></button>
+                                    <div
+                                        :id="'collapse' + (index + 1)"
+                                        class="collapse list-group-item"
+                                        :aria-labelledby="'heading' + (index + 1)"
+                                        data-parent="#accordionStudents"
+                                    >
+                                        <p v-text="member"></p>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- <div>
+                                <ul v-if="members">
+                                    <li
+                                        v-for="(member, index) in members"
+                                        :key="index"
+                                        v-text="member.name"
+                                    ></li>
+                                </ul>
+                            </div>-->
                             <form @submit.prevent="addStudents" id="studentForm">
                                 <textarea
+                                    form="studentForm"
                                     name="studentEmails"
                                     id="studentEmails"
                                     class="form-control"
@@ -318,7 +359,11 @@
                                     rows="10"
                                     v-model="studentEmails"
                                 ></textarea>
-                                <button class="btn btn-secondary mr-2" type="submit">
+                                <button
+                                    class="btn btn-secondary mr-2"
+                                    type="submit"
+                                    form="studentForm"
+                                >
                                     Add Students
                                     <div
                                         class="spinner-border"
@@ -347,6 +392,7 @@
                         <div v-if="members">
                             <img
                                 v-for="(member, index) in members"
+                                v-if="member.teacher == true"
                                 :key="index"
                                 :src="member.avatar"
                                 :alt="member.name"
@@ -407,6 +453,17 @@ export default {
     },
     props: ["skilltree", "members"],
     methods: {
+        async loadMember(id) {
+            console.log(id);
+            // await axios
+            //     .get("/user/" + id + "/meta")
+            //     .then(function(response) {
+            //         console.log(response.data.message);
+            //     })
+            //     .catch(function(error) {
+            //         flash({ body: error, type: "alert-danger" });
+            //     });
+        },
         // async deleteCourseConnection() {
         //     let con = true;
         //     await axios
@@ -430,7 +487,7 @@ export default {
                     location = response.data.message;
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
         },
         async submit() {
@@ -439,20 +496,23 @@ export default {
                 .then(function(response) {
                     location = response.data.message;
                 })
-                .catch(error => console.log(error));
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
         },
         async addStudents() {
-            console.log(this.studentEmails);
             await axios
-                .post(
-                    "/skilltrees/" + this.id + "/invitations",
-                    this.studentEmails
-                )
+                .post("/skilltrees/" + this.id + "/invitations", {
+                    emails: this.studentEmails
+                })
                 .then(function(response) {
-                    console.log(response);
+                    flash({
+                        body: "Students invited",
+                        type: "alert-success"
+                    });
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    flash({ body: error, type: "alert-danger" });
                 });
         }
         // async getCourses() {

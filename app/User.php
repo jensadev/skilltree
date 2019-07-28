@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(Skilltree::class, 'owner_id')->latest('updated_at');
     }
 
+    public function progress()
+    {
+        return $this->hasMany(Progress::class, 'owner_id');
+    }
+
     public function accessibleSkilltrees()
     {
         return Skilltree::where('owner_id', $this->id)

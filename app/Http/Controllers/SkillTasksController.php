@@ -22,6 +22,7 @@ class SkillTasksController extends Controller
     {
         $this->authorize('update', $skilltree);
 
+        //request()->validate(['body' => 'required|min:3']);
         $task = $skill->addTask($this->validateRequest());
 
         if (request('courseWorkId')) {
@@ -48,6 +49,8 @@ class SkillTasksController extends Controller
         $this->authorize('update', $skilltree);
 
         $task->update($this->validateRequest());
+
+        //        request('completed') ?  $task->complete() : $task->incomplete();
 
         if (request()->wantsJson()) {
             return ['message' => $task];
@@ -78,7 +81,8 @@ class SkillTasksController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'body' => 'required|min:3'
+            'body' => 'required|min:3',
+            'link' => 'nullable|url'
         ]);
     }
 }

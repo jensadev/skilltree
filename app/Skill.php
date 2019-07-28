@@ -54,9 +54,9 @@ class Skill extends Model
      * 
      * @param string $body
      */
-    public function addTask($body)
+    public function addTask($task)
     {
-        return $this->tasks()->updateOrCreate(compact('body'));
+        return $this->tasks()->create($task);
     }
 
     /*

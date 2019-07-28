@@ -19,7 +19,7 @@
         <edit-skill-modal></edit-skill-modal>
         <manage-skilltree-modal
             :skilltree="{{ $skilltree }}"
-            :members="{{ $skilltree->members->where('teacher', true) }}">
+            :members="{{ $skilltree->members }}">
         </manage-skilltree-modal>
         @elsecan('read', $skilltree)
             <student-skill-card

@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top bg-transparent dashbar">
+<nav class="navbar fixed-top bg-transparent dashbar" style="z-index: 100;">
     <div class="container">
         <div class="crumb">
             <h1 class="h3 text-capitalize mb-1"><a  href="/skilltrees">Skilltrees</a>
@@ -26,9 +26,7 @@
                     </a>
                 @endcan
             @endif
-            <a href="#" class="btn dashbaricon" role="button" title="Report a Bug">
-                <i class="material-icons">bug_report</i>
-            </a>
+            <bug-report></bug-report>
         </div>
     </div>
 </nav>

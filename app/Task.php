@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Appstract\Meta\Metable;
+use App\User;
 
 class Task extends Model
 {
@@ -25,6 +26,11 @@ class Task extends Model
         return $this->belongsTo(Skill::class);
     }
 
+    public function progress()
+    {
+        return $this->hasMany(Progress::class, 'task_id');
+        //return $this->morphMany('App\Progress', 'progress');
+    }
 
     /**
      * Handle for task path

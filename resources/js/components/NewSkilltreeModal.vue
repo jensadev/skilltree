@@ -126,7 +126,9 @@ export default {
             this.form
                 .submit("/skilltrees")
                 .then(response => (location = response.data.message))
-                .catch(error => console.log(error));
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
         }
     }
 };

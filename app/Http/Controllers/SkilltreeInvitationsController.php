@@ -11,7 +11,7 @@ class SkilltreeInvitationsController extends Controller
 {
     public function store(Skilltree $skilltree, SkilltreeInvitationRequest $request)
     {
-        $this->authorize('update', $skilltree);
+        $this->authorize('manage', $skilltree);
 
         $user = User::whereEmail(request('email'))->first();
 
@@ -30,13 +30,9 @@ class SkilltreeInvitationsController extends Controller
 
     public function classStore(Skilltree $skilltree)
     {
-        $this->authorize('manage', $skilltree);
+        $this->authorize('update', $skilltree);
 
-        $emails = explode(",", request('studentEmails'));
-
-        if (request()->wantsJson()) {
-            return ['message' => $emails];
-        }
+        $emails = explode(",", request('emails'));
 
         foreach ($emails as $email) {
             $user = User::whereEmail($email)->first();
@@ -46,6 +42,10 @@ class SkilltreeInvitationsController extends Controller
             }
 
             $skilltree->invite($user);
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $emails];
         }
     }
 

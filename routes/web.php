@@ -19,6 +19,12 @@ Route::group(
         Route::get('/', 'SkilltreesController@index');
         Route::resource('skilltrees', 'SkilltreesController');
 
+        // Progress
+        Route::get('/user/{user}/progress', 'UserProgressController@index');
+        Route::get('/user/{user}/progress/{progress}', 'UserProgressController@show');
+        Route::post('/user/{user}/progress/{task}', 'UserProgressController@store');
+        Route::patch('/user/{user}/progress/{progress}', 'UserProgressController@update');
+
         // invitations
         Route::post('skilltrees/{skilltree}/invitation', 'SkilltreeInvitationsController@store');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@classStore');
@@ -39,7 +45,6 @@ Route::group(
         Route::patch('/skilltrees/{skilltree}/skills/{skill}/tasks/{task}', 'SkillTasksController@update');
         Route::delete('/skilltrees/{skilltree}/skills/{skill}/tasks/{task}', 'SkillTasksController@destroy');
 
-
         // classroom controller routes
         Route::post('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@connect');
         Route::delete('skilltrees/{skilltree}/classroom/course', 'SkilltreeClassroomsController@disconnect');
@@ -53,8 +58,6 @@ Route::group(
         Route::get('/classroom/courses/{courseid}/coursework/{courseworkid}', 'ClassroomController@getCourseWork');
     }
 );
-
-
 
 Auth::routes(['register' => false]);
 
