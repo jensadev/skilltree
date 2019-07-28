@@ -6,6 +6,7 @@ use App\User;
 use App\Skilltree;
 use Illuminate\Http\Request;
 use App\Http\Requests\SkilltreeInvitationRequest;
+use App\Progress;
 
 class SkilltreeInvitationsController extends Controller
 {
@@ -42,6 +43,15 @@ class SkilltreeInvitationsController extends Controller
             }
 
             $skilltree->invite($user);
+
+            foreach ($skilltree->skills as $skill) {
+                foreach ($skill->tasks as $task) {
+                    Progress::create([
+                        'owner_id' => $user->id,
+                        'task_id' => $task->id
+                    ]);
+                }
+            }
         }
 
         if (request()->wantsJson()) {

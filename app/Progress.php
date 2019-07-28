@@ -10,6 +10,8 @@ class Progress extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['task'];
+
     public function progressable()
     {
         return $this->morphTo();

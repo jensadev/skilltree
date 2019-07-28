@@ -3358,6 +3358,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3377,29 +3405,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         description: this.skilltree.description,
         notes: this.skilltree.notes,
         courseId: this.skilltree.course_id
-      })
+      }),
+      studentProgress: ""
     };
   },
   props: ["skilltree", "members"],
   methods: {
-    loadMember: function () {
-      var _loadMember = _asyncToGenerator(
+    taskCompleted: function () {
+      var _taskCompleted = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(owner, id, completed) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(id); // await axios
-                //     .get("/user/" + id + "/meta")
-                //     .then(function(response) {
-                //         console.log(response.data.message);
-                //     })
-                //     .catch(function(error) {
-                //         flash({ body: error, type: "alert-danger" });
-                //     });
+                _context.next = 2;
+                return axios.patch("/user/" + owner + "/progress/" + id, {
+                  completed: completed == 0 || completed == false ? true : false
+                }).then(function (response) {
+                  console.log(response.data.message);
+                })["catch"](function (error) {
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
+                });
 
-              case 1:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -3407,7 +3439,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }));
 
-      function loadMember(_x) {
+      function taskCompleted(_x, _x2, _x3) {
+        return _taskCompleted.apply(this, arguments);
+      }
+
+      return taskCompleted;
+    }(),
+    loadMember: function () {
+      var _loadMember = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log(id);
+                _context2.next = 3;
+                return axios.get("/user/" + id + "/progress").then(function (response) {
+                  console.log(response.data.message);
+                  data = response.data.message;
+                })["catch"](function (error) {
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
+                });
+
+              case 3:
+                this.studentProgress = data;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loadMember(_x4) {
         return _loadMember.apply(this, arguments);
       }
 
@@ -3430,14 +3500,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteSkilltree: function () {
       var _deleteSkilltree = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 id = this.id;
-                _context2.next = 3;
+                _context3.next = 3;
                 return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
                   localStorage.removeItem(id);
                   location = response.data.message;
@@ -3450,10 +3520,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function deleteSkilltree() {
@@ -3465,10 +3535,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   location = response.data.message;
@@ -3481,10 +3551,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function submit() {
@@ -3496,12 +3566,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addStudents: function () {
       var _addStudents = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.next = 2;
+                _context5.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/invitations", {
                   emails: this.studentEmails
                 }).then(function (response) {
@@ -3518,10 +3588,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function addStudents() {
@@ -4364,7 +4434,11 @@ __webpack_require__.r(__webpack_exports__);
       this.description = this.skill.description ? this.skill.description : "";
       this.id = this.skill.id;
       this.tree = this.skill.skilltree_id;
-      if (this.skill.tasks) this.tasks = this.skill.tasks;
+
+      if (this.skill.tasks) {
+        this.tasks = this.skill.tasks;
+        console.log(this.skill.tasks);
+      }
     }
   },
   mounted: function mounted() {
@@ -43829,15 +43903,15 @@ var render = function() {
                       {
                         staticClass: "nav-link active",
                         attrs: {
-                          id: "information-tab",
-                          href: "#information",
+                          id: "manage-tab",
+                          href: "#manage",
                           "data-toggle": "tab",
                           role: "tab",
-                          "aria-controls": "information",
+                          "aria-controls": "manage",
                           "aria-selected": "true"
                         }
                       },
-                      [_vm._v("Information")]
+                      [_vm._v("Manage")]
                     )
                   ]),
                   _vm._v(" "),
@@ -43906,19 +43980,16 @@ var render = function() {
           _c("div", { staticClass: "modal-body" }, [
             _c(
               "div",
-              {
-                staticClass: "tab-content",
-                attrs: { id: "informationTabContent" }
-              },
+              { staticClass: "tab-content", attrs: { id: "manageTabContent" } },
               [
                 _c(
                   "div",
                   {
                     staticClass: "tab-pane fade show active",
                     attrs: {
-                      id: "information",
+                      id: "manage",
                       role: "tabpanel",
-                      "aria-labelledby": "information-tab"
+                      "aria-labelledby": "manage-tab"
                     }
                   },
                   [
@@ -44158,7 +44229,9 @@ var render = function() {
                                     "aria-controls": "collapse" + (index + 1)
                                   },
                                   domProps: {
-                                    textContent: _vm._s(member.name)
+                                    textContent: _vm._s(
+                                      member.name ? member.name : member.email
+                                    )
                                   },
                                   on: {
                                     click: function($event) {
@@ -44179,9 +44252,180 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("p", {
-                                      domProps: { textContent: _vm._s(member) }
-                                    })
+                                    _vm.studentProgress
+                                      ? _c(
+                                          "ul",
+                                          { staticClass: "list-group" },
+                                          _vm._l(_vm.studentProgress, function(
+                                            taskProgress
+                                          ) {
+                                            return _c(
+                                              "li",
+                                              {
+                                                key: taskProgress.id,
+                                                staticClass:
+                                                  "list-group-item list-group-item-action"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "d-flex justify-content-between"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "label",
+                                                      {
+                                                        staticClass: "mb-0",
+                                                        attrs: {
+                                                          for: "completed"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                                    Task: " +
+                                                            _vm._s(
+                                                              taskProgress.task
+                                                                .body
+                                                            ) +
+                                                            ",\n                                                    "
+                                                        ),
+                                                        _c(
+                                                          "small",
+                                                          {
+                                                            staticClass:
+                                                              "text-muted"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "Updated at: " +
+                                                                _vm._s(
+                                                                  taskProgress.updated_at
+                                                                )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c("form", [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "form-check"
+                                                        },
+                                                        [
+                                                          _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  taskProgress.completed,
+                                                                expression:
+                                                                  "taskProgress.completed"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-check-input",
+                                                            attrs: {
+                                                              type: "checkbox",
+                                                              name: "completed",
+                                                              id: "completed"
+                                                            },
+                                                            domProps: {
+                                                              checked: Array.isArray(
+                                                                taskProgress.completed
+                                                              )
+                                                                ? _vm._i(
+                                                                    taskProgress.completed,
+                                                                    null
+                                                                  ) > -1
+                                                                : taskProgress.completed
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.taskCompleted(
+                                                                  taskProgress.owner_id,
+                                                                  taskProgress.id,
+                                                                  taskProgress.completed
+                                                                )
+                                                              },
+                                                              change: function(
+                                                                $event
+                                                              ) {
+                                                                var $$a =
+                                                                    taskProgress.completed,
+                                                                  $$el =
+                                                                    $event.target,
+                                                                  $$c = $$el.checked
+                                                                    ? true
+                                                                    : false
+                                                                if (
+                                                                  Array.isArray(
+                                                                    $$a
+                                                                  )
+                                                                ) {
+                                                                  var $$v = null,
+                                                                    $$i = _vm._i(
+                                                                      $$a,
+                                                                      $$v
+                                                                    )
+                                                                  if (
+                                                                    $$el.checked
+                                                                  ) {
+                                                                    $$i < 0 &&
+                                                                      _vm.$set(
+                                                                        taskProgress,
+                                                                        "completed",
+                                                                        $$a.concat(
+                                                                          [$$v]
+                                                                        )
+                                                                      )
+                                                                  } else {
+                                                                    $$i > -1 &&
+                                                                      _vm.$set(
+                                                                        taskProgress,
+                                                                        "completed",
+                                                                        $$a
+                                                                          .slice(
+                                                                            0,
+                                                                            $$i
+                                                                          )
+                                                                          .concat(
+                                                                            $$a.slice(
+                                                                              $$i +
+                                                                                1
+                                                                            )
+                                                                          )
+                                                                      )
+                                                                  }
+                                                                } else {
+                                                                  _vm.$set(
+                                                                    taskProgress,
+                                                                    "completed",
+                                                                    $$c
+                                                                  )
+                                                                }
+                                                              }
+                                                            }
+                                                          })
+                                                        ]
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          }),
+                                          0
+                                        )
+                                      : _vm._e()
                                   ]
                                 )
                               ]
@@ -44212,13 +44456,15 @@ var render = function() {
                               expression: "studentEmails"
                             }
                           ],
-                          staticClass: "form-control",
+                          staticClass: "form-control mt-3",
                           attrs: {
                             form: "studentForm",
                             name: "studentEmails",
                             id: "studentEmails",
                             cols: "30",
-                            rows: "10"
+                            rows: "10",
+                            placeholder:
+                              "Add students emails as a comma separated list"
                           },
                           domProps: { value: _vm.studentEmails },
                           on: {
@@ -44234,7 +44480,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-secondary mr-2",
+                            staticClass: "btn btn-secondary mt-3",
                             attrs: { type: "submit", form: "studentForm" }
                           },
                           [

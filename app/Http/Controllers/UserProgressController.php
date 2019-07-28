@@ -11,6 +11,10 @@ class UserProgressController extends Controller
 {
     public function index(User $user)
     {
+        if (request()->wantsJson()) {
+            return ['message' => $user->progress];
+        }
+
         return $user->progress;
     }
 
@@ -21,13 +25,19 @@ class UserProgressController extends Controller
             'task_id' => $task->id
         ]);
 
-        return $progress;
+        if (request()->wantsJson()) {
+            return ['message' => $progress];
+        }
+
+        //return $progress;
     }
 
     public function update(User $user, Progress $progress)
     {
         request('completed') ?  $progress->complete() : $progress->incomplete();
 
-        return response('', 200);
+        if (request()->wantsJson()) {
+            return ['message' => $progress->completed];
+        }
     }
 }

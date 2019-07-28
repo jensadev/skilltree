@@ -22,13 +22,13 @@
                         <li class="nav-item">
                             <a
                                 class="nav-link active"
-                                id="information-tab"
-                                href="#information"
+                                id="manage-tab"
+                                href="#manage"
                                 data-toggle="tab"
                                 role="tab"
-                                aria-controls="information"
+                                aria-controls="manage"
                                 aria-selected="true"
-                            >Information</a>
+                            >Manage</a>
                         </li>
                         <li class="nav-item">
                             <a
@@ -64,12 +64,12 @@
                     </button>
                 </header>
                 <div class="modal-body">
-                    <div class="tab-content" id="informationTabContent">
+                    <div class="tab-content" id="manageTabContent">
                         <div
                             class="tab-pane fade show active"
-                            id="information"
+                            id="manage"
                             role="tabpanel"
-                            aria-labelledby="information-tab"
+                            aria-labelledby="manage-tab"
                         >
                             <form
                                 @submit.prevent="submit"
@@ -327,7 +327,7 @@
                                         :data-target="'#collapse' + (index + 1)"
                                         aria-expanded="true"
                                         :aria-controls="'collapse' + (index + 1)"
-                                        v-text="member.name"
+                                        v-text="member.name ? member.name : member.email"
                                         @click="loadMember(member.id)"
                                     ></button>
                                     <div
@@ -336,7 +336,34 @@
                                         :aria-labelledby="'heading' + (index + 1)"
                                         data-parent="#accordionStudents"
                                     >
-                                        <p v-text="member"></p>
+                                        <ul v-if="studentProgress" class="list-group">
+                                            <li
+                                                class="list-group-item list-group-item-action"
+                                                v-for="taskProgress in studentProgress"
+                                                :key="taskProgress.id"
+                                            >
+                                                <div class="d-flex justify-content-between">
+                                                    <label for="completed" class="mb-0">
+                                                        Task: {{ taskProgress.task.body }},
+                                                        <small
+                                                            class="text-muted"
+                                                        >Updated at: {{ taskProgress.updated_at }}</small>
+                                                    </label>
+                                                    <form>
+                                                        <div class="form-check">
+                                                            <input
+                                                                class="form-check-input"
+                                                                type="checkbox"
+                                                                name="completed"
+                                                                id="completed"
+                                                                @click="taskCompleted(taskProgress.owner_id, taskProgress.id, taskProgress.completed)"
+                                                                v-model="taskProgress.completed"
+                                                            />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </section>
@@ -354,13 +381,14 @@
                                     form="studentForm"
                                     name="studentEmails"
                                     id="studentEmails"
-                                    class="form-control"
+                                    class="form-control mt-3"
                                     cols="30"
                                     rows="10"
                                     v-model="studentEmails"
+                                    placeholder="Add students emails as a comma separated list"
                                 ></textarea>
                                 <button
-                                    class="btn btn-secondary mr-2"
+                                    class="btn btn-secondary mt-3"
                                     type="submit"
                                     form="studentForm"
                                 >
@@ -448,21 +476,38 @@ export default {
                 description: this.skilltree.description,
                 notes: this.skilltree.notes,
                 courseId: this.skilltree.course_id
-            })
+            }),
+            studentProgress: ""
         };
     },
     props: ["skilltree", "members"],
     methods: {
+        async taskCompleted(owner, id, completed) {
+            await axios
+                .patch("/user/" + owner + "/progress/" + id, {
+                    completed:
+                        completed == 0 || completed == false ? true : false
+                })
+                .then(function(response) {
+                    console.log(response.data.message);
+                })
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
+        },
         async loadMember(id) {
+            let data;
             console.log(id);
-            // await axios
-            //     .get("/user/" + id + "/meta")
-            //     .then(function(response) {
-            //         console.log(response.data.message);
-            //     })
-            //     .catch(function(error) {
-            //         flash({ body: error, type: "alert-danger" });
-            //     });
+            await axios
+                .get("/user/" + id + "/progress")
+                .then(function(response) {
+                    console.log(response.data.message);
+                    data = response.data.message;
+                })
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
+            this.studentProgress = data;
         },
         // async deleteCourseConnection() {
         //     let con = true;

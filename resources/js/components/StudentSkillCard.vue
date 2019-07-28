@@ -80,7 +80,10 @@ export default {
             this.id = this.skill.id;
             this.tree = this.skill.skilltree_id;
 
-            if (this.skill.tasks) this.tasks = this.skill.tasks;
+            if (this.skill.tasks) {
+                this.tasks = this.skill.tasks;
+                console.log(this.skill.tasks);
+            }
         }
     },
     mounted() {
