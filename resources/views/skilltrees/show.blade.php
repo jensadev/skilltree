@@ -29,6 +29,8 @@
             @foreach ($skilltree->skills as $skill)
                 <student-skill-card
                     :skill="{{ $skill }}"
+                    {{-- :progress="{{ auth()->user()->progress }}" --}}
+                    {{-- :progress="{{ $skill->tasksProgress }}" --}}
                 ></student-skill-card>
             @endforeach
         @endcan

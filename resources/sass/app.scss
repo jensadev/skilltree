@@ -132,6 +132,12 @@ $cards-per-line: (
         }
 }
 
+.card-header-completed {
+    background-color:  $blue;
+    color: $light;
+    @include font-medium;
+}
+
 .h1 {
     @include font-xbold;
 }

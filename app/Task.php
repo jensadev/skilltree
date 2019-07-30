@@ -32,6 +32,13 @@ class Task extends Model
         //return $this->morphMany('App\Progress', 'progress');
     }
 
+    public function userProgress()
+    {
+        return $this->hasMany(Progress::class, 'task_id')
+            ->where('owner_id', auth()->user()->id);
+        //return $this->morphMany('App\Progress', 'progress');
+    }
+
     /**
      * Handle for task path
      *

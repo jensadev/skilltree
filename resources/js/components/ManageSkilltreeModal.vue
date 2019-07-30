@@ -335,6 +335,7 @@
                                         class="collapse list-group-item"
                                         :aria-labelledby="'heading' + (index + 1)"
                                         data-parent="#accordionStudents"
+                                        style="border-bottom: 0;"
                                     >
                                         <ul v-if="studentProgress" class="list-group">
                                             <li
@@ -344,7 +345,8 @@
                                             >
                                                 <div class="d-flex justify-content-between">
                                                     <label for="completed" class="mb-0">
-                                                        Task: {{ taskProgress.task.body }},
+                                                        Task:
+                                                        <strong>{{ taskProgress.task.body }}</strong>,
                                                         <small
                                                             class="text-muted"
                                                         >Updated at: {{ taskProgress.updated_at }}</small>

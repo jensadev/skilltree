@@ -10,17 +10,13 @@ class Progress extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['task'];
-
-    public function progressable()
-    {
-        return $this->morphTo();
-    }
+    //protected $with = ['task'];
 
     public function owner()
     {
         // $this->morphedByMany('App\User', 'progress');
         return $this->belongsTo('App\User');
+        //            ->with('task');
     }
 
     public function task()

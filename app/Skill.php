@@ -46,7 +46,19 @@ class Skill extends Model
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        if (auth()->user()->teacher == true) {
+            return $this->hasMany(Task::class);
+        } else {
+            return $this->hasMany(Task::class)
+                ->with('userProgress');
+        }
+    }
+
+    public function tasksProgress()
+    {
+        return $this->hasMany(Task::class)
+            ->with('userProgress');
+        //            ->where('progress.owner_id', auth()->user()->id);
     }
 
     /**

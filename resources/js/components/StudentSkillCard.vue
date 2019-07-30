@@ -12,6 +12,7 @@
         </div>
         <div
             class="card-header d-flex justify-content-between align-items-end"
+            :class="completed == '100%' ? 'card-header-completed' : ''"
             style="padding-bottom: 0;"
         >
             <h2 class="h5">{{ str_limit(title, 15, true) }}</h2>
@@ -47,7 +48,7 @@
 
 <script>
 export default {
-    props: ["skilltree", "skill"],
+    props: ["skilltree", "skill", "progress", "sp"],
     data() {
         return {
             title: "",
@@ -62,7 +63,8 @@ export default {
             position: {},
             tasks: [],
             connections: [],
-            completed: ""
+            completed: "",
+            progresses: []
         };
     },
     created() {
@@ -82,7 +84,15 @@ export default {
 
             if (this.skill.tasks) {
                 this.tasks = this.skill.tasks;
-                console.log(this.skill.tasks);
+
+                let completed = 0;
+                this.tasks.forEach(task => {
+                    if (task.user_progress[0].completed == 1) {
+                        completed++;
+                    }
+                });
+                let temp = (completed / this.tasks.length) * 100;
+                this.completed = temp + "%";
             }
         }
     },

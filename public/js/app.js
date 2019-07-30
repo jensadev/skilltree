@@ -3386,6 +3386,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4403,8 +4405,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["skilltree", "skill"],
+  props: ["skilltree", "skill", "progress", "sp"],
   data: function data() {
     return {
       title: "",
@@ -4419,7 +4422,8 @@ __webpack_require__.r(__webpack_exports__);
       position: {},
       tasks: [],
       connections: [],
-      completed: ""
+      completed: "",
+      progresses: []
     };
   },
   created: function created() {
@@ -4437,7 +4441,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.skill.tasks) {
         this.tasks = this.skill.tasks;
-        console.log(this.skill.tasks);
+        var completed = 0;
+        this.tasks.forEach(function (task) {
+          if (task.user_progress[0].completed == 1) {
+            completed++;
+          }
+        });
+        var temp = completed / this.tasks.length * 100;
+        this.completed = temp + "%";
       }
     }
   },
@@ -44244,6 +44255,7 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass: "collapse list-group-item",
+                                    staticStyle: { "border-bottom": "0" },
                                     attrs: {
                                       id: "collapse" + (index + 1),
                                       "aria-labelledby":
@@ -44284,12 +44296,18 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "\n                                                    Task: " +
+                                                          "\n                                                    Task:\n                                                    "
+                                                        ),
+                                                        _c("strong", [
+                                                          _vm._v(
                                                             _vm._s(
                                                               taskProgress.task
                                                                 .body
-                                                            ) +
-                                                            ",\n                                                    "
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(
+                                                          ",\n                                                    "
                                                         ),
                                                         _c(
                                                           "small",
@@ -45216,6 +45234,7 @@ var render = function() {
         {
           staticClass:
             "card-header d-flex justify-content-between align-items-end",
+          class: _vm.completed == "100%" ? "card-header-completed" : "",
           staticStyle: { "padding-bottom": "0" }
         },
         [
