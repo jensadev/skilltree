@@ -3388,10 +3388,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isOpen: false,
       isAddingStudents: false,
       isLoadingCourses: false,
       isLoadingTopics: false,
@@ -3413,15 +3448,86 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["skilltree", "members"],
   methods: {
-    taskCompleted: function () {
-      var _taskCompleted = _asyncToGenerator(
+    refreshStudent: function () {
+      var _refreshStudent = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(owner, id, completed) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log(id);
+                _context.next = 3;
+                return axios.patch("/skilltrees/" + this.id + "/invitation/" + id).then(function (response) {
+                  flash({
+                    body: response.data.message,
+                    type: "alert-success"
+                  });
+                })["catch"](function (error) {
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function refreshStudent(_x) {
+        return _refreshStudent.apply(this, arguments);
+      }
+
+      return refreshStudent;
+    }(),
+    removeStudent: function () {
+      var _removeStudent = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/skilltrees/" + this.id + "/invitation/" + id).then(function (response) {
+                  flash({
+                    body: response.data.message,
+                    type: "alert-success"
+                  });
+                })["catch"](function (error) {
+                  flash({
+                    body: error,
+                    type: "alert-danger"
+                  });
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function removeStudent(_x2) {
+        return _removeStudent.apply(this, arguments);
+      }
+
+      return removeStudent;
+    }(),
+    taskCompleted: function () {
+      var _taskCompleted = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(owner, id, completed) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
                 return axios.patch("/user/" + owner + "/progress/" + id, {
                   completed: completed == 0 || completed == false ? true : false
                 }).then(function (response) {
@@ -3435,13 +3541,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee);
+        }, _callee3);
       }));
 
-      function taskCompleted(_x, _x2, _x3) {
+      function taskCompleted(_x3, _x4, _x5) {
         return _taskCompleted.apply(this, arguments);
       }
 
@@ -3450,16 +3556,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadMember: function () {
       var _loadMember = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
         var data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 console.log(id);
-                _context2.next = 3;
+                _context4.next = 3;
                 return axios.get("/user/" + id + "/progress").then(function (response) {
-                  console.log(response.data.message);
                   data = response.data.message;
                 })["catch"](function (error) {
                   flash({
@@ -3469,17 +3574,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                this.studentProgress = data;
+                console.log(data);
+                this.studentProgress = _.sortBy(data, ["skill_id"]);
+                console.log(this.studentProgress);
 
-              case 4:
+              case 6:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee4, this);
       }));
 
-      function loadMember(_x4) {
+      function loadMember(_x6) {
         return _loadMember.apply(this, arguments);
       }
 
@@ -3502,14 +3609,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteSkilltree: function () {
       var _deleteSkilltree = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 id = this.id;
-                _context3.next = 3;
+                _context5.next = 3;
                 return axios["delete"]("/skilltrees/" + this.id).then(function (response) {
                   localStorage.removeItem(id);
                   location = response.data.message;
@@ -3522,10 +3629,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee5, this);
       }));
 
       function deleteSkilltree() {
@@ -3537,10 +3644,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 this.form.submit("/skilltrees/" + this.id, "patch").then(function (response) {
                   location = response.data.message;
@@ -3553,10 +3660,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context4.stop();
+                return _context6.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee6, this);
       }));
 
       function submit() {
@@ -3568,12 +3675,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addStudents: function () {
       var _addStudents = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context5.next = 2;
+                _context7.next = 2;
                 return axios.post("/skilltrees/" + this.id + "/invitations", {
                   emails: this.studentEmails
                 }).then(function (response) {
@@ -3590,10 +3697,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context5.stop();
+                return _context7.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee7, this);
       }));
 
       function addStudents() {
@@ -3690,6 +3797,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // this.$nextTick(() => {
     //     if (this.courseId != 0) this.isConnected = true;
     // });
+  },
+  watch: {
+    isOpen: function isOpen() {
+      if (this.isOpen) {
+        document.addEventListener("click", this.closeIfClickedOutside);
+        Vue.nextTick().then(function () {
+          document.getElementById("add-skill-name").focus();
+        });
+      }
+    }
   }
 });
 
@@ -42971,7 +43088,7 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("add_box")])]
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("add_comment")])]
     ),
     _vm._v(" "),
     _c(
@@ -43727,7 +43844,7 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("share")])]
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("person_add")])]
     ),
     _vm._v(" "),
     _c(
@@ -44212,7 +44329,139 @@ var render = function() {
                     }
                   },
                   [
-                    _c("h5", [_vm._v("Students Tab")]),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex justify-content-between align-items-center"
+                      },
+                      [
+                        _c("h5", { staticClass: "h5 mb-0" }, [
+                          _vm._v("Manage Students")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn dashbaricon",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.isOpen = !_vm.isOpen
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "material-icons",
+                              domProps: {
+                                textContent: _vm._s(
+                                  !_vm.isOpen ? "group_add" : "close"
+                                )
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "section",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isOpen,
+                            expression: "isOpen"
+                          }
+                        ],
+                        staticClass: "container"
+                      },
+                      [
+                        _c(
+                          "form",
+                          {
+                            attrs: { id: "studentForm" },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.addStudents($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.studentEmails,
+                                    expression: "studentEmails"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  form: "studentForm",
+                                  name: "studentEmails",
+                                  id: "studentEmails",
+                                  rows: "6",
+                                  placeholder:
+                                    "Add students email as a comma separated list eg. student@test.com,student@test.com"
+                                },
+                                domProps: { value: _vm.studentEmails },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.studentEmails = $event.target.value
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "text-right" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-secondary my-3",
+                                  attrs: { type: "submit", form: "studentForm" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Add Students\n                                        "
+                                  ),
+                                  _vm.isAddingStudents
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "spinner-border",
+                                          staticStyle: {
+                                            width: "24px",
+                                            height: "24px",
+                                            "margin-left": "14px"
+                                          },
+                                          attrs: { role: "status" }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "sr-only" },
+                                            [_vm._v("Loading...")]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _vm.members
                       ? _c(
@@ -44229,33 +44478,88 @@ var render = function() {
                                 attrs: { id: "heading" + (index + 1) }
                               },
                               [
-                                _c("button", {
-                                  staticClass:
-                                    "list-group-item list-group-item-action",
-                                  attrs: {
-                                    type: "button",
-                                    "data-toggle": "collapse",
-                                    "data-target": "#collapse" + (index + 1),
-                                    "aria-expanded": "true",
-                                    "aria-controls": "collapse" + (index + 1)
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "d-flex justify-content-between list-group-item list-group-item-action"
                                   },
-                                  domProps: {
-                                    textContent: _vm._s(
-                                      member.name ? member.name : member.email
-                                    )
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.loadMember(member.id)
-                                    }
-                                  }
-                                }),
+                                  [
+                                    _c("button", {
+                                      staticClass: "btn btn-link",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "collapse",
+                                        "data-target":
+                                          "#collapse" + (index + 1),
+                                        "aria-expanded": "true",
+                                        "aria-controls":
+                                          "collapse" + (index + 1)
+                                      },
+                                      domProps: {
+                                        textContent: _vm._s(
+                                          member.name
+                                            ? member.name + " - " + member.email
+                                            : member.email
+                                        )
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.loadMember(member.id)
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-less",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.refreshStudent(
+                                                member.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "i",
+                                            { staticClass: "material-icons" },
+                                            [_vm._v("refresh")]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-less",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.removeStudent(
+                                                member.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "i",
+                                            { staticClass: "material-icons" },
+                                            [_vm._v("delete")]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
                                   {
                                     staticClass: "collapse list-group-item",
-                                    staticStyle: { "border-bottom": "0" },
                                     attrs: {
                                       id: "collapse" + (index + 1),
                                       "aria-labelledby":
@@ -44295,9 +44599,6 @@ var render = function() {
                                                         }
                                                       },
                                                       [
-                                                        _vm._v(
-                                                          "\n                                                    Task:\n                                                    "
-                                                        ),
                                                         _c("strong", [
                                                           _vm._v(
                                                             _vm._s(
@@ -44306,9 +44607,7 @@ var render = function() {
                                                             )
                                                           )
                                                         ]),
-                                                        _vm._v(
-                                                          ",\n                                                    "
-                                                        ),
+                                                        _vm._v(" "),
                                                         _c(
                                                           "small",
                                                           {
@@ -44317,7 +44616,7 @@ var render = function() {
                                                           },
                                                           [
                                                             _vm._v(
-                                                              "Updated at: " +
+                                                              "- Updated at: " +
                                                                 _vm._s(
                                                                   taskProgress.updated_at
                                                                 )
@@ -44451,83 +44750,7 @@ var render = function() {
                           }),
                           0
                         )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "form",
-                      {
-                        attrs: { id: "studentForm" },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.addStudents($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.studentEmails,
-                              expression: "studentEmails"
-                            }
-                          ],
-                          staticClass: "form-control mt-3",
-                          attrs: {
-                            form: "studentForm",
-                            name: "studentEmails",
-                            id: "studentEmails",
-                            cols: "30",
-                            rows: "10",
-                            placeholder:
-                              "Add students emails as a comma separated list"
-                          },
-                          domProps: { value: _vm.studentEmails },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.studentEmails = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-secondary mt-3",
-                            attrs: { type: "submit", form: "studentForm" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Add Students\n                                "
-                            ),
-                            _vm.isAddingStudents
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass: "spinner-border",
-                                    staticStyle: {
-                                      width: "24px",
-                                      height: "24px",
-                                      "margin-left": "14px"
-                                    },
-                                    attrs: { role: "status" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "sr-only" }, [
-                                      _vm._v("Loading...")
-                                    ])
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      ]
-                    )
+                      : _vm._e()
                   ]
                 )
               ]
@@ -44903,7 +45126,7 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("clear")])]
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("clear_all")])]
     ),
     _vm._v(" "),
     _c(

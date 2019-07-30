@@ -5,7 +5,7 @@
             @click="isOpen = !isOpen"
             title="Invite another teacher to your Skilltree"
         >
-            <i class="material-icons">share</i>
+            <i class="material-icons">person_add</i>
         </button>
         <div v-show="isOpen" class="smallform-content position-absolute w-25">
             <div class="card shadow-sm bg-white">

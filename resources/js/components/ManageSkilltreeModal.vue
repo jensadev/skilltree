@@ -309,7 +309,51 @@
                             role="tabpanel"
                             aria-labelledby="students-tab"
                         >
-                            <h5>Students Tab</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="h5 mb-0">Manage Students</h5>
+                                <button
+                                    type="button"
+                                    class="btn dashbaricon"
+                                    @click.prevent="isOpen = !isOpen"
+                                >
+                                    <i
+                                        class="material-icons"
+                                        v-text="!isOpen ? 'group_add' : 'close'"
+                                    ></i>
+                                </button>
+                            </div>
+                            <section v-show="isOpen" class="container">
+                                <form @submit.prevent="addStudents" id="studentForm">
+                                    <div>
+                                        <textarea
+                                            form="studentForm"
+                                            name="studentEmails"
+                                            id="studentEmails"
+                                            class="form-control"
+                                            rows="6"
+                                            v-model="studentEmails"
+                                            placeholder="Add students email as a comma separated list eg. student@test.com,student@test.com"
+                                        ></textarea>
+                                    </div>
+                                    <div class="text-right">
+                                        <button
+                                            class="btn btn-secondary my-3"
+                                            type="submit"
+                                            form="studentForm"
+                                        >
+                                            Add Students
+                                            <div
+                                                class="spinner-border"
+                                                role="status"
+                                                v-if="isAddingStudents"
+                                                style="width:24px; height:24px; margin-left:14px;"
+                                            >
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </section>
                             <section
                                 class="accordion list-group"
                                 id="accordionStudents"
@@ -320,22 +364,40 @@
                                     v-for="(member, index) in members"
                                     :key="index"
                                 >
-                                    <button
-                                        class="list-group-item list-group-item-action"
-                                        type="button"
-                                        data-toggle="collapse"
-                                        :data-target="'#collapse' + (index + 1)"
-                                        aria-expanded="true"
-                                        :aria-controls="'collapse' + (index + 1)"
-                                        v-text="member.name ? member.name : member.email"
-                                        @click="loadMember(member.id)"
-                                    ></button>
+                                    <div
+                                        class="d-flex justify-content-between list-group-item list-group-item-action"
+                                    >
+                                        <button
+                                            class="btn btn-link"
+                                            type="button"
+                                            data-toggle="collapse"
+                                            :data-target="'#collapse' + (index + 1)"
+                                            aria-expanded="true"
+                                            :aria-controls="'collapse' + (index + 1)"
+                                            v-text="member.name ? member.name + ' - ' + member.email : member.email"
+                                            @click="loadMember(member.id)"
+                                        ></button>
+                                        <div>
+                                            <button
+                                                class="btn btn-less"
+                                                @click="refreshStudent(member.id)"
+                                            >
+                                                <i class="material-icons">refresh</i>
+                                            </button>
+
+                                            <button
+                                                class="btn btn-less"
+                                                @click="removeStudent(member.id)"
+                                            >
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div
                                         :id="'collapse' + (index + 1)"
                                         class="collapse list-group-item"
                                         :aria-labelledby="'heading' + (index + 1)"
                                         data-parent="#accordionStudents"
-                                        style="border-bottom: 0;"
                                     >
                                         <ul v-if="studentProgress" class="list-group">
                                             <li
@@ -345,11 +407,10 @@
                                             >
                                                 <div class="d-flex justify-content-between">
                                                     <label for="completed" class="mb-0">
-                                                        Task:
-                                                        <strong>{{ taskProgress.task.body }}</strong>,
+                                                        <strong>{{ taskProgress.task.body }}</strong>
                                                         <small
                                                             class="text-muted"
-                                                        >Updated at: {{ taskProgress.updated_at }}</small>
+                                                        >- Updated at: {{ taskProgress.updated_at }}</small>
                                                     </label>
                                                     <form>
                                                         <div class="form-check">
@@ -378,33 +439,6 @@
                                     ></li>
                                 </ul>
                             </div>-->
-                            <form @submit.prevent="addStudents" id="studentForm">
-                                <textarea
-                                    form="studentForm"
-                                    name="studentEmails"
-                                    id="studentEmails"
-                                    class="form-control mt-3"
-                                    cols="30"
-                                    rows="10"
-                                    v-model="studentEmails"
-                                    placeholder="Add students emails as a comma separated list"
-                                ></textarea>
-                                <button
-                                    class="btn btn-secondary mt-3"
-                                    type="submit"
-                                    form="studentForm"
-                                >
-                                    Add Students
-                                    <div
-                                        class="spinner-border"
-                                        role="status"
-                                        v-if="isAddingStudents"
-                                        style="width:24px; height:24px; margin-left:14px;"
-                                    >
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                </button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -463,6 +497,7 @@ import Form from "./Form";
 export default {
     data() {
         return {
+            isOpen: false,
             isAddingStudents: false,
             isLoadingCourses: false,
             isLoadingTopics: false,
@@ -484,6 +519,33 @@ export default {
     },
     props: ["skilltree", "members"],
     methods: {
+        async refreshStudent(id) {
+            console.log(id);
+            await axios
+                .patch("/skilltrees/" + this.id + "/invitation/" + id)
+                .then(function(response) {
+                    flash({
+                        body: response.data.message,
+                        type: "alert-success"
+                    });
+                })
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
+        },
+        async removeStudent(id) {
+            await axios
+                .delete("/skilltrees/" + this.id + "/invitation/" + id)
+                .then(function(response) {
+                    flash({
+                        body: response.data.message,
+                        type: "alert-success"
+                    });
+                })
+                .catch(function(error) {
+                    flash({ body: error, type: "alert-danger" });
+                });
+        },
         async taskCompleted(owner, id, completed) {
             await axios
                 .patch("/user/" + owner + "/progress/" + id, {
@@ -503,13 +565,15 @@ export default {
             await axios
                 .get("/user/" + id + "/progress")
                 .then(function(response) {
-                    console.log(response.data.message);
                     data = response.data.message;
                 })
                 .catch(function(error) {
                     flash({ body: error, type: "alert-danger" });
                 });
-            this.studentProgress = data;
+
+            console.log(data);
+            this.studentProgress = _.sortBy(data, ["skill_id"]);
+            console.log(this.studentProgress);
         },
         // async deleteCourseConnection() {
         //     let con = true;
@@ -651,6 +715,17 @@ export default {
         // this.$nextTick(() => {
         //     if (this.courseId != 0) this.isConnected = true;
         // });
+    },
+    watch: {
+        isOpen() {
+            if (this.isOpen) {
+                document.addEventListener("click", this.closeIfClickedOutside);
+
+                Vue.nextTick().then(function() {
+                    document.getElementById("add-skill-name").focus();
+                });
+            }
+        }
     }
 };
 </script>

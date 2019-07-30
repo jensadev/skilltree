@@ -44,14 +44,7 @@ class SkilltreeInvitationsController extends Controller
 
             $skilltree->invite($user);
 
-            foreach ($skilltree->skills as $skill) {
-                foreach ($skill->tasks as $task) {
-                    Progress::create([
-                        'owner_id' => $user->id,
-                        'task_id' => $task->id
-                    ]);
-                }
-            }
+            $this->progress($skilltree, $user);
         }
 
         if (request()->wantsJson()) {
@@ -59,16 +52,38 @@ class SkilltreeInvitationsController extends Controller
         }
     }
 
-    public function destroy(Skilltree $skilltree, SkilltreeInvitationRequest $request)
+
+    public function update(Skilltree $skilltree, User $user)
     {
         $this->authorize('manage', $skilltree);
 
-        $user = User::whereEmail(request('email'))->first();
+        $this->progress($skilltree, $user);
+
+        if (request()->wantsJson()) {
+            return ['message' => "Progress updated"];
+        }
+    }
+
+    public function destroy(Skilltree $skilltree, User $user)
+    {
+        $this->authorize('manage', $skilltree);
 
         $skilltree->uninvite($user);
 
         if (request()->wantsJson()) {
             return ['message' => "User detached"];
+        }
+    }
+
+    protected function progress(Skilltree $skilltree, User $user)
+    {
+        foreach ($skilltree->skills as $skill) {
+            foreach ($skill->tasks as $task) {
+                Progress::updateOrCreate([
+                    'owner_id' => $user->id,
+                    'task_id' => $task->id
+                ]);
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
         <div class="dashbar d-flex justify-content-between">
             @if(isset($skilltrees) && auth()->user()->teacher)
                 <a href="" class="btn dashbaricon" role="button" @click.prevent="$modal.show('new-skilltree')" title="Create a new Skilltree">
-                    <i class="material-icons">add_box</i>
+                    <i class="material-icons">create_new_folder</i>
                 </a>
             @endif
             @if(isset($skilltree))

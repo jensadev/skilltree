@@ -16,10 +16,12 @@
             if (e.altKey && controller.isPaused())
             {
                 controller.resume();
+                $(".skillzone").css("cursor", "move");
             }
         });
         window.addEventListener("keyup", function(e) {
             controller.pause();
+            $(".skillzone").css("cursor", "auto");
         });
         controller.pause();
     }, { passive: true });

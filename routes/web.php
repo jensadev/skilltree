@@ -28,7 +28,8 @@ Route::group(
         // invitations
         Route::post('skilltrees/{skilltree}/invitation', 'SkilltreeInvitationsController@store');
         Route::post('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@classStore');
-        Route::delete('skilltrees/{skilltree}/invitations', 'SkilltreeInvitationsController@destroy');
+        Route::patch('skilltrees/{skilltree}/invitation/{user}', 'SkilltreeInvitationsController@update');
+        Route::delete('skilltrees/{skilltree}/invitation/{user}', 'SkilltreeInvitationsController@destroy');
         Route::post('skilltrees/{skilltree}/classroom/invitations', 'SkilltreeInvitationsController@classroomStore');
 
         // skills

@@ -5,7 +5,7 @@
             @click.prevent="clearPosCon"
             title="Clear Skilltree positions and connections"
         >
-            <i class="material-icons">clear</i>
+            <i class="material-icons">clear_all</i>
         </button>
         <button
             class="btn dashbaricon"
