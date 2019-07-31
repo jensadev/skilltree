@@ -367,6 +367,12 @@
                                     <div
                                         class="d-flex justify-content-between list-group-item list-group-item-action"
                                     >
+                                        <img
+                                            class="rounded-circle"
+                                            alt="avatar"
+                                            height="32px"
+                                            :src="member.name ? member.avatar : '/img/nti_gymnasiet_symbol_svart.png'"
+                                        />
                                         <button
                                             class="btn btn-link"
                                             type="button"

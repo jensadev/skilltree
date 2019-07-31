@@ -7,12 +7,10 @@ Stuff
         * And it's not crap
     * Dashboard shows active skilltrees
 * Teacher interface
-
 * Write tests
     * green current
 * Add some tooltips
 * Activity
-
 * check caching
 
 ## Finished

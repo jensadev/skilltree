@@ -142,7 +142,7 @@ $cards-per-line: (
     @include font-xbold;
 }
 .h4 {
-    @include font-medium;
+    @include font-regular;
 }
 .h3 {
     @include font-regular;
@@ -171,8 +171,10 @@ $cards-per-line: (
  * LOGINHEADER
  *
  **/
+
 .loginheader-padding {
     padding-left: 5.3rem;
+    padding-right: 6.4rem;
 }
 
 .loginheader-text {

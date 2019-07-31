@@ -36,15 +36,18 @@ class SkilltreeInvitationsController extends Controller
         $emails = explode(",", request('emails'));
 
         foreach ($emails as $email) {
-            $user = User::whereEmail($email)->first();
+            $findme   = 'elev';
+            if (strpos($email, $findme)) {
+                $user = User::whereEmail($email)->first();
 
-            if (!$user) {
-                $user = User::create(['email' => $email]);
+                if (!$user) {
+                    $user = User::create(['email' => $email]);
+                }
+
+                $skilltree->invite($user);
+
+                $this->progress($skilltree, $user);
             }
-
-            $skilltree->invite($user);
-
-            $this->progress($skilltree, $user);
         }
 
         if (request()->wantsJson()) {

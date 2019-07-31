@@ -1,11 +1,11 @@
 <div class="card shadow-sm bg-white my-2" style="width: 18rem;">
     <div class="card-header">
-        <h5 class="card-title mt-2"><a href="{{ $skilltree->path() }}">{{ str_limit($skilltree->title, 25) }}</a></h5>
+        <h3 class="h4 card-title mb-0"><a href="{{ $skilltree->path() }}">{{ str_limit($skilltree->title, 25) }}</a></h5>
     </div>
     <div class="card-body">
         <p class="card-text text-muted">{{ str_limit($skilltree->description, 125) }}</p>
     </div>
-    <div class="card-footer d-flex justify-content-between align-items-center">
+    <div class="card-footer d-flex justify-content-between align-items-center" style="padding: 0.25rem 0.75rem;">
         <div>
             @foreach ($skilltree->members->take(5) as $member)
                 @if ($member->teacher)
