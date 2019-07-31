@@ -2063,6 +2063,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3557,13 +3561,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _loadMember = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-        var data;
+        var data, present, filtered;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log(id);
-                _context4.next = 3;
+                _context4.next = 2;
                 return axios.get("/user/" + id + "/progress").then(function (response) {
                   data = response.data.message;
                 })["catch"](function (error) {
@@ -3573,12 +3576,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 });
 
-              case 3:
-                console.log(data);
-                this.studentProgress = _.sortBy(data, ["skill_id"]);
-                console.log(this.studentProgress);
+              case 2:
+                present = [];
+                this.skilltree.skills.forEach(function (element) {
+                  present.push(element.id);
+                });
+                filtered = [];
 
-              case 6:
+                _.forEach(data, function (val) {
+                  if (present.includes(val.task.skill_id)) {
+                    filtered.push(val);
+                  }
+                });
+
+                this.studentProgress = _.sortBy(filtered, ["skill_id"]);
+
+              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -3708,7 +3721,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return addStudents;
-    }() // async getCourses() {
+    }(),
+    clearPosCon: function clearPosCon() {
+      window.events.$emit("updatePosCon", JSON.stringify(""));
+      localStorage.removeItem(this.skilltree);
+      jqSimpleConnect.removeAll();
+    } // async getCourses() {
     //     let courses;
     //     this.isLoadingCourses = true;
     //     Event.$emit("onCenterLoading");
@@ -43075,11 +43093,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "add-skill" }, [
+  return _c("li", { staticClass: "add-skill nav-item" }, [
     _c(
       "button",
       {
-        staticClass: "btn dashbaricon",
+        staticClass: "nav-link btn dashbaricon",
         attrs: { title: "Add a new Skill" },
         on: {
           click: function($event) {
@@ -43088,7 +43106,7 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("add_comment")])]
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("add_box")])]
     ),
     _vm._v(" "),
     _c(
@@ -43832,11 +43850,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "invite-skilltree-member" }, [
+  return _c("li", { staticClass: "invite-skilltree-member nav-item" }, [
     _c(
       "button",
       {
-        staticClass: "btn dashbaricon",
+        staticClass: "nav-link btn dashbaricon",
         attrs: { title: "Invite another teacher to your Skilltree" },
         on: {
           click: function($event) {
@@ -44805,6 +44823,16 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-outline-secondary mr-2",
+                    attrs: { type: "button" },
+                    on: { click: _vm.clearPosCon }
+                  },
+                  [_vm._v("Clear Positions and Connections")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
                     staticClass: "btn btn-outline-danger mr-2",
                     attrs: { type: "button" },
                     on: { click: _vm.deleteSkilltree }
@@ -45113,108 +45141,113 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "save-load-skilltree-pos-con" }, [
-    _c(
-      "button",
-      {
-        staticClass: "btn dashbaricon",
-        attrs: { title: "Clear Skilltree positions and connections" },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.clearPosCon($event)
-          }
-        }
-      },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("clear_all")])]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      _vm._b(
+  return _c(
+    "li",
+    { staticClass: "save-load-skilltree-pos-con nav-item d-flex" },
+    [
+      _c(
+        "button",
         {
-          staticClass: "btn dashbaricon",
-          attrs: {
-            title: "Restore Skilltree positions and connections from Database",
-            disabled: _vm.isLoading
-          },
+          staticClass: "nav-link btn dashbaricon",
+          attrs: { title: "Clear Skilltree positions and connections" },
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.restorePosCon($event)
+              return _vm.clearPosCon($event)
             }
           }
         },
-        "button",
-        { isLoading: _vm.isLoading },
-        false
+        [_c("i", { staticClass: "material-icons" }, [_vm._v("clear_all")])]
       ),
-      [
-        _vm.isLoading == false
-          ? _c("i", { staticClass: "material-icons" }, [_vm._v("restore_page")])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.isLoading
-          ? _c(
-              "div",
-              {
-                staticClass: "spinner-border",
-                staticStyle: {
-                  width: "24px",
-                  height: "24px",
-                  "margin-left": "14px"
-                },
-                attrs: { role: "status" }
-              },
-              [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-            )
-          : _vm._e()
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      _vm._b(
-        {
-          staticClass: "btn dashbaricon",
-          attrs: {
-            title: "Save Skilltree positions and connections to Database",
-            disabled: _vm.isSaving
+      _vm._v(" "),
+      _c(
+        "button",
+        _vm._b(
+          {
+            staticClass: "nav-link btn dashbaricon",
+            attrs: {
+              title:
+                "Restore Skilltree positions and connections from Database",
+              disabled: _vm.isLoading
+            },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.restorePosCon($event)
+              }
+            }
           },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.savePosConDB($event)
-            }
-          }
-        },
-        "button",
-        { isSaving: _vm.isSaving },
-        false
-      ),
-      [
-        _vm.isSaving == false
-          ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.isSaving
-          ? _c(
-              "div",
-              {
-                staticClass: "spinner-border",
-                staticStyle: {
-                  width: "24px",
-                  height: "24px",
-                  "margin-left": "14px"
+          "button",
+          { isLoading: _vm.isLoading },
+          false
+        ),
+        [
+          _vm.isLoading == false
+            ? _c("i", { staticClass: "material-icons" }, [_vm._v("restore")])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLoading
+            ? _c(
+                "div",
+                {
+                  staticClass: "spinner-border",
+                  staticStyle: {
+                    width: "24px",
+                    height: "24px",
+                    "margin-left": "14px"
+                  },
+                  attrs: { role: "status" }
                 },
-                attrs: { role: "status" }
-              },
-              [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-            )
-          : _vm._e()
-      ]
-    )
-  ])
+                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+              )
+            : _vm._e()
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        _vm._b(
+          {
+            staticClass: "nav-link btn dashbaricon",
+            attrs: {
+              title: "Save Skilltree positions and connections to Database",
+              disabled: _vm.isSaving
+            },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.savePosConDB($event)
+              }
+            }
+          },
+          "button",
+          { isSaving: _vm.isSaving },
+          false
+        ),
+        [
+          _vm.isSaving == false
+            ? _c("i", { staticClass: "material-icons" }, [_vm._v("save")])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isSaving
+            ? _c(
+                "div",
+                {
+                  staticClass: "spinner-border",
+                  staticStyle: {
+                    width: "24px",
+                    height: "24px",
+                    "margin-left": "14px"
+                  },
+                  attrs: { role: "status" }
+                },
+                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+              )
+            : _vm._e()
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

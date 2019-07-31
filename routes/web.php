@@ -60,6 +60,10 @@ Route::group(
     }
 );
 
+Route::get('/help', function () {
+    return view('skilltrees.help');
+});
+
 Auth::routes(['register' => false]);
 
 Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')

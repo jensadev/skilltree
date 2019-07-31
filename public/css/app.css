@@ -10705,7 +10705,7 @@ a.text-dark:focus {
 }
 
 .ptop {
-  padding-top: 8rem;
+  padding-top: 9rem;
 }
 
 .material-icons {
@@ -10713,8 +10713,8 @@ a.text-dark:focus {
 }
 
 .dashbar {
-  z-index: 80;
-  top: 4rem;
+  z-index: 100;
+  top: 4.5rem;
 }
 
 .dashbar .material-icons {
@@ -10730,7 +10730,7 @@ a.text-dark:focus {
 }
 
 .dashbaricon .material-icons {
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
 }
 
 .dashbaricon:focus {

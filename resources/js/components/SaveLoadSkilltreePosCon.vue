@@ -1,20 +1,20 @@
 <template>
-    <div class="save-load-skilltree-pos-con">
+    <li class="save-load-skilltree-pos-con nav-item d-flex">
         <button
-            class="btn dashbaricon"
+            class="nav-link btn dashbaricon"
             @click.prevent="clearPosCon"
             title="Clear Skilltree positions and connections"
         >
             <i class="material-icons">clear_all</i>
         </button>
         <button
-            class="btn dashbaricon"
+            class="nav-link btn dashbaricon"
             @click.prevent="restorePosCon"
             title="Restore Skilltree positions and connections from Database"
             v-bind="{isLoading}"
             :disabled="isLoading"
         >
-            <i class="material-icons" v-if="isLoading == false">restore_page</i>
+            <i class="material-icons" v-if="isLoading == false">restore</i>
             <div
                 class="spinner-border"
                 role="status"
@@ -26,7 +26,7 @@
         </button>
         <!--v-if="save"-->
         <button
-            class="btn dashbaricon"
+            class="nav-link btn dashbaricon"
             @click.prevent="savePosConDB"
             title="Save Skilltree positions and connections to Database"
             v-bind="{isSaving}"
@@ -42,7 +42,7 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </button>
-    </div>
+    </li>
 </template>
 
 <script>

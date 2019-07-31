@@ -469,11 +469,11 @@
                         </div>
                     </div>
                     <div>
-                        <!-- <button
+                        <button
                             class="btn btn-outline-secondary mr-2"
                             type="button"
-                            @click="clearConnections"
-                        >Clear Connections</button>-->
+                            @click="clearPosCon"
+                        >Clear Positions and Connections</button>
                         <button
                             class="btn btn-outline-danger mr-2"
                             type="button"
@@ -561,7 +561,6 @@ export default {
         },
         async loadMember(id) {
             let data;
-            console.log(id);
             await axios
                 .get("/user/" + id + "/progress")
                 .then(function(response) {
@@ -571,9 +570,19 @@ export default {
                     flash({ body: error, type: "alert-danger" });
                 });
 
-            console.log(data);
-            this.studentProgress = _.sortBy(data, ["skill_id"]);
-            console.log(this.studentProgress);
+            let present = [];
+            this.skilltree.skills.forEach(element => {
+                present.push(element.id);
+            });
+
+            let filtered = [];
+            _.forEach(data, function(val) {
+                if (present.includes(val.task.skill_id)) {
+                    filtered.push(val);
+                }
+            });
+
+            this.studentProgress = _.sortBy(filtered, ["skill_id"]);
         },
         // async deleteCourseConnection() {
         //     let con = true;
@@ -625,6 +634,11 @@ export default {
                 .catch(function(error) {
                     flash({ body: error, type: "alert-danger" });
                 });
+        },
+        clearPosCon() {
+            window.events.$emit("updatePosCon", JSON.stringify(""));
+            localStorage.removeItem(this.skilltree);
+            jqSimpleConnect.removeAll();
         }
         // async getCourses() {
         //     let courses;

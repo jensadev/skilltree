@@ -1,7 +1,11 @@
 <template>
-    <div class="add-skill">
-        <button class="btn dashbaricon" @click.prevent="isOpen = !isOpen" title="Add a new Skill">
-            <i class="material-icons">add_comment</i>
+    <li class="add-skill nav-item">
+        <button
+            class="nav-link btn dashbaricon"
+            @click.prevent="isOpen = !isOpen"
+            title="Add a new Skill"
+        >
+            <i class="material-icons">add_box</i>
         </button>
         <div v-show="isOpen" class="smallform-content position-absolute w-25">
             <div class="card shadow-sm bg-white">
@@ -34,7 +38,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </li>
 </template>
 
 <script>

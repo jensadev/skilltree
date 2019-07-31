@@ -37,7 +37,8 @@ class SkilltreeInvitationRequest extends FormRequest
             'email' => [
                 'email',
                 'required',
-                'regex:/(ga.ntig.se)/'
+                'regex:/(ga.ntig.se)/',
+                'not_regex:/(@elev)/'
             ]
         ];
     }
@@ -47,7 +48,8 @@ class SkilltreeInvitationRequest extends FormRequest
         return [
             'email.email' => 'You must enter a valid email address.',
             //            'email.exists' => 'The user you are inviting must have a Skilltree Teacher account.',
-            'email.regex' => 'The email must be a valid account.'
+            'email.regex' => 'The email must be a valid account.',
+            'email.not_regex' => 'The email provided must be a teacher address'
         ];
     }
 }

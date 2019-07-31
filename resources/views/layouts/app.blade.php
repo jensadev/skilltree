@@ -25,7 +25,7 @@
         <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark shadow" style="z-index: 200;">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="/img/nti_logo_white_umea.svg" height="30" alt="{{ config('app.name', 'Laravel') }}">
+                        <img src="/img/nti_gymnasiet_symbol_vit.png" height="40" alt="{{ config('app.name', 'Laravel') }}" class="d-inline-block align-top">
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -34,11 +34,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li>
+                            <a class="nav-link {{ setActive('skilltrees') }}" href="/skilltrees">Skilltrees</a>
 
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <li class="nav-item dropdown">
+                            <a
+                                id="navbarDropdown"
+                                class="nav-link"
+                                href="#" role="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false" v-pre
+                            ><i class="material-icons">
+                            help
+                            </i></a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-muted disabled">Need help?</a>
+                                <a href="/help" class="dropdown-item">Get started</a>
+                                <a href="/help#report" class="dropdown-item">Report a problem</a>
+                            </div>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -48,26 +68,26 @@
                             <li class="nav-item dropdown">
                              <a
                                     id="navbarDropdown"
-                                    class="nav-link dropdown-toggle"
+                                    class="nav-link"
                                     href="#" role="button"
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
-                                    aria-expanded="false" v-pre
+                                    aria-expanded="false" 
+                                    v-pre
                                 >
                                     @if(auth()->user()->avatar)
                                         <img
                                             src="{{ auth()->user()->avatar }}"
                                             class="rounded-circle"
                                             alt="avatar"
-                                            width="32"
-                                            height="32"
-                                            style="margin-right: 8px;"
+                                            height="40"
                                         >
                                     @endif
-                                    {{ auth()->user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-muted disabled">{{ auth()->user()->name }}</a>
+                                    <a class="dropdown-item" href="/home">Profile</a>
                                     <a
                                         class="dropdown-item"
                                         href="{{ route('logout') }}"

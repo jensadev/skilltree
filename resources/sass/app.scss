@@ -45,7 +45,7 @@ $cards-per-line: (
 }
 
 .ptop {
-    padding-top: 8rem;
+    padding-top: 9rem;
 }
 
 .material-icons {
@@ -53,8 +53,8 @@ $cards-per-line: (
 }
 
 .dashbar {
-    z-index: 80;
-    top: 4rem;
+    z-index: 100;
+    top: 4.5rem;
     .material-icons {
         font-size: 2rem;
     }
@@ -66,7 +66,7 @@ $cards-per-line: (
     margin: 0;
     padding: 0;
     .material-icons {
-        margin-left: 0.5rem;
+        margin-left: 0.75rem;
     }
 }
 .dashbaricon:focus {

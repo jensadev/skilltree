@@ -1,7 +1,7 @@
 <template>
-    <div class="invite-skilltree-member">
+    <li class="invite-skilltree-member nav-item">
         <button
-            class="btn dashbaricon"
+            class="nav-link btn dashbaricon"
             @click="isOpen = !isOpen"
             title="Invite another teacher to your Skilltree"
         >
@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </li>
 </template>
 
 <script>
