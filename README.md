@@ -7,12 +7,12 @@ Stuff
         * And it's not crap
     * Dashboard shows active skilltrees
 * Teacher interface
-    * remove and update students on skilltree
+
 * Write tests
     * green current
 * Add some tooltips
 * Activity
-* skilltreeinvite->teacher only. treemodal, update user progresses, reload on student invite, group by skill
+
 * check caching
 
 ## Finished
@@ -34,3 +34,5 @@ Stuff
         * Tasks completed - First step checkboxes
         * Progress bar on skillcard
 * Clean up localstorage
+* remove and update students on skilltree
+* skilltreeinvite->teacher only. treemodal, update user progresses, reload on student invite, group by skill
