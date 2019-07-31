@@ -46,7 +46,10 @@ class Skill extends Model
 
     public function tasks()
     {
-        if (auth()->user()->teacher == true) {
+        // tveksamt som fan
+        if (!isset(auth()->user()->teacher)) {
+            return $this->hasMany(Task::class);
+        } elseif (auth()->user()->teacher == true) {
             return $this->hasMany(Task::class);
         } else {
             return $this->hasMany(Task::class)

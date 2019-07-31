@@ -14,9 +14,11 @@ class SkillsTasksTest extends TestCase
     /** @test */
     function a_skill_can_have_tasks()
     {
-        //$this->signIn();
-        //$this->withoutExceptionHandling();
-        $skilltree = SkilltreeFactory::withSkills(1)->create();
+        $user = $this->signInTeacher();
+        $skilltree = SkilltreeFactory::withSkills(1)->create($user);
+
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
+        $skilltree->addSkill(['name' => 'Test skill']);
 
         $this->actingAs($skilltree->owner)
             ->post($skilltree->skills[0]->path() . '/tasks', [
@@ -30,7 +32,11 @@ class SkillsTasksTest extends TestCase
     /** @test */
     function a_task_requires_a_body()
     {
-        $skilltree = SkilltreeFactory::withSkills(1)->create();
+        $user = $this->signInTeacher();
+        $skilltree = SkilltreeFactory::withSkills(1)->create($user);
+
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
+        $skill = $skilltree->addSkill(['name' => 'Test skill']);
 
         $attributes = factory('App\Task')->raw(['body' => '']);
         $this->actingAs($skilltree->owner)

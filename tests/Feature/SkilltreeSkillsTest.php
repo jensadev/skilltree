@@ -22,8 +22,8 @@ class SkilltreeSkillsTest extends TestCase
     /** @test */
     function a_skilltree_can_have_skills()
     {
-        $this->signIn();
-        $skilltree = SkilltreeFactory::create();
+        $user = $this->signInTeacher();
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user]);
 
         $this->actingAs($skilltree->owner)
             ->post($skilltree->path() . '/skills', ['name' => 'Test skill']);
@@ -36,7 +36,9 @@ class SkilltreeSkillsTest extends TestCase
     /** @test */
     function a_skill_can_be_updated()
     {
-        $skilltree = SkilltreeFactory::withSkills(1)->create();
+        $user = $this->signInTeacher();
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user]);
+        $skill = $skilltree->addSkill(["name" => "change me"]);
 
         $this->actingAs($skilltree->owner)
             ->patch($skilltree->skills[0]->path(), [
@@ -49,10 +51,10 @@ class SkilltreeSkillsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_delete_a_skill()
+    function a_teacher_can_delete_a_skill()
     {
-        $this->signIn();
-        $skilltree = factory('App\Skilltree')->create();
+        $user = $this->signInTeacher();
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user]);
         $skill = $skilltree->addSkill(["name" => "delete me"]);
 
         $this->actingAs($skilltree->owner)
@@ -76,9 +78,8 @@ class SkilltreeSkillsTest extends TestCase
     /** @test **/
     public function only_the_owner_of_a_skilltree_may_update_a_skill()
     {
-        $this->signIn();
-
-        $skilltree = SkilltreeFactory::withSkills(1)->create();
+        $user = $this->signInTeacher();
+        $skilltree = SkilltreeFactory::withSkills(1)->create($user);
 
         $this->patch($skilltree->skills[0]->path(), ['name' => 'changed'])
             ->assertStatus(403);
@@ -89,7 +90,9 @@ class SkilltreeSkillsTest extends TestCase
     /** @test **/
     function a_skill_requires_a_title()
     {
-        $skilltree = SkilltreeFactory::create();
+        $user = $this->signInTeacher();
+
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
 
         $attributes = factory('App\Skill')->raw(['name' => '']);
         $this->actingAs($skilltree->owner)
@@ -100,7 +103,9 @@ class SkilltreeSkillsTest extends TestCase
     /** @test **/
     function a_skill_can_have_a_description()
     {
-        $skilltree = SkilltreeFactory::create();
+        $user = $this->signInTeacher();
+
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
 
         $attributes = factory('App\Skill')->raw(['name' => 'Test', 'description' => 'Some text']);
         $this->actingAs($skilltree->owner)

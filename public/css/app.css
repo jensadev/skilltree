@@ -10811,8 +10811,8 @@ a.text-dark:focus {
 }
 
 .h4 {
-  font-family: "Soleto Medium", "Titillium Web", sans-serif;
-  font-weight: 600;
+  font-family: "Soleto Regular", "Titillium Web", sans-serif;
+  font-weight: 400;
 }
 
 .h3 {
@@ -10847,6 +10847,7 @@ a.text-dark:focus {
 
 .loginheader-padding {
   padding-left: 5.3rem;
+  padding-right: 6.4rem;
 }
 
 .loginheader-text {

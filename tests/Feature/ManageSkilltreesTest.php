@@ -13,10 +13,10 @@ class ManageSkilltreesTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    function a_user_can_create_a_skilltree()
+    function a_teacher_can_create_a_skilltree()
     {
         //$this->withoutExceptionHandling();
-        $this->signIn();
+        $this->signInTeacher();
         $this->get('/skilltrees/create')->assertStatus(200);
         $attributes = factory(Skilltree::class)->raw();
 
@@ -29,7 +29,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function skills_can_be_included_as_part_of_a_new_skilltree_creation()
     {
-        $this->signIn();
+        $this->signInTeacher();
         $attributes = factory(Skilltree::class)->raw();
         $attributes['skills'] = [
             ['name' => 'Skill 1'],
@@ -52,11 +52,11 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test **/
-    function a_user_can_delete_a_skilltree()
+    function a_teacher_can_delete_a_skilltree()
     {
+        $user = $this->signInTeacher();
 
-        $this->signIn();
-        $skilltree = SkilltreeFactory::create();
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
 
         $this->actingAs($skilltree->owner)
             ->delete($skilltree->path())
@@ -66,11 +66,11 @@ class ManageSkilltreesTest extends TestCase
     }
 
     /** @test **/
-    function a_user_can_update_a_skilltree()
+    function a_teacher_can_update_a_skilltree()
     {
-        //$this->withoutExceptionHandling();
-        $this->signIn();
-        $skilltree = SkilltreeFactory::create();
+        $user = $this->signInTeacher();
+
+        $skilltree = factory('App\Skilltree')->create(['owner_id' => $user->id]);
 
         $this->actingAs($skilltree->owner)
             ->patch($skilltree->path(), [
@@ -125,7 +125,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_skilltree_requires_a_title()
     {
-        $this->signIn();
+        $this->signInTeacher();
         $attributes = factory('App\Skilltree')->raw(['title' => '']);
         $this->post('/skilltrees', $attributes)->assertSessionHasErrors('title');
     }
@@ -133,7 +133,7 @@ class ManageSkilltreesTest extends TestCase
     /** @test */
     function a_skilltree_requires_a_description()
     {
-        $this->signIn();
+        $this->signInTeacher();
         $attributes = factory('App\Skilltree')->raw(['description' => '']);
         $this->post('/skilltrees', $attributes)->assertSessionHasErrors('description');
     }

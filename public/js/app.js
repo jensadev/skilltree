@@ -3426,6 +3426,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -44503,6 +44509,17 @@ var render = function() {
                                       "d-flex justify-content-between list-group-item list-group-item-action"
                                   },
                                   [
+                                    _c("img", {
+                                      staticClass: "rounded-circle",
+                                      attrs: {
+                                        alt: "avatar",
+                                        height: "32px",
+                                        src: member.name
+                                          ? member.avatar
+                                          : "/img/nti_gymnasiet_symbol_svart.png"
+                                      }
+                                    }),
+                                    _vm._v(" "),
                                     _c("button", {
                                       staticClass: "btn btn-link",
                                       attrs: {

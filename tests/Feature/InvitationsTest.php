@@ -21,7 +21,7 @@ class InvitationsTest extends TestCase
 
         $assertInvitationForbidden = function () use ($user, $skilltree) {
             $this->actingAs($user)
-                ->post($skilltree->path() . '/invitations')
+                ->post($skilltree->path() . '/invitation')
                 ->assertStatus(403);
         };
 
@@ -85,13 +85,13 @@ class InvitationsTest extends TestCase
     /** @test **/
     public function invited_users_may_update_skilltree_details()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $this->signIn();
         // skilltree has owner
         $skilltree = SkilltreeFactory::create();
 
         // owner can invite users
-        $skilltree->invite($newUser = factory(User::class)->create(['email' => 'inite@ga.ntig.se']));
+        $skilltree->invite($newUser = factory(User::class)->create(['email' => 'invite@ga.ntig.se']));
 
         // invited user can add skills
         $this->signIn($newUser);

@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Setup;
+
 use App\Skilltree;
 use App\User;
 use App\Skill;

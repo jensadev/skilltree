@@ -29,9 +29,11 @@ class SkillTest extends TestCase
     /** @test **/
     function it_can_add_a_task()
     {
+        //        $this->signIn();
+        //$this->withoutExceptionHandling();
         $skilltree = factory('App\Skilltree')->create();
         $skill = $skilltree->addSkill(['name' => 'Test skill']);
-        $task = $skill->addtask('Test task');
+        $task = $skill->addtask(['skill_id' => $skill->id, 'body' => 'Test task']);
 
         $this->assertCount(1, $skill->tasks);
         $this->assertTrue($skill->tasks->contains($task));
