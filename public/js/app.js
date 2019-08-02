@@ -4473,13 +4473,13 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           this.position = {
             left: this.random(200, window.innerWidth - 200),
-            top: this.random(200, window.innerWidth - 200)
+            top: this.random(200, window.innerHeight - 200)
           };
         }
       } else {
         this.position = {
           left: this.random(200, window.innerWidth - 200),
-          top: this.random(200, window.innerWidth - 200)
+          top: this.random(200, window.innerHeight - 200)
         };
       }
 
@@ -4642,13 +4642,13 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           this.position = {
             left: this.random(200, window.innerWidth - 200) + "px",
-            top: this.random(200, window.innerWidth - 200) + "px"
+            top: this.random(200, window.innerHeight - 200) + "px"
           };
         }
       } else {
         this.position = {
           left: this.random(200, window.innerWidth - 200) + "px",
-          top: this.random(200, window.innerWidth - 200) + "px"
+          top: this.random(200, window.innerHeight - 200) + "px"
         };
       }
 

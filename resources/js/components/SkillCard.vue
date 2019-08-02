@@ -231,13 +231,13 @@ export default {
                 } else {
                     this.position = {
                         left: this.random(200, window.innerWidth - 200),
-                        top: this.random(200, window.innerWidth - 200)
+                        top: this.random(200, window.innerHeight - 200)
                     };
                 }
             } else {
                 this.position = {
                     left: this.random(200, window.innerWidth - 200),
-                    top: this.random(200, window.innerWidth - 200)
+                    top: this.random(200, window.innerHeight - 200)
                 };
             }
             return this.position;

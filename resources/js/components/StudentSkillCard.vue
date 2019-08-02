@@ -156,13 +156,13 @@ export default {
                 } else {
                     this.position = {
                         left: this.random(200, window.innerWidth - 200) + "px",
-                        top: this.random(200, window.innerWidth - 200) + "px"
+                        top: this.random(200, window.innerHeight - 200) + "px"
                     };
                 }
             } else {
                 this.position = {
                     left: this.random(200, window.innerWidth - 200) + "px",
-                    top: this.random(200, window.innerWidth - 200) + "px"
+                    top: this.random(200, window.innerHeight - 200) + "px"
                 };
             }
             return this.position;
