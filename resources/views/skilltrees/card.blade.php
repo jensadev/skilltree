@@ -7,13 +7,19 @@
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center" style="padding: 0.25rem 0.75rem;">
         <div>
+            <img
+                src="{{ auth()->user()->avatar }}"
+                alt="{{ auth()->user()->name }}'s avatar"
+                title="User {{ auth()->user()->name }} is the Skilltree owner"
+                class="rounded-circle mr-1 border border-info"
+                style="width: 24px;">
             @foreach ($skilltree->members->take(5) as $member)
                 @if ($member->teacher)
                     <img
                         src="{{ $member->avatar }}"
                         alt="{{ $member->name }}'s avatar"
                         title="User {{ $member->name }} is allowed to edit Skilltree"
-                        class="rounded-circle mr-1"
+                        class="rounded-circle mr-1 border"
                         style="width: 24px;">
                 @endif
             @endforeach

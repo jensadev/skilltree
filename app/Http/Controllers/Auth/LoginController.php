@@ -74,10 +74,10 @@ class LoginController extends Controller
 
         $existingUser = User::where('email', $user->getEmail())->first();
 
-        if ($existingUser && $existingUser->provider_id === null) {
-            $findme   = 'elev';
-            $pos = strpos($user->getEmail(), $findme);
+        $findme   = 'elev';
+        $pos = strpos($user->getEmail(), $findme);
 
+        if ($existingUser && $existingUser->provider_id === null) {
             $attributes = [
                 'provider_name'     => $driver,
                 'provider_id'       => $user->getId(),
@@ -96,10 +96,6 @@ class LoginController extends Controller
             $existingUser->update($attributes);
             auth()->login($existingUser, true);
         } else {
-
-            $findme   = 'elev';
-            $pos = strpos($user->getEmail(), $findme);
-
             $newUser                    = new User;
             $newUser->provider_name     = $driver;
             $newUser->provider_id       = $user->getId();
