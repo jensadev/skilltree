@@ -75,31 +75,38 @@ class LoginController extends Controller
         $existingUser = User::where('email', $user->getEmail())->first();
 
         $findme   = 'elev';
-        $pos = strpos($user->getEmail(), $findme);
+        $isTeacher = strpos($user->getEmail(), $findme);
 
         if ($existingUser && $existingUser->provider_id === null) {
+
             $attributes = [
                 'provider_name'     => $driver,
                 'provider_id'       => $user->getId(),
                 'name'              => $user->getName(),
-                'teacher'           => $pos === false ? true : false,
+                'teacher'           => $isTeacher === false ? true : false,
                 'g_token' => json_encode($google_client_token),
                 'email_verified_at' => now(),
                 'avatar'            => $user->getAvatar()
             ];
+
             $existingUser->update($attributes);
             auth()->login($existingUser, true);
+
         } elseif ($existingUser) {
+
             $attributes = [
                 'g_token' => json_encode($google_client_token)
             ];
+
             $existingUser->update($attributes);
             auth()->login($existingUser, true);
+
         } else {
+
             $newUser                    = new User;
             $newUser->provider_name     = $driver;
             $newUser->provider_id       = $user->getId();
-            $newUser->teacher           = $pos === false ? true : false;
+            $newUser->teacher           = $isTeacher === false ? true : false;
             $newUser->g_token           = json_encode($google_client_token);
             $newUser->name              = $user->getName();
             $newUser->email             = $user->getEmail();
@@ -108,6 +115,7 @@ class LoginController extends Controller
             $newUser->save();
 
             auth()->login($newUser, true);
+            
         }
         return redirect($this->redirectPath());
     }
