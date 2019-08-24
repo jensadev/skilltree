@@ -8,10 +8,25 @@ Stuff
     * Dashboard shows active skilltrees
 * Teacher interface
 * Write tests
-    * green current
+    * for class invitation, limit account type, validation
+    * for administration of tasks
+    * for administration of students
 * Add some tooltips
+    * Overall make UI & UX better
 * Activity
+    * skilltree activity for teachers
+        * x updated, added task etc.
+    * skilltree activity for students
+        * completed task, added task, did stuff 
 * check caching
+* Roles - rather than user flag
+    * admin
+    * teacher
+    * student
+* Redo classroom implementation
+    * load
+    * export
+    * students
 
 ## Finished
 * sign in with oAuth
