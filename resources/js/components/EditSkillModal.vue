@@ -337,7 +337,7 @@ export default {
                         this.skilltree +
                         "/skills/" +
                         this.form.id +
-                        "/tasks/" +
+                        "/tasks" +
                         this.tasks[task - 1].id,
                     this.tasks[task - 1]
                 )
