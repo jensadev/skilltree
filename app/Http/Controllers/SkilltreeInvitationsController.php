@@ -41,12 +41,13 @@ class SkilltreeInvitationsController extends Controller
                 $user = User::whereEmail($email)->first();
 
                 if (!$user) {
-                    $user = User::create(['email' => $email]);
+                    $user = User::firstOrCreate(['email' => $email]);
                 }
 
-                $skilltree->invite($user);
-
-                $this->progress($skilltree, $user);
+                if (!$skilltree->members->contains($user)) {
+                    $skilltree->invite($user);
+                    $this->progress($skilltree, $user);
+                }
             }
         }
 

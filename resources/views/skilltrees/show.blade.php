@@ -35,5 +35,4 @@
             @endforeach
         @endcan
         </section>
-    @include('skilltrees.activity.feed')
 @endsection

@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="skilltree">
+<body class="skilltree" style="overflow: hidden;">
     <div id="app">
         <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark shadow" style="z-index: 200;">
             <div class="container">
@@ -114,6 +114,9 @@
             <loader @onCenterLoading="status()"></loader>
             {{-- @include('skilltrees.toast') --}}
         </main>
+        @if (Request::is('skilltrees/*'))
+            @include('skilltrees.activity.feed')
+        @endif
     </div>
     @if (Request::is('skilltrees/*'))
         @include('skilltrees.dragConnect')

@@ -193,9 +193,9 @@ jqSimpleConnect.connect = function(elementA, elementB, options) {
                      'background-color:'+connection.color+'; ' +
                      (connection.roundedCorners? 'border-radius:'+parseInt(connection.radius/2,10)+'px; -webkit-border-radius:'+parseInt(connection.radius/2,10)+'px; -moz-border-radius:'+parseInt(connection.radius/2,10)+'px; ' : '') + 
                      'position:absolute;"></div>';
-    jQuery('body').prepend(div.replace('divUniqueIdentifier', connection.id + '_1'));
-    jQuery('body').prepend(div.replace('divUniqueIdentifier', connection.id + '_2'));
-    jQuery('body').prepend(div.replace('divUniqueIdentifier', connection.id + '_3'));
+    jQuery('main').prepend(div.replace('divUniqueIdentifier', connection.id + '_1'));
+    jQuery('main').prepend(div.replace('divUniqueIdentifier', connection.id + '_2'));
+    jQuery('main').prepend(div.replace('divUniqueIdentifier', connection.id + '_3'));
 
     // Position connection.
     jqSimpleConnect._positionConnection(connection);
