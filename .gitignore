@@ -16,3 +16,4 @@ quickstart.php
 public/css/fonts
 public/css/app.css
 public/js/app.js
+package-lock.json
