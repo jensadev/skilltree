@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="skilltree" style="overflow: hidden;">
+<body class="skilltree" style="{{ Request::is('skilltrees/*') ? 'overflow: hidden;' : '' }}">
     <div id="app">
         <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark shadow" style="z-index: 200;">
             <div class="container">
@@ -62,7 +62,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                               <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                               <a class="nav-link" href="{{ route('login.provider', 'google') }}">{{ __('Login') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
