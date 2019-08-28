@@ -71,7 +71,7 @@ class Skilltree extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps();
+        return $this->belongsToMany(User::class, 'skilltree_members')->withTimestamps()->orderBy('email');
     }
 
     // public function students()
