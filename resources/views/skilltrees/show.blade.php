@@ -16,11 +16,6 @@
                     :skill="{{ $skill }}"
                 ></skill-card>
             @endforeach
-        <edit-skill-modal></edit-skill-modal>
-        <manage-skilltree-modal
-            :skilltree="{{ $skilltree }}"
-            :members="{{ $skilltree->members }}">
-        </manage-skilltree-modal>
         @elsecan('read', $skilltree)
             <student-skill-card
                 :skilltree="{{ $skilltree }}"
@@ -35,4 +30,9 @@
             @endforeach
         @endcan
         </section>
+        <edit-skill-modal></edit-skill-modal>
+        <manage-skilltree-modal
+            :skilltree="{{ $skilltree }}"
+            :members="{{ $skilltree->members }}">
+        </manage-skilltree-modal>
 @endsection

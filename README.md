@@ -1,5 +1,15 @@
 # Skilltree
+
+A system to visualize learning.
+
+## This project uses
+
+https://github.com/anvaka/panzoom
+Modified version of https://github.com/jfmdev/jqSimpleConnect
+
+
 ## Getting started
+
 For the inital setup there are a few steps in cloning this repo
 
 ```

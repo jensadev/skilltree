@@ -1,5 +1,9 @@
 <template>
-    <div class="card skill-card shadow-sm" :id="'skill_' + id" v-draggable="draggableValue">
+    <div
+        class="card skill-card shadow-sm"
+        :id="'skill_' + id"
+        :style="position"
+    >
         <div
             class="position-absolute text-light d-flex justify-content-center align-items-center h-100 w-100 card-bg"
             v-if="icon"
@@ -68,20 +72,10 @@
 </template>
 
 <script>
-import { Draggable } from "draggable-vue-directive";
-
 export default {
-    directives: {
-        Draggable
-    },
     props: ["skilltree", "skill", "teacher"],
     data() {
         return {
-            draggableValue: {
-                onPositionChange: this.onPosChanged,
-                onDragEnd: this.onDragEnd,
-                initialPosition: { left: 0, top: 0 }
-            },
             title: "",
             description: "",
             icon: "",
@@ -96,6 +90,12 @@ export default {
             connections: [],
             path: ""
         };
+    },
+    beforeMount() {
+        this.position = {
+            left: this.random(200, window.innerWidth - 200) + 'px',
+            top: this.random(200, window.innerHeight - 200) + 'px'
+        }
     },
     created() {
         if (typeof this.skilltree !== "undefined") {
@@ -112,10 +112,10 @@ export default {
             this.id = this.skill.id;
             this.tree = this.skill.skilltree_id;
 
-            if (this.skill.tasks) this.tasks = this.skill.tasks;
+            if (this.skill.tasks) {
+                this.tasks = this.skill.tasks;
+            }
         }
-
-        this.draggableValue.initialPosition = this.getPos();
 
         window.events.$on("clearCon", data => {
             this.connections = [];
@@ -198,20 +198,6 @@ export default {
             };
             return posdata;
         },
-        onPosChanged: function(positionDiff, absolutePosition, event) {
-            if (absolutePosition) {
-                this.position = absolutePosition;
-
-                window.events.$emit(
-                    "updatePosCon",
-                    JSON.stringify(this.getCardData())
-                );
-            }
-            jqSimpleConnect.repaintAll();
-        },
-        onDragEnd: function(absolutePosition) {
-            window.events.$emit("savePosCon", this.id);
-        },
         random: function(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
         },
@@ -221,25 +207,11 @@ export default {
             );
         },
         getPos: function() {
-            if (localStorage.hasOwnProperty(this.tree)) {
-                let data = JSON.parse(localStorage.getItem(this.tree));
-                if (data[this.id]) {
-                    this.position = {
-                        left: data[this.id].position.left,
-                        top: data[this.id].position.top
-                    };
-                } else {
-                    this.position = {
-                        left: this.random(200, window.innerWidth - 200),
-                        top: this.random(200, window.innerHeight - 200)
-                    };
-                }
-            } else {
-                this.position = {
-                    left: this.random(200, window.innerWidth - 200),
-                    top: this.random(200, window.innerHeight - 200)
-                };
-            }
+            this.position = {
+                left: this.random(200, window.innerWidth - 200),
+                top: this.random(200, window.innerHeight - 200)
+            };
+            console.log(this.position);
             return this.position;
         }
     }

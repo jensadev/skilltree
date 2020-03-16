@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Skill;
 use App\Activity;
-use Appstract\Meta\Metable;
+// use Appstract\Meta\Metable;
 
 class Skilltree extends Model
 {
     //    use RecordsActivity;
-    use Metable;
+    // use Metable;
 
     protected $guarded = [];
 
@@ -79,18 +79,18 @@ class Skilltree extends Model
     //     return $this->belongsToMany(User::class, 'skilltree_students')->withTimestamps();
     // }
 
-    public function showPositions()
-    {
-        if ($poscon = $this->getMeta('poscon')) {
-            return $poscon;
-        }
-        return "No positions found";
-    }
+    // public function showPositions()
+    // {
+    //     if ($poscon = $this->getMeta('poscon')) {
+    //         return $poscon;
+    //     }
+    //     return "No positions found";
+    // }
 
-    public function storePositions($data)
-    {
-        return $this->addOrUpdateMeta('poscon', $data);
-    }
+    // public function storePositions($data)
+    // {
+    //     return $this->addOrUpdateMeta('poscon', $data);
+    // }
 
     // public function storeClassroomid($classroomid)
     // {

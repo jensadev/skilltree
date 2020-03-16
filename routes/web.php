@@ -38,8 +38,8 @@ Route::group(
         Route::delete('/skilltrees/{skilltree}/skills/{skill}', 'SkilltreeSkillsController@destroy');
 
         // skill positions
-        Route::get('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@show');
-        Route::post('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@store');
+        // Route::get('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@show');
+        // Route::post('/skilltrees/{skilltree}/pos', 'SkilltreePositionsController@store');
 
         // tasks
         Route::post('/skilltrees/{skilltree}/skills/{skill}/tasks', 'SkillTasksController@store');

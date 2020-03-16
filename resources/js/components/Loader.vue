@@ -28,18 +28,6 @@ export default {
     methods: {
         async loadStorage(id) {
             this.loading = true;
-            await axios
-                .get("/skilltrees/" + id + "/pos")
-                .then(function(response) {
-                    sessionStorage.setItem(
-                        id,
-                        JSON.stringify(response.data.message.value)
-                    );
-                    location.reload();
-                })
-                .catch(function(error) {
-                    flash({ body: error, type: "alert-danger" });
-                });
             this.loading = false;
         }
     }

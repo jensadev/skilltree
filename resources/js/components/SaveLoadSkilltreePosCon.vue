@@ -59,25 +59,6 @@ export default {
     methods: {
         async savePosConDB() {
             this.isSaving = true;
-            let ls = JSON.parse(localStorage.getItem(this.skilltree));
-            if (!ls) {
-                ls = {};
-            }
-            await axios
-                .post("/skilltrees/" + this.skilltree + "/pos", {
-                    data: ls
-                })
-                .then(function(response) {
-                    if (response.status === 200) {
-                        flash({
-                            body: response.data.message,
-                            type: "alert-success"
-                        });
-                    }
-                })
-                .catch(function(error) {
-                    flash({ body: error, type: "alert-danger" });
-                });
             this.isSaving = false;
         },
         clearPosCon: function() {
@@ -111,25 +92,7 @@ export default {
         async loadStorage(id) {
             this.isLoading = true;
             window.events.$emit("onCenterLoading");
-            await axios
-                .get("/skilltrees/" + id + "/pos")
-                .then(function(response) {
-                    if (response.data.message != "No positions found") {
-                        localStorage.setItem(
-                            id,
-                            JSON.stringify(response.data.message.value)
-                        );
-                        location.reload();
-                    } else {
-                        flash({
-                            body: "No positions found.",
-                            type: "alert-warning"
-                        });
-                    }
-                })
-                .catch(function(error) {
-                    flash({ body: error, type: "alert-danger" });
-                });
+
             this.isLoading = false;
             window.events.$emit("onCenterLoading");
         }
