@@ -92,10 +92,7 @@ export default {
         };
     },
     beforeMount() {
-        this.position = {
-            left: this.random(200, window.innerWidth - 200) + 'px',
-            top: this.random(200, window.innerHeight - 200) + 'px'
-        }
+
     },
     created() {
         if (typeof this.skilltree !== "undefined") {
@@ -103,6 +100,10 @@ export default {
             this.description = this.skilltree.description;
             this.id = 0;
             this.tree = this.skilltree.id;
+            this.position = {
+                left: '40px',
+                top: window.innerHeight / 2 + 'px'
+            }
         } else {
             this.title = this.skill.name;
             this.icon = this.skill.icon;
@@ -114,6 +115,17 @@ export default {
 
             if (this.skill.tasks) {
                 this.tasks = this.skill.tasks;
+            }
+
+            let noSkills = this.$root.$children.filter(
+                child => { 
+                    return child.$options._componentTag === "skill-card"; 
+                }
+            );
+
+            this.position = {
+                right: 40 + 'px',
+                top: 0 + noSkills.length * 100 + 'px'
             }
         }
 
