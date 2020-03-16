@@ -1,5 +1,41 @@
 # Skilltree
-Stuff
+## Getting started
+For the inital setup there are a few steps in cloning this repo
+
+```
+git clone https://github.com/jensnti/skilltree.git
+cd skilltree
+```
+setting up the project
+
+installing packages
+```
+composer install
+npm install
+```
+
+setting up .env file
+```
+cp .env.example .env
+php artisan key:generate
+```
+setup a google oauth api project [here](https://console.developers.google.com/)
+After creating a project in the developer console, then make a oauth client id
+![image of developer console](https://i.imgur.com/mdCegkL.png)
+add a authorized redirect, should be ``DOMAIN_NAME/google/callback`` see image above. 
+Place Client id, Client secret in the .env file under:
+```
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT= # Should match the authorized redirect uri in the developer console
+```
+After adding database credentials
+run ``php artisan migrate``
+now all that is left is to compile the frontend
+```
+npm run dev
+```
+now for dev purposes run ``php artisan serve`` to launch the server.
 
 ## Todo
 * Student interface
